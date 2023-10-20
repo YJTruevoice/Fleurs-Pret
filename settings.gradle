@@ -1,0 +1,5 @@
+rootProject.name = "Fleurs Pret"
+include ':fleurspret'
+include ':baselib'
+include ':commonlib'
+include ':network'

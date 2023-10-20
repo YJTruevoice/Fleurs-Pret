@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Fleurs Pret</string>
+
+    <string name="title_one">Accueil</string>
+    <string name="title_two">Commandes</string>
+    <string name="title_three">Le mien</string>
+    <string name="text_preter_vite">Prêter Vite</string>
+    <string name="text_policy_desc">Hi.there To access your eligibility and facilitate faster disbursal of your loan, we need these permissions</string>
+    <string name="text_authorisation">Autorisation</string>
+    <string name="text_read_privacy_policy_guide">J’ai lu attentivement la « Politique de Confidentialité ».</string>
+    <string name="text_privacy_policy">« Politique de Confidentialité »</string>
+    <string name="text_permission_declare"><![CDATA[SMS\n\nCollect and monitor only financial transaction Introducir texto messages including the name of the transaction party. The purpose is to conduct a credit risk assessment of the transaction and the description of the transaction amount. This credit risk assessment speeds up loan disbursement without any Perfil Introducir texto messages being deleted, read or collected\n\nContacts\n\nThe NBFC loan process and guidelines mandates us to verify references. This feature enables us to do that & Why type in contact number when you can just choose from your contact book.\n\nCamera and Photos]]></string>
+    <string name="text_skip">SAUTER</string>
+    <string name="text_accept_and_go_on">J\'ACCEPTE ET\n CONTINUE</string>
+</resources>

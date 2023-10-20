@@ -1,0 +1,59 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    namespace "com.arthur.baselib"
+    compileSdk rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        minSdk rootProject.ext.android.minSdkVersion
+        targetSdk rootProject.ext.android.targetSdkVersion
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
+    buildTypes {
+        debug {
+        }
+
+        releaseTest {
+        }
+
+        release {
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.java.java_version
+        targetCompatibility rootProject.ext.java.java_version
+    }
+    kotlinOptions {
+        jvmTarget = rootProject.ext.jvmTarget.target
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+dependencies {
+    api rootProject.ext.androidxCoreLibs
+    api rootProject.ext.lifecycleLibs
+    api rootProject.ext.rxLibs
+    api rootProject.ext.kotlin.std_lib
+    api rootProject.ext.kotlin.reflect
+    api rootProject.ext.kotlin.coroutines_core
+    api rootProject.ext.kotlin.coroutines_android
+
+    implementation project(path:':commonlib')
+
+    kapt rootProject.ext.androidx_core.annotation
+
+    //statusbar相关
+    api 'com.geyifeng.immersionbar:immersionbar:3.2.2'
+}

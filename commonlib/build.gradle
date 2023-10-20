@@ -1,0 +1,42 @@
+import javax.xml.stream.events.Namespace
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+android {
+    namespace "com.arthur.commonlib"
+    compileSdk rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        minSdk rootProject.ext.android.minSdkVersion
+        targetSdk rootProject.ext.android.targetSdkVersion
+    }
+
+    buildTypes {
+        debug {
+        }
+
+        releaseTest {
+        }
+
+        release {
+        }
+    }
+    compileOptions {
+        sourceCompatibility rootProject.ext.java.java_version
+        targetCompatibility rootProject.ext.java.java_version
+    }
+    kotlinOptions {
+        jvmTarget = rootProject.ext.jvmTarget.target
+    }
+}
+
+dependencies {
+    implementation rootProject.ext.androidx_core.appcompat
+    implementation rootProject.ext.androidx_widget.material
+    implementation rootProject.ext.androidx_widget.recyclerview
+    implementation rootProject.ext.kotlin.std_lib
+    implementation rootProject.ext.dependencies.java_lang
+    implementation rootProject.ext.dependencies.gson
+}

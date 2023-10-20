@@ -1,0 +1,101 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
+
+android {
+    namespace rootProject.ext.android.applicationId
+    compileSdk rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        applicationId rootProject.ext.android.applicationId
+        minSdk rootProject.ext.android.minSdkVersion
+        targetSdk rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("$rootDir/fleurs_pret_keystore")
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+        releaseTest {
+            storeFile file("$rootDir/fleurs_pret_keystore")
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+        release {
+            // 配置文件保存在~/.gradle/gradle.properties
+            storeFile file("$rootDir/fleurs_pret_keystore")
+            //找不到常量
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            matchingFallbacks = ['release']
+            buildConfigField("int", "MODE", "2")
+            buildConfigField("String", "HOST", "\"https://snjr.ultracreditosmx.com\"")
+            signingConfig signingConfigs.debug
+        }
+
+        releaseTest {
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            matchingFallbacks = ['release']
+            buildConfigField("int", "MODE", "1")
+            signingConfig signingConfigs.releaseTest
+        }
+
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("int", "MODE", "0")
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility rootProject.ext.java.java_version
+        targetCompatibility rootProject.ext.java.java_version
+    }
+    kotlinOptions {
+        jvmTarget = rootProject.ext.jvmTarget.target
+    }
+    buildFeatures {
+        buildConfig = true
+        viewBinding true
+        dataBinding true
+    }
+}
+
+dependencies {
+    implementation rootProject.ext.androidx_core.core
+    implementation rootProject.ext.androidx_core.appcompat
+
+    implementation rootProject.ext.androidx_widget.material
+    implementation rootProject.ext.androidx_widget.fragment_ktx
+    implementation rootProject.ext.androidx_widget.ui_ktx
+
+    implementation rootProject.ext.lifecycle.livedata_ktx
+    implementation rootProject.ext.lifecycle.viewmodel_ktx
+
+    implementation project(path:':baselib')
+    implementation project(path:':commonlib')
+    implementation project(path:':network')
+}

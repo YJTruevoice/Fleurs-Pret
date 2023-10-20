@@ -1,0 +1,153 @@
+ext {
+
+    android = [
+            compileSdkVersion: 33,
+            applicationId    : "com.facile.immediate.electronique.fleurs.pret",
+            minSdkVersion    : 23,
+            targetSdkVersion : 33,
+            versionCode      : "${VERSION_CODE}".toInteger(),
+            versionName      : "${VERSION_NAME}",
+    ]
+
+    java = [
+            java_version: JavaVersion.VERSION_17
+    ]
+    jvmTarget = [
+            target: '17'
+    ]
+
+    dependVersion = [
+            core_ktx         : "1.9.0",
+            kotlin_coroutines: '1.7.3',
+
+            activity         : '1.6.0',
+            fragment         : '1.5.3',
+            appcompat        : "1.5.1",
+            annotation       : "1.5.0",
+            lifecycle        : "2.5.1",
+
+            recyclerview     : "1.2.1",
+            viewpager        : "1.0.0",
+            viewpager2       : "1.0.0",
+            constraintlayout : '2.1.4',
+            material         : '1.5.0',
+            navigation       : '2.5.2',
+            cardview         : '1.0.0',
+            flexbox          : '3.0.0',
+
+            rxJava           : "2.2.4",
+            rxAndroid        : "2.1.0",
+            retrofit         : "2.6.2",
+            okhttp           : "4.9.3",
+            glide            : "4.13.0",
+            room             : "2.4.2",
+    ]
+
+    androidx_core = [
+            core                 : "androidx.core:core-ktx:$dependVersion.core_ktx",
+            activity             : "androidx.activity:activity:$dependVersion.activity",
+            activity_ktx         : "androidx.activity:activity-ktx:$dependVersion.activity",
+            fragment             : "androidx.fragment:fragment:$dependVersion.fragment",
+            fragment_ktx         : "androidx.fragment:fragment-ktx:$dependVersion.fragment",
+            appcompat            : "androidx.appcompat:appcompat:$dependVersion.appcompat",
+            annotation           : "androidx.annotation:annotation:$dependVersion.annotation",
+            localbroadcastmanager: "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0",
+    ]
+
+    androidx_widget = [
+            recyclerview    : "androidx.recyclerview:recyclerview:$dependVersion.recyclerview",
+            viewpager       : "androidx.viewpager:viewpager:$dependVersion.viewpager",
+            viewpager2      : "androidx.viewpager2:viewpager2:$dependVersion.viewpager2",
+            constraintlayout: "androidx.constraintlayout:constraintlayout:$dependVersion.constraint",
+            material        : "com.google.android.material:material:$dependVersion.material",
+            fragment_ktx    : "androidx.navigation:navigation-fragment-ktx:$dependVersion.navigation",
+            ui_ktx          : "androidx.navigation:navigation-ui-ktx:$dependVersion.navigation",
+            cardview        : "androidx.cardview:cardview:$dependVersion.cardview",
+            flexbox         : "com.google.android.flexbox:flexbox:$dependVersion.flexbox",
+            exifinterface   : "androidx.exifinterface:exifinterface:1.3.3"
+    ]
+
+    kotlin = [
+            std_lib           : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+            stdlib_jdk7       : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+            reflect           : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
+            coroutines_core   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$dependVersion.kotlin_coroutines",
+            coroutines_android: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$dependVersion.kotlin_coroutines",
+            serialization     : "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2",
+    ]
+
+    lifecycle = [
+            viewmodel_ktx       : "androidx.lifecycle:lifecycle-viewmodel-ktx:$dependVersion.lifecycle",
+            livedata_ktx        : "androidx.lifecycle:lifecycle-livedata-ktx:$dependVersion.lifecycle",
+            runtime_ktx         : "androidx.lifecycle:lifecycle-runtime-ktx:$dependVersion.lifecycle",
+            viewmodel_savedstate: "androidx.lifecycle:lifecycle-viewmodel-savedstate:$dependVersion.lifecycle",
+            reactive_streams_ktx: "androidx.lifecycle:lifecycle-reactivestreams-ktx:$dependVersion.lifecycle",
+            process             : "androidx.lifecycle:lifecycle-process:$dependVersion.lifecycle",
+            common              : "androidx.lifecycle:lifecycle-common-java8:$dependVersion.lifecycle",
+    ]
+
+    rx = [
+            java   : "io.reactivex.rxjava2:rxjava:$dependVersion.rxJava",
+            android: "io.reactivex.rxjava2:rxandroid:$dependVersion.rxAndroid"
+    ]
+
+    retrofit = [
+            retrofit         : "com.squareup.retrofit2:retrofit:$dependVersion.retrofit",
+            converter_gson   : "com.squareup.retrofit2:converter-gson:$dependVersion.retrofit",
+            converter_scalars: "com.squareup.retrofit2:converter-scalars:$dependVersion.retrofit",
+            adapter_rxjava2  : "com.squareup.retrofit2:adapter-rxjava2:$dependVersion.retrofit",
+    ]
+
+    okhttp = [
+            okhttp            : "com.squareup.okhttp3:okhttp:$dependVersion.okhttp",
+            logger_interceptor: "com.squareup.okhttp3:logging-interceptor:$dependVersion.okhttp"
+    ]
+
+    glide = [
+            glide              : "com.github.bumptech.glide:glide:$dependVersion.glide",
+            okhttp3_integration: "com.github.bumptech.glide:okhttp3-integration:$dependVersion.glide",
+            compiler           : "com.github.bumptech.glide:compiler:$dependVersion.glide",
+            transformer        : "jp.wasabeef:glide-transformations:4.3.0",
+    ]
+
+    room = [
+            base        : "androidx.room:room-runtime:$dependVersion.room",
+            compiler    : "androidx.room:room-compiler:$dependVersion.room",
+            ktx         : "androidx.room:room-ktx:$dependVersion.room",
+            rx_extention: "androidx.room:room-rxjava2:$dependVersion.room"
+    ]
+
+    dependencies = [
+            gson              : "com.google.code.gson:gson:2.10.1",
+            eventBus          : "org.greenrobot:eventbus:3.1.1",
+            java_lang         : "org.apache.commons:commons-lang3:3.13.0",
+            lottie            : "com.airbnb.android:lottie:6.0.0",
+            magicIndicator    : "com.github.hackware1993:MagicIndicator:1.7.0",
+            smartRefreshLayout: "io.github.scwang90:refresh-layout-kernel:2.0.5",
+            palette           : "androidx.palette:palette:1.0.0",
+    ]
+
+    rxJava = [
+            rxJava   : "io.reactivex.rxjava2:rxjava:$dependVersion.rxJava",
+            rxAndroid: "io.reactivex.rxjava2:rxandroid:$dependVersion.rxAndroid"
+    ]
+
+    okhttp = [
+            "okhttp"                    : "com.squareup.okhttp3:okhttp:${dependVersion.okhttp}",
+            "okhttp-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp}",
+    ]
+
+    tests = [
+            stetho        : "com.facebook.stetho:stetho:1.6.0",
+            stetho_okhttp3: "com.facebook.stetho:stetho-okhttp3:1.6.0"
+    ]
+
+    androidxCoreLibs = androidx_core.values()
+    androidxWidgetLibs = androidx_widget.values()
+    kotlinLibs = kotlin.values()
+    lifecycleLibs = lifecycle.values()
+    okhttpLibs = okhttp.values()
+    retrofitLibs = retrofit.values()
+    rxLibs = rx.values()
+    testsLibs = tests.values()
+}

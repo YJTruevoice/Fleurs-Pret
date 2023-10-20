@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fleurs Pret</string>
+
+    <string name="title_one">首页</string>
+    <string name="title_two">订单</string>
+    <string name="title_three">我的</string>
+    <string name="text_preter_vite">快速放款</string>
+    <string name="text_policy_desc">您好。为了了解您的资格并促进更快地支付您的贷款，我们需要这些权限</string>
+    <string name="text_authorisation">授权</string>
+    <string name="text_read_privacy_policy_guide">我已仔细阅读《隐私政策》。</string>
+    <string name="text_privacy_policy">《隐私政策》</string>
+    <string name="text_permission_declare"><![CDATA[短信\n\n仅收集和监控金融交易 输入包含交易方姓名的短信。目的是对交易进行信用风险评估以及交易金额的描述。此信用风险评估可加快贷款支付速度，而不会删除、读取或收集任何 Perfil Introducir 文本消息\n\n联系人\n\nNBFC 贷款流程和指南要求我们验证参考资料。此功能使我们能够做到这一点，并且当您只需从通讯录中进行选择时，为什么要输入联系电话号码。\n\n相机和照片]]></string>
+    <string name="text_skip">跳过</string>
+    <string name="text_accept_and_go_on">我接受并继续</string>
+</resources>
