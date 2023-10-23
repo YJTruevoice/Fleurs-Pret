@@ -1,6 +1,5 @@
 package com.facile.immediate.electronique.fleurs.pret.main
 
-import android.content.Context
 import android.view.View
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,7 +8,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityMainBinding
-import com.facile.immediate.electronique.fleurs.pret.utils.AppLanguageUtil
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gyf.immersionbar.ImmersionBar
 
@@ -41,11 +39,5 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-
-    override fun attachBaseLanguageContext(context: Context?): Context? {
-        return super.attachBaseLanguageContext(context?.let {
-            AppLanguageUtil.getAttachBaseContext(it)
-        })
     }
 }

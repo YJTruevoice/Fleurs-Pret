@@ -20,6 +20,9 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>() {
 
     override fun setListener() {
         super.setListener()
+        mBinding.srlRefresh.setOnRefreshListener {
+            mViewModel.getAppSettings()
+        }
         mBinding.ivBannerLink.setOnClickListener {
             context?.let {
                 mViewModel.globalInfo?.brownTopic?.let { url -> WebActivity.open(it, url) }
@@ -27,8 +30,17 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>() {
         }
     }
 
+    override fun onPageResume() {
+        super.onPageResume()
+        mBinding.srlRefresh.autoRefresh()
+    }
+
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
+        mViewModel.refreshCompleteLiveData.observe(viewLifecycleOwner) {
+            if (mBinding.srlRefresh.isRefreshing)
+                mBinding.srlRefresh.finishRefresh()
+        }
 
         mViewModel.globalInfoLiveData.observe(viewLifecycleOwner) {
             it?.let { globalInfo ->

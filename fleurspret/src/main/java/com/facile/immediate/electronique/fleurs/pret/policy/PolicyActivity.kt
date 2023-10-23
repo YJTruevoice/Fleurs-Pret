@@ -1,14 +1,11 @@
 package com.facile.immediate.electronique.fleurs.pret.policy
 
-import android.content.Context
 import android.content.Intent
 import android.text.method.ScrollingMovementMethod
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
-import com.arthur.commonlib.utils.SystemUtils
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityPolicyBinding
 import com.facile.immediate.electronique.fleurs.pret.main.MainActivity
-import com.facile.immediate.electronique.fleurs.pret.utils.AppLanguageUtil
 import com.facile.immediate.electronique.fleurs.pret.utils.PolicyUtil
 
 /**
@@ -30,18 +27,12 @@ class PolicyActivity : BaseBindingActivity<ActivityPolicyBinding>() {
     override fun setListener() {
         super.setListener()
         mBinding.tvSkip.setOnClickListener {
-            SystemUtils.killAppProcess()
-        }
-        mBinding.tvAccept.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
-            PolicyUtil.policyAccepted()
             finish()
         }
-    }
-
-    override fun attachBaseLanguageContext(context: Context?): Context? {
-        return super.attachBaseLanguageContext(context?.let {
-            AppLanguageUtil.getAttachBaseContext(it)
-        })
+        mBinding.tvAccept.setOnClickListener {
+            PolicyUtil.policyAccepted()
+            // 申请权限
+        }
     }
 }

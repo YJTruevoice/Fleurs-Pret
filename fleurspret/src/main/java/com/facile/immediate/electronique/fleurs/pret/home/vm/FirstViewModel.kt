@@ -12,15 +12,15 @@ import com.facile.immediate.electronique.fleurs.pret.home.model.GlobalInfo
 class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(application) {
 
     val globalInfoLiveData: SingleLiveEvent<GlobalInfo?> = SingleLiveEvent()
+    val refreshCompleteLiveData: SingleLiveEvent<Boolean?> = SingleLiveEvent()
 
     var globalInfo: GlobalInfo? = null
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
-        getAppSettings()
     }
 
-    private fun getAppSettings() {
+    fun getAppSettings() {
         launchNet {
             mModel.appSetting("afraidDecemberSlimClassicalTechnology,brownTopic")
         }.success { res ->
@@ -30,6 +30,8 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
             }
         }.failed {
             Toaster.showToast(it.message)
+        }.finished {
+            refreshCompleteLiveData.value = true
         }.launch()
     }
 }

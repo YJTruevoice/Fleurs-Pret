@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.arthur.baselib.utils.AppLanguageUtil
 import com.gyf.immersionbar.ImmersionBar
 import com.arthur.commonlib.ability.MainThreadExecutor
 import com.arthur.commonlib.ability.Toaster
@@ -170,6 +171,6 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     open fun attachBaseLanguageContext(context: Context?): Context? {
-        return context
+        return context?.let { AppLanguageUtil.getAttachBaseContext(it) }
     }
 }

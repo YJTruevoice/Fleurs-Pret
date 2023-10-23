@@ -6,7 +6,7 @@ import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Toaster
 import com.arthur.commonlib.utils.ActivityManager
 import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
-import com.facile.immediate.electronique.fleurs.pret.utils.AppLanguageUtil
+import com.arthur.baselib.utils.AppLanguageUtil
 
 /**
  * @Author arthur

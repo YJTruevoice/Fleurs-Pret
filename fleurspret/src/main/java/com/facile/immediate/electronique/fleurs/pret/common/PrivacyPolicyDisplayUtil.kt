@@ -41,7 +41,7 @@ object PrivacyPolicyDisplayUtil {
         ssb.setSpan(
             object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    WebActivity.open(context, "")
+                    WebActivity.open(context, "https://baidu.com")
                 }
 
                 override fun updateDrawState(ds: TextPaint) {

@@ -1,4 +1,4 @@
-package com.facile.immediate.electronique.fleurs.pret.utils
+package com.arthur.baselib.utils
 
 import android.annotation.TargetApi
 import android.content.Context

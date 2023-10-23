@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebViewClient
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
 import com.arthur.commonlib.ability.Toaster
 import com.facile.immediate.electronique.fleurs.pret.AppConstants
@@ -27,6 +28,7 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
             }
             // 加快网页加载速度
             setLayerType(View.LAYER_TYPE_HARDWARE, null)
+            webViewClient = WebViewClient()
         }
 
     }

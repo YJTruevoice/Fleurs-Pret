@@ -13,7 +13,7 @@ import com.facile.immediate.electronique.fleurs.pret.BuildConfig
 import com.facile.immediate.electronique.fleurs.pret.net.converter.CustomJsonConverter
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.CommonParamsInterceptor
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.ServerStatusInterceptor
-import com.facile.immediate.electronique.fleurs.pret.utils.AppLanguageUtil
+import com.arthur.baselib.utils.AppLanguageUtil
 import com.facile.immediate.electronique.fleurs.pret.utils.DeviceIdUtil
 import java.util.concurrent.TimeUnit
 
