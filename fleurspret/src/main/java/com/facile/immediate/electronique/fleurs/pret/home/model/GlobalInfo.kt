@@ -63,6 +63,9 @@ data class GlobalInfo(
     val msgBulletFrameTitle: String? = null,
     val msgBulletFrameMsg: String? = null,
     val isOpenGpReview: String? = null,
-    val contractLoan: String? = null
+    val contractLoan: String? = null,
+//{"brownTopic":"http://www.baidu.com","afraidDecemberSlimClassicalTechnology":"10000"}
+    val brownTopic: String? = null,
+    val afraidDecemberSlimClassicalTechnology: String? = null
 
 ) : Parcelable

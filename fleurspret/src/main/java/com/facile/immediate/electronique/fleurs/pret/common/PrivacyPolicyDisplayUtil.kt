@@ -1,9 +1,9 @@
 package com.facile.immediate.electronique.fleurs.pret.common
 
 import android.content.Context
-import android.content.Intent
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
@@ -11,7 +11,6 @@ import android.text.style.ImageSpan
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.facile.immediate.electronique.fleurs.pret.AppConstants
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.view.CenterVerticalImageSpan
 import com.facile.immediate.electronique.fleurs.pret.web.WebActivity
@@ -42,11 +41,13 @@ object PrivacyPolicyDisplayUtil {
         ssb.setSpan(
             object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    context.startActivity(Intent(context, WebActivity::class.java).apply {
-                        putExtra(AppConstants.KEY_WEB_VIEW_URL, "")
-                    })
+                    WebActivity.open(context, "")
                 }
 
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = ContextCompat.getColor(context, R.color.color_3680D7)
+                    ds.isUnderlineText = false
+                }
             },
             blueTextStrIdx,
             blueTextStrIdx + blueTextStr.length,

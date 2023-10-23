@@ -98,4 +98,6 @@ dependencies {
     implementation project(path:':baselib')
     implementation project(path:':commonlib')
     implementation project(path:':network')
+
+    implementation rootProject.ext.dependencies.smartRefreshLayout
 }

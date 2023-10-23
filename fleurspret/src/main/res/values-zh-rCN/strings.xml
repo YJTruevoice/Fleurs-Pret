@@ -13,4 +13,17 @@
     <string name="text_permission_declare"><![CDATA[短信\n\n仅收集和监控金融交易 输入包含交易方姓名的短信。目的是对交易进行信用风险评估以及交易金额的描述。此信用风险评估可加快贷款支付速度，而不会删除、读取或收集任何 Perfil Introducir 文本消息\n\n联系人\n\nNBFC 贷款流程和指南要求我们验证参考资料。此功能使我们能够做到这一点，并且当您只需从通讯录中进行选择时，为什么要输入联系电话号码。\n\n相机和照片]]></string>
     <string name="text_skip">跳过</string>
     <string name="text_accept_and_go_on">我接受并继续</string>
+    <string name="text_montant_maximal">最高贷款金额</string>
+    <string name="text_xof">XOF</string>
+    <string name="text_dur_e_maximale_du_remboursement">最长报销期限</string>
+    <string name="text_91_jours">91_天</string>
+    <string name="text_demander_maintenant">立即询问</string>
+    <string name="text_guide_de_pr_t">贷款指南：</string>
+    <string name="remtext_plissez_vos_informations_personnelles">填写您的个人信息。</string>
+    <string name="text_veuillez_fournir_le_num_ro_de_compte_bancaire_pour_recevoir_les_paiements">请提供银行帐号以接收付款。</string>
+    <string name="text_pr_t_r_ussi">贷款成功</string>
+    <string name="text_caract_ristiques_du_produit">产品特点</string>
+    <string name="text_traitemen_rapide">快速处理</string>
+    <string name="text_90_de_nr_ussite">90% 成功</string>
+    <string name="text_seulement_n3_tapes">只需3步</string>
 </resources>

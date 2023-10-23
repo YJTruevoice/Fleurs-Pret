@@ -7,10 +7,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.arthur.commonlib.utils.ActivityManager
 import com.arthur.commonlib.utils.AppUtils
-import com.arthur.commonlib.utils.SystemUtils
 import com.arthur.network.BaseNetMgr
 import com.arthur.network.NetOptions
 import com.facile.immediate.electronique.fleurs.pret.BuildConfig
+import com.facile.immediate.electronique.fleurs.pret.net.converter.CustomJsonConverter
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.CommonParamsInterceptor
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.ServerStatusInterceptor
 import com.facile.immediate.electronique.fleurs.pret.utils.AppLanguageUtil
@@ -55,8 +55,7 @@ class NetMgr : BaseNetMgr() {
                 mutableMapOf()
             )
             val appVersionName = context?.let { AppUtils.getAppVersionName(it) } ?: ""
-            val appVersionCode =
-                context?.let { AppUtils.getAppVersionCode(it).toString() } ?: "0"
+            val appVersionCode = context?.let { AppUtils.getAppVersionCode(it).toString() } ?: "0"
             // 公共参数
             addCommonParams {
                 hashMapOf(
@@ -70,10 +69,10 @@ class NetMgr : BaseNetMgr() {
                     CommonParamsKey.IMEI to DeviceIdUtil.getDeviceId(),
                     CommonParamsKey.IP to "",
                     CommonParamsKey.CHANNEL to CommonValue.GOOGLE_PLAY,
-                    CommonParamsKey.SYSTEM_MODE to  Build.MODEL,
-                    CommonParamsKey.MOBILE_NO to  "",
-                    CommonParamsKey.GOOGLE_AD_ID to  "",
-                    CommonParamsKey.GOOGLE_USER_AGENT to  "",
+                    CommonParamsKey.SYSTEM_MODE to Build.MODEL,
+                    CommonParamsKey.MOBILE_NO to "",
+                    CommonParamsKey.GOOGLE_AD_ID to "",
+                    CommonParamsKey.GOOGLE_USER_AGENT to "",
                 )
             }
             // 公共请求头
@@ -93,6 +92,8 @@ class NetMgr : BaseNetMgr() {
                     HeadersKey.V_FLAG to "",
                 )
             }
+
+            setConverter(CustomJsonConverter())
 
             addInterceptor(CommonParamsInterceptor(getCommonParams()))
             addInterceptor(ServerStatusInterceptor())
@@ -136,38 +137,38 @@ class NetMgr : BaseNetMgr() {
      * 公共参数 key
      */
     object CommonParamsKey {
-        const val APP_SSID = "appssid"
-        const val USER_ID = "userId"
+        const val APP_SSID = "halfPainfulEverything"
+        const val USER_ID = "radioactiveTeacherBasicBankLaserSuspect"
         const val LBS = "lbs"
-        const val LANGUAGE = "language"
-        const val VERSION_NAME = "versionName"
-        const val VERSION_CODE = "versionCode"
-        const val DEVICE_ID_ = "deviceId"
-        const val IMEI = "imei"
-        const val IP = "ip"
-        const val CHANNEL = "channel"
-        const val SYSTEM_MODE = "systemMode"
-        const val MOBILE_NO = "googleMobileNo"
-        const val GOOGLE_AD_ID = "googleGaid"
-        const val GOOGLE_USER_AGENT = "googleUserAgent"
+        const val LANGUAGE = "thirstyUnderstandingDelightedEagle"
+        const val VERSION_NAME = "upsetPrimaryEuropeanMatch"
+        const val VERSION_CODE = "lemonLikelyFireworks"
+        const val DEVICE_ID_ = "funnyLuckSaltyBat"
+        const val IMEI = "holyDirectorAntarcticChildhood"
+        const val IP = "facialLakeNaturalDigestProduction"
+        const val CHANNEL = "nuclearCertainSauce"
+        const val SYSTEM_MODE = "primaryPaperEitherPen"
+        const val MOBILE_NO = "cottonFactBlindCancer"
+        const val GOOGLE_AD_ID = "publicThemeJuicyHardshipFoolishDetermination"
+        const val GOOGLE_USER_AGENT = "nextStopwatchInstitution"
     }
 
     /**
      * 请求头 key
      */
     object HeadersKey {
-        const val CLIENT_ID = "client-id"
-        const val TOKEN = "token"
-        const val USER_ID = "userId"
-        const val CURRENT_USER_ID = "currentUserId"
-        const val CHANNEL = "channel"
-        const val VERSION_NAME = "versionName"
-        const val VERSION_CODE = "versionCode"
-        const val DEVICE_ID = "device-id"
-        const val DEVICE_ID_ = "deviceId"
-        const val IMEI = "imei"
-        const val MULTI_FLAG = "mulFlag"
-        const val V_FLAG = "v-flag"
+        const val CLIENT_ID = "russianTeapotScreen"//kindLazyForehead
+        const val TOKEN = "dirtyCompositionUpsetRealBelief"
+        const val USER_ID = "radioactiveTeacherBasicBankLaserSuspect"
+        const val CURRENT_USER_ID = "taxSmogFallIndependentJourney"
+        const val CHANNEL = "nuclearCertainSauce"
+        const val VERSION_NAME = "upsetPrimaryEuropeanMatch"
+        const val VERSION_CODE = "lemonLikelyFireworks"
+        const val DEVICE_ID = "regularSignalHappinessLaserEaster"//hopefulGestureMiddle
+        const val DEVICE_ID_ = "funnyLuckSaltyBat"
+        const val IMEI = "holyDirectorAntarcticChildhood"
+        const val MULTI_FLAG = "fondNecktieTram"
+        const val V_FLAG = "justModestPlentyLiteraryMenu"
     }
 
     /**

@@ -39,10 +39,10 @@ class ServerStatusInterceptor : Interceptor {
                 val baseResponse: BaseResponse<*>? =
                     JsonUtils.fromJson(resultString, BaseResponse::class.java)
                 if (baseResponse != null) {
-                    if (baseResponse.code != NetConstant.SuccessCode.CODE_SUCCESS) { // 其余非0的code码都播出去
+                    if (baseResponse.greekCompetitorSquareBirdcage != NetConstant.SuccessCode.CODE_SUCCESS) { // 其余非0的code码都播出去
                         val intent = Intent()
-                        intent.putExtra(NetConstant.ServerStatusKey.CODE, baseResponse.code)
-                        intent.putExtra(NetConstant.ServerStatusKey.MSG, baseResponse.msg)
+                        intent.putExtra(NetConstant.ServerStatusKey.CODE, baseResponse.greekCompetitorSquareBirdcage)
+                        intent.putExtra(NetConstant.ServerStatusKey.MSG, baseResponse.civilGoatNearEveryMoustache)
                         intent.putExtra(
                             NetConstant.ServerStatusKey.URL,
                             response.request.url.toUrl().toString()

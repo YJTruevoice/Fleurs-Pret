@@ -6,24 +6,30 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.arthur.baselib.structure.base.view.BaseSimpleActivity
+import com.arthur.baselib.structure.base.view.BaseBindingActivity
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityMainBinding
 import com.facile.immediate.electronique.fleurs.pret.utils.AppLanguageUtil
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.gyf.immersionbar.ImmersionBar
 
-class MainActivity : BaseSimpleActivity() {
+class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
 
-    private lateinit var binding: ActivityMainBinding
+    override fun setStatusBar() {
+        ImmersionBar.with(this)
+            .transparentStatusBar()
+            .statusBarDarkFont(statusBarDarkMode)
+            .fitsSystemWindows(true)
+            .titleBar(mBinding.toolBar)
+            .init()
+    }
 
     override fun buildView() {
         super.buildView()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setSupportActionBar(binding.toolBar)
-        binding.toolBar.visibility = View.GONE
+        setSupportActionBar(mBinding.toolBar)
+        mBinding.toolBar.visibility = View.GONE
 
-        val navView: BottomNavigationView = binding.navView
+        val navView: BottomNavigationView = mBinding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each

@@ -9,5 +9,5 @@ interface FirstAPI {
 
     @FormUrlEncoded
     @POST("/fleurspret/religiousLawyer/parkDeadEquipment")
-    suspend fun appSetting(@Field("key") key: String): BaseResponse<GlobalInfo>
+    suspend fun appSetting(@Field("solidAugustGuard") key: String): BaseResponse<GlobalInfo?>
 }

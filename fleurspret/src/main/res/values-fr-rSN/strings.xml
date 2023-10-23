@@ -12,4 +12,17 @@
     <string name="text_permission_declare"><![CDATA[SMS\n\nCollect and monitor only financial transaction Introducir texto messages including the name of the transaction party. The purpose is to conduct a credit risk assessment of the transaction and the description of the transaction amount. This credit risk assessment speeds up loan disbursement without any Perfil Introducir texto messages being deleted, read or collected\n\nContacts\n\nThe NBFC loan process and guidelines mandates us to verify references. This feature enables us to do that & Why type in contact number when you can just choose from your contact book.\n\nCamera and Photos]]></string>
     <string name="text_skip">SAUTER</string>
     <string name="text_accept_and_go_on">J\'ACCEPTE ET\n CONTINUE</string>
+    <string name="text_montant_maximal">Montant maximal du prêt</string>
+    <string name="text_xof">XOF</string>
+    <string name="text_dur_e_maximale_du_remboursement">Durée maximale du remboursement</string>
+    <string name="text_91_jours">91 Jours</string>
+    <string name="text_demander_maintenant">Demander maintenant</string>
+    <string name="text_guide_de_pr_t">Guide de prêt :</string>
+    <string name="remtext_plissez_vos_informations_personnelles">Remplissez vos informations personnelles.</string>
+    <string name="text_veuillez_fournir_le_num_ro_de_compte_bancaire_pour_recevoir_les_paiements">Veuillez fournir le numéro de compte bancaire pour recevoir les paiements.</string>
+    <string name="text_pr_t_r_ussi">Prêt réussi</string>
+    <string name="text_caract_ristiques_du_produit">Caractéristiques du produit</string>
+    <string name="text_traitemen_rapide">Traitemen\nrapide</string>
+    <string name="text_90_de_nr_ussite">90% de\nréussite</string>
+    <string name="text_seulement_n3_tapes">Seulement\n3 étapes</string>
 </resources>

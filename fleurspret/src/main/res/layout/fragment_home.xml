@@ -6,17 +6,267 @@
     android:layout_height="match_parent"
     tools:context=".home.view.FirstFragment">
 
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_title"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/text_preter_vite"
+            android:textAlignment="center"
+            android:textColor="@color/color_333333"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_customer"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="15dp"
+            android:src="@mipmap/icon_customer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/cl_title">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:background="@drawable/shape_bg_gradient_66b7ed_1673e0_radius_10"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/text_montant_maximal"
+                        android:textColor="@color/color_B6D7F5"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_xof"
+                            android:textColor="@color/color_FFFFFF"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_max_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_FFFFFF"
+                            android:textSize="36sp"
+                            android:textStyle="bold"
+                            tools:text="100000" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/shape_bg_1affffff_radius_2"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:paddingVertical="7dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_dur_e_maximale_du_remboursement"
+                            android:textColor="@color/color_B6D7F5"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:background="@drawable/shape_bg_ffffff_radius_10"
+                            android:paddingHorizontal="6dp"
+                            android:paddingVertical="2dp"
+                            android:text="@string/text_91_jours"
+                            android:textColor="@color/color_3680D7"
+                            android:textSize="12sp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <TextView
+                        android:id="@+id/tv_ask_now"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="35dp"
+                        android:background="@drawable/shape_bg_gradient_fff0b9_fad46e_radius_22"
+                        android:gravity="center"
+                        android:paddingHorizontal="45dp"
+                        android:text="@string/text_demander_maintenant" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="-20dp"
+                    android:background="@mipmap/pic_bg_home_bottom"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="15dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_banner_link"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/pic_banner_default" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/text_guide_de_pr_t"
+                        android:textColor="@color/color_333333"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/shape_bg_ffffff_stroke_e8e9eb_1_radius_8"
+                        android:drawablePadding="10dp"
+                        android:paddingHorizontal="18dp"
+                        android:paddingVertical="22dp"
+                        android:text="@string/remtext_plissez_vos_informations_personnelles"
+                        android:textColor="@color/color_333333"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@mipmap/icon_guide_step_1" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/shape_bg_ffffff_stroke_e8e9eb_1_radius_8"
+                        android:drawablePadding="10dp"
+                        android:paddingHorizontal="18dp"
+                        android:paddingVertical="22dp"
+                        android:text="@string/text_veuillez_fournir_le_num_ro_de_compte_bancaire_pour_recevoir_les_paiements"
+                        android:textColor="@color/color_333333"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@mipmap/icon_guide_step_2" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/shape_bg_ffffff_stroke_e8e9eb_1_radius_8"
+                        android:drawablePadding="10dp"
+                        android:paddingHorizontal="18dp"
+                        android:paddingVertical="22dp"
+                        android:text="@string/text_pr_t_r_ussi"
+                        android:textColor="@color/color_333333"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@mipmap/icon_guide_step_3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/text_caract_ristiques_du_produit"
+                        android:textColor="@color/color_333333"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="137dp"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/shape_bg_f6f7f9_radius_8"
+                        android:gravity="center"
+                        android:paddingBottom="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/text_seulement_n3_tapes"
+                            android:textColor="@color/color_333333"
+                            android:textSize="13sp"
+                            app:drawableTopCompat="@mipmap/icon_product_feature_1" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/text_90_de_nr_ussite"
+                            android:textColor="@color/color_333333"
+                            android:textSize="13sp"
+                            app:drawableTopCompat="@mipmap/icon_product_feature_2" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/text_traitemen_rapide"
+                            android:textColor="@color/color_333333"
+                            android:textSize="13sp"
+                            app:drawableTopCompat="@mipmap/icon_product_feature_3" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <TextView
+                        android:id="@+id/tv_read_privacy_policy_guide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="42dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/text_read_privacy_policy_guide"
+                        android:textColor="@color/color_999999"
+                        android:textSize="12sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.core.widget.NestedScrollView>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

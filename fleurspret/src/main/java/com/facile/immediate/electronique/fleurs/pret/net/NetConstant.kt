@@ -16,7 +16,8 @@ object NetConstant {
      */
     object ServerStatusAction {
         // 网络请求状态action
-        const val STATUS_ACTION = "com.facile.immediate.electronique.fleurs.pret.error_status_action"
+        const val STATUS_ACTION =
+            "com.facile.immediate.electronique.fleurs.pret.error_status_action"
     }
 
     /**
@@ -26,6 +27,12 @@ object NetConstant {
         const val CODE = "code"
         const val MSG = "msg"
         const val URL = "url"
+    }
+
+    object ResponseRootKey {
+        const val KEY_CODE = "greekCompetitorSquareBirdcage"
+        const val KEY_MSG = "civilGoatNearEveryMoustache"
+        const val KEY_DATA = "aggressiveParentMethod"
     }
 
     /**

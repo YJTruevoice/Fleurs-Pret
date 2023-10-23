@@ -1,5 +1,7 @@
 package com.facile.immediate.electronique.fleurs.pret.web
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
@@ -55,5 +57,13 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
         super.processLogic()
         mUrl = intent.getStringExtra(AppConstants.KEY_WEB_VIEW_URL)
         mUrl?.let { mBinding.webView.loadUrl(it) } ?: let { Toaster.showToast("") }
+    }
+
+    companion object {
+        fun open(context: Context, url: String) {
+            context.startActivity(Intent(context, WebActivity::class.java).apply {
+                putExtra(AppConstants.KEY_WEB_VIEW_URL, url)
+            })
+        }
     }
 }

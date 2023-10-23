@@ -2,24 +2,18 @@ package com.facile.immediate.electronique.fleurs.pret.home.vm
 
 import android.app.Application
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.launchNet
 import com.arthur.baselib.structure.mvvm.BaseViewModel
-import com.arthur.commonlib.ability.Logger
+import com.arthur.baselib.structure.mvvm.SingleLiveEvent
+import com.arthur.commonlib.ability.Toaster
 import com.facile.immediate.electronique.fleurs.pret.home.model.FirstModel
+import com.facile.immediate.electronique.fleurs.pret.home.model.GlobalInfo
 
 class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
+    val globalInfoLiveData: SingleLiveEvent<GlobalInfo?> = SingleLiveEvent()
 
-    override fun processLogic() {
-        super.processLogic()
-        getAppSettings()
-    }
+    var globalInfo: GlobalInfo? = null
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
@@ -28,11 +22,14 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
 
     private fun getAppSettings() {
         launchNet {
-            mModel.appSetting("")
-        }.success {
-            Logger.logI(it.data.toString())
+            mModel.appSetting("afraidDecemberSlimClassicalTechnology,brownTopic")
+        }.success { res ->
+            res.aggressiveParentMethod?.let {
+                globalInfo = it
+                globalInfoLiveData.value = it
+            }
         }.failed {
-            Logger.logE(it.message)
+            Toaster.showToast(it.message)
         }.launch()
     }
 }

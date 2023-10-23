@@ -8,7 +8,7 @@ import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
 class FirstModel:IBaseModel {
     private val service: FirstAPI = NetMgr.get().service()
 
-    suspend fun appSetting(key: String):BaseResponse<GlobalInfo>{
+    suspend fun appSetting(key: String):BaseResponse<GlobalInfo?>{
         return service.appSetting(key)
     }
 

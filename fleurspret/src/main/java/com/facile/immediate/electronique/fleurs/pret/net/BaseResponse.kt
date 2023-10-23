@@ -7,5 +7,7 @@ import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class BaseResponse<T>(
-    val data: @RawValue T? = null
+    val greekCompetitorSquareBirdcage: Int = -1,
+    val civilGoatNearEveryMoustache: String = "",
+    val aggressiveParentMethod: @RawValue T? = null
 ) : Parcelable, NetBaseResponse()
