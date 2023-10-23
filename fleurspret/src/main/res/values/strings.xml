@@ -25,4 +25,13 @@
     <string name="text_traitemen_rapide">Traitemen\nrapide</string>
     <string name="text_90_de_nr_ussite">90% de\nréussite</string>
     <string name="text_seulement_n3_tapes">Seulement\n3 étapes</string>
+    <string name="text_connectez_vous_maintenant_pour_demander_votre_pr_t">Connectez-vous maintenant pour demander votre prêt</string>
+    <string name="text_retour">Retour</string>
+    <string name="_221">+221</string>
+    <string name="text_saisissez_votre_num_ro_de_t_l_phone">Saisissez votre numéro de téléphone</string>
+    <string name="text_entrez_le_code_de_v_rification">Entrez le code de vérification</string>
+    <string name="text_obtenir_otp">Obtenir OTP</string>
+    <string name="text_connectez_vous">Connectez-vous</string>
+    <string name="text_le_num_ro_de_t_l_phone_portable_est_vide">Le numéro de téléphone portable est vide</string>
+    <string name="text_le_code_de_v_rification_est_vide">Le code de vérification est vide</string>
 </resources>

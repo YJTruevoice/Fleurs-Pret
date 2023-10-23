@@ -53,6 +53,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".login.LogUpActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".web.WebActivity"
             android:exported="true"
             android:screenOrientation="portrait">
