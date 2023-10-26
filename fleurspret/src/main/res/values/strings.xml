@@ -34,4 +34,9 @@
     <string name="text_connectez_vous">Connectez-vous</string>
     <string name="text_le_num_ro_de_t_l_phone_portable_est_vide">Le numéro de téléphone portable est vide</string>
     <string name="text_le_code_de_v_rification_est_vide">Le code de vérification est vide</string>
+    <string name="text_politique_de_confidentialit">Politique de Confidentialité</string>
+    <string name="text_service_client_en_ligne">Service client en ligne</string>
+    <string name="text_centre_de_service_client">Centre de service client</string>
+    <string name="text_d_connexion">Déconnexion</string>
+    <string name="text_r_acqu_rir_otp">Réacquérir OTP</string>
 </resources>

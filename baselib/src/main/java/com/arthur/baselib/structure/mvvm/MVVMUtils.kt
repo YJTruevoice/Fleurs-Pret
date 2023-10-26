@@ -1,4 +1,4 @@
-package com.immomo.moremo.base.mvvm
+package com.arthur.baselib.structure.mvvm
 
 import android.app.Activity
 import android.app.Application
@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.arthur.baselib.structure.base.IBaseModel
-import com.arthur.baselib.structure.mvvm.BaseViewModel
 import com.arthur.commonlib.utils.ReflectUtils.getTargetTFromObj
 import java.io.Serializable
 

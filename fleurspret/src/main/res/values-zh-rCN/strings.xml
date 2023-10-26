@@ -35,4 +35,9 @@
     <string name="text_connectez_vous">登录</string>
     <string name="text_le_num_ro_de_t_l_phone_portable_est_vide">手机号为空</string>
     <string name="text_le_code_de_v_rification_est_vide">验证码为空</string>
+    <string name="text_politique_de_confidentialit">隐私政策</string>
+    <string name="text_service_client_en_ligne">在线客服</string>
+    <string name="text_centre_de_service_client">客户服务中心</string>
+    <string name="text_d_connexion">退出登录</string>
+    <string name="text_r_acqu_rir_otp">重新获得 OTP</string>
 </resources>

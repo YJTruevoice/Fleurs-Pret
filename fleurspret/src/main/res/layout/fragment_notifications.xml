@@ -4,19 +4,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_FFFFFF"
     tools:context=".mine.ThirdFragment">
 
-    <TextView
-        android:id="@+id/text_notifications"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_customer"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/icon_customer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_head_portrait"
+        android:layout_width="102dp"
+        android:layout_height="102dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/shape_oval_ebebeb"
+        android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:lines="1"
+        android:textColor="@color/color_333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_head_portrait"
+        tools:text="Ronald Lamb" />
+
+    <TextView
+        android:id="@+id/tv_user_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:lines="1"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
+        tools:text="+221 954566670" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_phone">
+
+        <TextView
+            android:id="@+id/tv_service_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/shape_bg_ffffff_stroke_e8e9eb_1_radius_8"
+            android:drawablePadding="10dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="20dp"
+            android:text="@string/text_centre_de_service_client"
+            android:textColor="@color/color_333333"
+            android:textSize="14sp"
+            app:drawableStartCompat="@mipmap/icon_service_phone" />
+
+        <TextView
+            android:id="@+id/tv_service_online"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/shape_bg_ffffff_stroke_e8e9eb_1_radius_8"
+            android:drawablePadding="10dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="20dp"
+            android:text="@string/text_service_client_en_ligne"
+            android:textColor="@color/color_333333"
+            android:textSize="14sp"
+            app:drawableStartCompat="@mipmap/icon_service_online" />
+
+        <TextView
+            android:id="@+id/tv_privacy_policy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/shape_bg_ffffff_stroke_e8e9eb_1_radius_8"
+            android:drawablePadding="10dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="20dp"
+            android:text="@string/text_politique_de_confidentialit"
+            android:textColor="@color/color_333333"
+            android:textSize="14sp"
+            app:drawableStartCompat="@mipmap/icon_privacy_policy" />
+
+        <TextView
+            android:id="@+id/tv_quit"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginVertical="35dp"
+            android:background="@drawable/drawable_login_btn"
+            android:gravity="center"
+            android:paddingHorizontal="60dp"
+            android:text="@string/text_d_connexion"
+            android:textColor="@color/color_FFFFFF"
+            android:textSize="16sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

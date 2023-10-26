@@ -39,4 +39,5 @@ dependencies {
     implementation rootProject.ext.kotlin.std_lib
     implementation rootProject.ext.dependencies.java_lang
     implementation rootProject.ext.dependencies.gson
+    implementation rootProject.ext.glides
 }

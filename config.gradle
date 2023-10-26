@@ -150,4 +150,5 @@ ext {
     retrofitLibs = retrofit.values()
     rxLibs = rx.values()
     testsLibs = tests.values()
+    glides = glide.values()
 }

@@ -1,49 +1,43 @@
 package com.facile.immediate.electronique.fleurs.pret.main
 
 import android.content.Intent
-import android.view.MenuItem
-import android.view.View
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.common.UserManager
+import com.facile.immediate.electronique.fleurs.pret.common.loadFragments
+import com.facile.immediate.electronique.fleurs.pret.common.showFragmentAndHideOthers
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityMainBinding
+import com.facile.immediate.electronique.fleurs.pret.home.view.FirstFragment
 import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
+import com.facile.immediate.electronique.fleurs.pret.mine.ThirdFragment
+import com.facile.immediate.electronique.fleurs.pret.order.SecondFragment
 import com.gyf.immersionbar.ImmersionBar
 
 class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
+
+    private val fragments = hashMapOf(
+        R.id.navigation_one to FirstFragment(),
+        R.id.navigation_two to SecondFragment(),
+        R.id.navigation_three to ThirdFragment()
+    )
 
     override fun setStatusBar() {
         ImmersionBar.with(this)
             .transparentStatusBar()
             .statusBarDarkFont(statusBarDarkMode)
             .fitsSystemWindows(true)
-            .titleBar(mBinding.toolBar)
             .init()
     }
 
     override fun buildView() {
         super.buildView()
-        setSupportActionBar(mBinding.toolBar)
-        mBinding.toolBar.visibility = View.GONE
-
-        val navView: BottomNavigationView = mBinding.navView
-
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_one, R.id.navigation_two, R.id.navigation_three
-            )
+        loadFragments(
+            R.id.nav_host_fragment_activity_main,
+            showPosition = 0,
+            fragments[R.id.navigation_one],
+            fragments[R.id.navigation_two],
+            fragments[R.id.navigation_three]
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
     }
 
     override fun setListener() {
@@ -55,7 +49,17 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
                     return@setOnItemSelectedListener false
                 }
             }
+
+            showFragmentAndHideOthers(fragments[item.itemId])
+
             return@setOnItemSelectedListener true
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.getIntExtra("selectedItemId", R.id.navigation_one)?.let {
+            mBinding.navView.selectedItemId = it
         }
     }
 }

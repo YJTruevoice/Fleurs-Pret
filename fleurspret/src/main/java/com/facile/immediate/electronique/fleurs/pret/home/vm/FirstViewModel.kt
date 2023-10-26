@@ -16,10 +16,6 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
 
     var globalInfo: GlobalInfo? = null
 
-    override fun onResume(owner: LifecycleOwner) {
-        super.onResume(owner)
-    }
-
     fun getAppSettings() {
         launchNet {
             mModel.appSetting("afraidDecemberSlimClassicalTechnology,brownTopic")

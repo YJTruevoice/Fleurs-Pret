@@ -31,4 +31,11 @@ object UserManager {
     fun isLogUp(): Boolean {
         return SPUtils.getString(AppConstants.KEY_TOKEN, "").isNotEmpty()
     }
+
+    fun logout() {
+        SPUtils.remove(AppConstants.KEY_USER)
+        SPUtils.remove(AppConstants.KEY_USER_ID)
+        SPUtils.remove(AppConstants.KEY_TOKEN)
+    }
+
 }

@@ -1,42 +1,54 @@
 package com.facile.immediate.electronique.fleurs.pret.mine
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import android.content.Intent
+import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
+import com.arthur.commonlib.utils.image.DisplayUtils
+import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentNotificationsBinding
+import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
+import com.facile.immediate.electronique.fleurs.pret.web.WebActivity
 
-class ThirdFragment : Fragment() {
+class ThirdFragment : BaseMVVMFragment<FragmentNotificationsBinding, ThirdViewModel>() {
 
-    private var _binding: FragmentNotificationsBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val thirdViewModel =
-            ViewModelProvider(this).get(ThirdViewModel::class.java)
-
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textNotifications
-        thirdViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+    override fun setListener() {
+        super.setListener()
+        mBinding.ivCustomer.setOnClickListener {
+            // 客服
         }
-        return root
+        mBinding.tvServiceCenter.setOnClickListener {
+            // 客服
+
+        }
+        mBinding.tvServiceOnline.setOnClickListener {
+            // 客服
+
+        }
+        mBinding.tvPrivacyPolicy.setOnClickListener {
+            WebActivity.open(requireContext(), "https://baidu.com")
+        }
+
+        mBinding.tvQuit.setOnClickListener {
+            mViewModel.quit()
+            startActivity(Intent(requireContext(), LogUpActivity::class.java))
+        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun initLiveDataObserver() {
+        super.initLiveDataObserver()
+        mViewModel.userNameLiveData.observe(viewLifecycleOwner) {
+            it?.let {
+                mBinding.tvUserName.text = it.dirtyCrowdedEarthquakePrivateLevel
+                mBinding.tvUserPhone.text = it.usualExtraordinaryScholarshipQuickHardship
+            }
+        }
+        mViewModel.userHeadImgLiveData.observe(viewLifecycleOwner) {
+            DisplayUtils.displayImageAsCircle(it, mBinding.ivHeadPortrait, R.mipmap.ic_launcher)
+        }
+    }
+
+    override fun onLazyInit() {
+        super.onLazyInit()
+        mViewModel.getUserName()
+        mViewModel.getUserHeadPortrait()
     }
 }

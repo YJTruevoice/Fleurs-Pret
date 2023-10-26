@@ -13,8 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 import com.arthur.baselib.structure.mvvm.BaseViewModel
 import com.immomo.moremo.base.mvvm.IMVVMView
-import com.immomo.moremo.base.mvvm.MVVMUtils
-import com.immomo.moremo.base.mvvm.generateDeclaredViewModel
+import com.arthur.baselib.structure.mvvm.MVVMUtils
+import com.arthur.baselib.structure.mvvm.generateDeclaredViewModel
 import com.arthur.baselib.structure.base.IArgumentsGetter
 import com.arthur.baselib.structure.base.IBaseModel
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
