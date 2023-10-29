@@ -13,7 +13,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/color_F6F7FB</item>
+        <item name="android:windowBackground">@color/color_FFFFFF</item>
     </style>
 
     <style name="Theme.AppStartLoad" parent="Theme.AppCompat.Light.NoActionBar">

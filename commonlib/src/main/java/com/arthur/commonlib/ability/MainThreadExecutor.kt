@@ -17,41 +17,41 @@ class MainThreadExecutor {
         }
 
         fun post(runnable: Runnable) {
-            com.arthur.commonlib.ability.MainThreadExecutor.Companion.handler.post(runnable)
+            handler.post(runnable)
         }
 
         fun post(tag: Any, runnable: Runnable) {
-            com.arthur.commonlib.ability.MainThreadExecutor.Companion.handler.sendMessage(Message.obtain(
-                com.arthur.commonlib.ability.MainThreadExecutor.Companion.handler, runnable).apply {
-                obj = com.arthur.commonlib.ability.MainThreadExecutor.Companion.getTag(tag)
+            handler.sendMessage(Message.obtain(
+                handler, runnable).apply {
+                obj = getTag(tag)
             })
         }
 
         fun postAtFrontOfQueue(runnable: Runnable) {
-            com.arthur.commonlib.ability.MainThreadExecutor.Companion.handler.postAtFrontOfQueue(runnable)
+            handler.postAtFrontOfQueue(runnable)
         }
 
         fun postDelayed(tag: Any, runnable: Runnable, delayMill: Long) {
-            com.arthur.commonlib.ability.MainThreadExecutor.Companion.handler.sendMessageDelayed(Message.obtain(
-                com.arthur.commonlib.ability.MainThreadExecutor.Companion.handler, runnable).apply {
-                obj = com.arthur.commonlib.ability.MainThreadExecutor.Companion.getTag(tag)
+            handler.sendMessageDelayed(Message.obtain(
+                handler, runnable).apply {
+                obj = getTag(tag)
             }, delayMill)
         }
 
         fun cancelRunnable(tag: Any, runnable: Runnable) {
-            com.arthur.commonlib.ability.MainThreadExecutor.Companion.handler.removeCallbacks(runnable,
-                com.arthur.commonlib.ability.MainThreadExecutor.Companion.getTag(tag)
+            handler.removeCallbacks(runnable,
+                getTag(tag)
             )
         }
 
         fun cancelRunnablesByTag(tag: Any) {
-            com.arthur.commonlib.ability.MainThreadExecutor.Companion.handler.removeCallbacksAndMessages(
-                com.arthur.commonlib.ability.MainThreadExecutor.Companion.getTag(tag)
+            handler.removeCallbacksAndMessages(
+                getTag(tag)
             )
         }
 
         fun cancelAll() {
-            com.arthur.commonlib.ability.MainThreadExecutor.Companion.handler.removeCallbacksAndMessages(null)
+            handler.removeCallbacksAndMessages(null)
         }
 
         private fun getTag(tag: Any): Any {

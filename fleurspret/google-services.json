@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1007394611339",
+    "project_id": "freurs-pret",
+    "storage_bucket": "freurs-pret.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007394611339:android:996cdcf69a5cb9add0b48e",
+        "android_client_info": {
+          "package_name": "com.facile.immediate.electronique.fleurs.pret"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5vWptoIaAWLzJ5uk6rnquT6yOVonrUHc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

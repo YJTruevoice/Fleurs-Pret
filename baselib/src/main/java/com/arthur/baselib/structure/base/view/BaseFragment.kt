@@ -22,7 +22,7 @@ abstract class BaseFragment : Fragment() {
     /**
      * 是否已经加载
      */
-    private var isLoaded = false
+    var isLoaded = false
 
     /**
      * Fragment是否可见

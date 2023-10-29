@@ -45,8 +45,11 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
                         } else {
                             it.text = getString(R.string.text_obtenir_otp)
                             stop()
+                            mBinding.btnSendVerifyCode.isEnabled =
+                                mBinding.etPhone.text.isNotEmpty()
                         }
                     }
+                    isEnabled = false
                 }.start()
             }
         }
@@ -77,7 +80,10 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                mBinding.btnSendVerifyCode.isEnabled = s?.isNotEmpty() == true
+                mBinding.btnSendVerifyCode.apply {
+                    if (this.isTheFinalCountDown)
+                    isEnabled = s?.isNotEmpty() == true
+                }
                 mViewModel.phone = s.toString()
                 mBinding.ivClearPhone.visibility =
                     if (s?.isNotEmpty() == true) View.VISIBLE else View.GONE

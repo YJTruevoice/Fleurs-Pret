@@ -14,6 +14,7 @@ import com.facile.immediate.electronique.fleurs.pret.net.converter.CustomJsonCon
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.CommonParamsInterceptor
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.ServerStatusInterceptor
 import com.arthur.baselib.utils.AppLanguageUtil
+import com.facile.immediate.electronique.fleurs.pret.common.UserManager
 import com.facile.immediate.electronique.fleurs.pret.utils.DeviceIdUtil
 import java.util.concurrent.TimeUnit
 
@@ -60,7 +61,7 @@ class NetMgr : BaseNetMgr() {
             addCommonParams {
                 hashMapOf(
                     CommonParamsKey.APP_SSID to CommonValue.DISK_NUM,
-                    CommonParamsKey.USER_ID to "",
+                    CommonParamsKey.USER_ID to UserManager.userId(),
                     CommonParamsKey.LBS to CommonValue.LBS_DEFAULT,// todo 定位成功后保持
                     CommonParamsKey.LANGUAGE to AppLanguageUtil.getAppLocale().language,
                     CommonParamsKey.VERSION_NAME to appVersionName,
@@ -79,8 +80,8 @@ class NetMgr : BaseNetMgr() {
             addCommonHeaders {
                 hashMapOf(
                     HeadersKey.CLIENT_ID to CommonValue.DISK_NUM,
-                    HeadersKey.TOKEN to "",
-                    HeadersKey.USER_ID to "",
+                    HeadersKey.TOKEN to UserManager.token(),
+                    HeadersKey.USER_ID to UserManager.userId(),
                     HeadersKey.CURRENT_USER_ID to "",
                     HeadersKey.CHANNEL to CommonValue.GOOGLE_PLAY,
                     HeadersKey.VERSION_NAME to appVersionName,
