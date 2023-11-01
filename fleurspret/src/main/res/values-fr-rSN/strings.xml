@@ -39,4 +39,10 @@
     <string name="text_centre_de_service_client">Centre de service client</string>
     <string name="text_d_connexion">Déconnexion</string>
     <string name="text_r_acqu_rir_otp">Réacquérir OTP</string>
+    <string name="text_fleurs_pret_des_services_milliers_d_utilisateurs">Fleurs Prêt a fourni des services de prêt à des milliers d\'utilisateurs</string>
+    <string name="text_dont_98_sont_satisfaits">dont 98% sont satisfaits !</string>
+    <string name="text_pourquoi_nous_choisi">Pourquoi nous choisi</string>
+    <string name="text_taux_plus_bas">Taux plus bas</string>
+    <string name="text_options_de_dur_e_plus_flexibles">Options de durée plus flexibles</string>
+    <string name="text_d_blocage_rapide_des_fonds">Déblocage rapide des fonds</string>
 </resources>

@@ -40,4 +40,10 @@
     <string name="text_centre_de_service_client">客户服务中心</string>
     <string name="text_d_connexion">退出登录</string>
     <string name="text_r_acqu_rir_otp">重新获得 OTP</string>
+    <string name="text_fleurs_pret_des_services_milliers_d_utilisateurs">花贷已为上千用户提供贷款服务</string>
+    <string name="text_dont_98_sont_satisfaits">98%的人都满意！</string>
+    <string name="text_pourquoi_nous_choisi">为什么选择我们</string>
+    <string name="text_taux_plus_bas">较低的利率</string>
+    <string name="text_options_de_dur_e_plus_flexibles">更灵活的期限选择</string>
+    <string name="text_d_blocage_rapide_des_fonds">资金快速释放</string>
 </resources>

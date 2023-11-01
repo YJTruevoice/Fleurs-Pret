@@ -1,12 +1,24 @@
 package com.facile.immediate.electronique.fleurs.pret.home.view
 
+import android.graphics.Rect
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
+import com.arthur.commonlib.utils.DensityUtils
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentHomeBinding
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
-import com.facile.immediate.electronique.fleurs.pret.web.WebActivity
+import com.facile.immediate.electronique.fleurs.pret.main.FeatureAdapter
+import com.facile.immediate.electronique.fleurs.pret.main.UniqueFeatureUtil
 
-class SingleProHFragment: BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>() {
+class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>() {
+
+    override fun buildView() {
+        super.buildView()
+        initFeature()
+    }
 
     override fun processLogic() {
         super.processLogic()
@@ -22,11 +34,6 @@ class SingleProHFragment: BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>(
         super.setListener()
         mBinding.srlRefresh.setOnRefreshListener {
             mViewModel.singleProH()
-        }
-        mBinding.ivBannerLink.setOnClickListener {
-            context?.let {
-                mViewModel.globalInfo?.brownTopic?.let { url -> WebActivity.open(it, url) }
-            }
         }
     }
 
@@ -45,6 +52,36 @@ class SingleProHFragment: BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>(
         mViewModel.singleProHLiveData.observe(viewLifecycleOwner) {
             it?.let { globalInfo ->
                 mBinding.tvMaxAmount.text = globalInfo.afraidDecemberSlimClassicalTechnology
+                globalInfo.afraidDecemberSlimClassicalTechnology?.let { amount ->
+                    mBinding.drvDividingRuler.setCurMaxMount(amount)
+                }
+            }
+        }
+    }
+
+    private fun initFeature() {
+        mBinding.rvChooseReason.apply {
+            layoutManager = LinearLayoutManager(
+                this@SingleProHFragment.requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = FeatureAdapter().apply {
+                addAll(UniqueFeatureUtil.generateFeatures())
+            }
+            if (itemDecorationCount <= 0) {
+                addItemDecoration(object : ItemDecoration() {
+                    override fun getItemOffsets(
+                        outRect: Rect,
+                        view: View,
+                        parent: RecyclerView,
+                        state: RecyclerView.State
+                    ) {
+                        if (parent.indexOfChild(view) > 0) {
+                            outRect.set(DensityUtils.dp2px(context, 16f), 0, 0, 0)
+                        }
+                    }
+                })
             }
         }
     }

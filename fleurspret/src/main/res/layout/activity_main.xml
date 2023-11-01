@@ -5,27 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/nav_view"
         android:layout_width="0dp"
-        android:layout_height="74dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="@color/color_FFFFFF"
-        android:paddingVertical="10dp"
-        app:itemIconSize="22dp"
-        app:itemIconTint="@color/tab_icon_tint_color"
-        app:itemTextColor="@color/tab_text_color"
+        android:layout_height="68dp"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:layout_constraintRight_toRightOf="parent">
+
+        <include
+            android:id="@+id/in_tab_first"
+            layout="@layout/tab_item_one" />
+
+        <include
+            android:id="@+id/in_tab_second"
+            layout="@layout/tab_item_two" />
+
+        <include
+            android:id="@+id/in_tab_third"
+            layout="@layout/tab_item_three" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+        android:id="@+id/v_tab_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_F9FAFC"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_activity_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintBottom_toTopOf="@id/v_tab_divider"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
