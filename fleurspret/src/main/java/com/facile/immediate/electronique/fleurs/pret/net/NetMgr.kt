@@ -14,6 +14,7 @@ import com.facile.immediate.electronique.fleurs.pret.net.converter.CustomJsonCon
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.CommonParamsInterceptor
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.ServerStatusInterceptor
 import com.arthur.baselib.utils.AppLanguageUtil
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.facile.immediate.electronique.fleurs.pret.common.UserManager
 import com.facile.immediate.electronique.fleurs.pret.utils.DeviceIdUtil
 import java.util.concurrent.TimeUnit
@@ -98,6 +99,11 @@ class NetMgr : BaseNetMgr() {
 
             addInterceptor(CommonParamsInterceptor(getCommonParams()))
             addInterceptor(ServerStatusInterceptor())
+
+            // stetho
+            if (BuildConfig.DEBUG) {
+                addNetworkInterceptor(StethoInterceptor())
+            }
 
             // 设置是否debug环境
             setDebug(true)

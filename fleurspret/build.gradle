@@ -105,6 +105,8 @@ dependencies {
 
     implementation rootProject.ext.dependencies.smartRefreshLayout
     implementation rootProject.ext.dependencies.baseQuickAdapter
+    implementation rootProject.ext.glides
+    implementation rootProject.ext.stethosLibs
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:32.4.0')

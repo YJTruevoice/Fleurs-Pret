@@ -80,10 +80,11 @@ object AppLanguageUtil {
     @TargetApi(Build.VERSION_CODES.N)
     private fun setAppLanguageApi24(context: Context): Context {
         val locale = getAppLocale()
-        val resource = context.resources
-        val configuration = resource.configuration
-        configuration.setLocale(locale)
-        configuration.setLocales(LocaleList(locale))
+        val resources = context.resources
+        val configuration = resources.configuration
+        val localeList = LocaleList(locale)
+        LocaleList.setDefault(localeList)
+        configuration.setLocales(localeList)
         return context.createConfigurationContext(configuration)
     }
 

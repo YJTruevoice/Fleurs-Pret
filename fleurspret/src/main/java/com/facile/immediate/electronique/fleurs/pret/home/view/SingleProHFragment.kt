@@ -1,5 +1,6 @@
 package com.facile.immediate.electronique.fleurs.pret.home.view
 
+import android.content.Intent
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import com.arthur.commonlib.utils.DensityUtils
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentHomeBinding
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
+import com.facile.immediate.electronique.fleurs.pret.input.view.InputInformationActivity
 import com.facile.immediate.electronique.fleurs.pret.main.FeatureAdapter
 import com.facile.immediate.electronique.fleurs.pret.main.UniqueFeatureUtil
 
@@ -34,6 +36,10 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
         super.setListener()
         mBinding.srlRefresh.setOnRefreshListener {
             mViewModel.singleProH()
+        }
+
+        mBinding.tvAskNow.setOnClickListener {
+            startActivity(Intent(requireContext(), InputInformationActivity::class.java))
         }
     }
 

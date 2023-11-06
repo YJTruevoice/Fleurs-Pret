@@ -46,4 +46,56 @@
     <string name="text_taux_plus_bas">较低的利率</string>
     <string name="text_options_de_dur_e_plus_flexibles">更灵活的期限选择</string>
     <string name="text_d_blocage_rapide_des_fonds">资金快速释放</string>
+    <string name="text_informations_personnelles">个人信息</string>
+    <string name="text_pr_noms">名字</string>
+    <string name="text_entrez_du_texte">输入文字</string>
+    <string name="text_nom">姓</string>
+    <string name="text_email">邮箱</string>
+    <string name="text_choisissez_s_il_vous_pla_t">请选择</string>
+    <string name="text_date_de_naissance">出生日期</string>
+    <string name="text_sexe">性别</string>
+    <string name="text_choosiness_une_r_gion">选择地区</string>
+    <string name="text_suivant">下一步</string>
+    <string name="text_fermer">关闭</string>
+    <string name="text_confirmer">确认</string>
+    <string name="text_contacts_en_cas_d_urgence">紧急联系人</string>
+    <string name="text_premier_contact_d_urgence">第一紧急联系人</string>
+    <string name="text_relation">关系</string>
+    <string name="text_saisissez">请输入</string>
+    <string name="text_num_ro_de_t_l_phone">电话号码</string>
+    <string name="text_deuxi_me_contact_d_urgence">第二紧急联系人</string>
+    <string name="text_carte_d_identit">身份证</string>
+    <string name="text_recto">正面</string>
+    <string name="text_verso">反面</string>
+    <string name="text_n_de_la_carte_d_identit">身份证号码</string>
+    <string name="text_reconnaissance_de_visage">人脸识别</string>
+    <string name="text_cliquer_ici">点击这里</string>
+    <string name="text_informations_d_identification">证件信息</string>
+    <string name="text_informations_de_compte_de_r_ception">收款信息</string>
+    <string name="text_moyen_de_r_ception">收款方式</string>
+    <string name="text_num_ro_de_compte">账号</string>
+    <string name="text_confirmer_le_num_ro_de_compte">确认账号</string>
+    <string name="text_adresse_compl_te">完整地址</string>
+    <string name="text_next">下一个</string>
+    <string name="text_ann_e">年</string>
+    <string name="veuilltext_ez_compl_ter_toutes_les_informations">请把全部信息填写完整</string>
+    <string name="text_m_le">男</string>
+    <string name="text_femelle">女</string>
+    <string name="text_troisi_me_sexe">第三性别</string>
+
+    <string-array name="string_arr_months">
+        <item>1月</item>
+        <item>2月</item>
+        <item>3月</item>
+        <item>4月</item>
+        <item>5月</item>
+        <item>6月</item>
+        <item>7月</item>
+        <item>8月</item>
+        <item>9月</item>
+        <item>10月</item>
+        <item>11月</item>
+        <item>12月</item>
+    </string-array>
+
 </resources>

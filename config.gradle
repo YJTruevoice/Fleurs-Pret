@@ -138,7 +138,7 @@ ext {
             "okhttp-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp}",
     ]
 
-    tests = [
+    stethos = [
             stetho        : "com.facebook.stetho:stetho:1.6.0",
             stetho_okhttp3: "com.facebook.stetho:stetho-okhttp3:1.6.0"
     ]
@@ -150,6 +150,6 @@ ext {
     okhttpLibs = okhttp.values()
     retrofitLibs = retrofit.values()
     rxLibs = rx.values()
-    testsLibs = tests.values()
+    stethosLibs = stethos.values()
     glides = glide.values()
 }

@@ -45,4 +45,55 @@
     <string name="text_taux_plus_bas">Taux plus bas</string>
     <string name="text_d_blocage_rapide_des_fonds">Déblocage rapide des fonds</string>
     <string name="text_options_de_dur_e_plus_flexibles">Options de durée plus flexibles</string>
+    <string name="text_informations_personnelles">Informations personnelles</string>
+    <string name="text_pr_noms">Prénoms</string>
+    <string name="text_entrez_du_texte">Entrez du texte</string>
+    <string name="text_nom">Nom</string>
+    <string name="text_email">Email</string>
+    <string name="text_choisissez_s_il_vous_pla_t">Choisissez s\'il vous plaît</string>
+    <string name="text_date_de_naissance">Date de naissance</string>
+    <string name="text_sexe">Sexe</string>
+    <string name="text_choosiness_une_r_gion">Choosiness une région</string>
+    <string name="text_suivant">Suivant</string>
+    <string name="text_fermer">Fermer</string>
+    <string name="text_confirmer">Confirmer</string>
+    <string name="text_contacts_en_cas_d_urgence">Contacts en cas d\'urgence</string>
+    <string name="text_premier_contact_d_urgence">Premier contact d\'urgence</string>
+    <string name="text_relation">Relation</string>
+    <string name="text_saisissez">Saisissez</string>
+    <string name="text_num_ro_de_t_l_phone">Numéro de téléphone</string>
+    <string name="text_deuxi_me_contact_d_urgence">Deuxième contact d\'urgence</string>
+    <string name="text_carte_d_identit">Carte d\'identité</string>
+    <string name="text_recto">Recto</string>
+    <string name="text_verso">Verso</string>
+    <string name="text_n_de_la_carte_d_identit">N° de la carte d\'identité</string>
+    <string name="text_reconnaissance_de_visage">Reconnaissance de visage</string>
+    <string name="text_cliquer_ici">Cliquer ici</string>
+    <string name="text_informations_d_identification">Informations d\'identification</string>
+    <string name="text_informations_de_compte_de_r_ception">Informations de compte de réception</string>
+    <string name="text_moyen_de_r_ception">Moyen de réception</string>
+    <string name="text_num_ro_de_compte">Numéro de compte</string>
+    <string name="text_confirmer_le_num_ro_de_compte">Confirmer le numéro de compte</string>
+    <string name="text_adresse_compl_te">Adresse complète</string>
+    <string name="text_next">Next</string>
+    <string name="text_ann_e">Année</string>
+    <string name="veuilltext_ez_compl_ter_toutes_les_informations">Veuillez compléter toutes les informations</string>
+    <string name="text_m_le">mâle</string>
+    <string name="text_femelle">femelle</string>
+    <string name="text_troisi_me_sexe">troisième sexe</string>
+
+    <string-array name="string_arr_months">
+        <item>Janvier</item>
+        <item>Février</item>
+        <item>Mars</item>
+        <item>Avril</item>
+        <item>Peut</item>
+        <item>Juin</item>
+        <item>Juillet</item>
+        <item>Août</item>
+        <item>Septembre</item>
+        <item>Octobre</item>
+        <item>Novembre</item>
+        <item>Décembre</item>
+    </string-array>
 </resources>

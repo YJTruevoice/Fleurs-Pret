@@ -6,7 +6,10 @@ import androidx.lifecycle.LifecycleOwner
 import com.arthur.network.runMain
 import com.arthur.network.scope.builder.MultiTaskConfig
 import com.arthur.network.withMain
-import kotlinx.coroutines.*
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 /**

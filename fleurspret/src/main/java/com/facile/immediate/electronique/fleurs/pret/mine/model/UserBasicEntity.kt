@@ -1,5 +1,8 @@
 package com.facile.immediate.electronique.fleurs.pret.mine.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 /**
 "popRoughProbableGame": "paydayOne",
 "lameJewelDeafPracticalStomach": "paydayTwo",
@@ -129,11 +132,41 @@ package com.facile.immediate.electronique.fleurs.pret.mine.model
 "moreDescriptionThread": "payday",
 "civilHobbyNaturalGardening": "paydayDesc"
  */
+@Parcelize
 data class UserBasicEntity(
     // names
     val dirtyCrowdedEarthquakePrivateLevel: String? = null,
-    // phone
-    val usualExtraordinaryScholarshipQuickHardship: String? = null,
     // head url
     val everydayRainfallCookieGuidance: String? = null,
-)
+    //surnames
+    val dustyChocolateEaster: String? = null,
+    //birthDay
+    val messyChapterLemonDozen: String? = null,
+    //sexDesc
+    val properExperienceFlatSimilarBat: String? = null,
+    // sex
+    val sureChemistryBigFairness: String? = null,
+    //email
+    val moralPressure: String? = null,
+    // fullAddress
+    val dangerousGoatContraryDueSemicircle: String? = null,
+
+
+    // first contact name
+    val irishGradeUndergroundAmericanPostcard: String? = null,
+    // first contact phoneNumber
+    val usualExtraordinaryScholarshipQuickHardship: String? = null,
+    //relationshipName
+    val secondViolentTightPilot: String? = null,
+    //relationship
+    val constantNovelistMessSureLibrary: String? = null,
+
+    // phoneNumberSec
+    val europeanBeardUniform: String? = null,
+    // nameSec
+    val theseMedicalRadioactiveDoll: String? = null,
+    // relationshipSecName
+    val expensiveSeriousPatientVoice: String? = null,
+    // relationshipSec
+    val mostSpaceshipVideophoneBirdcage: String? = null,
+) : Parcelable

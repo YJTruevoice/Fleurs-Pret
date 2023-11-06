@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/in_title_bar"
+        layout="@layout/title_bar_layout" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp"
+                android:paddingBottom="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="20dp"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_premier_contact_d_urgence"
+                    android:textColor="@color/color_242237"
+                    android:textSize="16sp"
+                    app:drawableStartCompat="@mipmap/icon_emergency_contact" />
+
+                <include
+                    android:id="@+id/in_contact_1st"
+                    layout="@layout/layout_emergency_contact_single" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/color_F9FAFC" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp"
+                android:paddingBottom="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="20dp"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_deuxi_me_contact_d_urgence"
+                    android:textColor="@color/color_242237"
+                    android:textSize="16sp"
+                    app:drawableStartCompat="@mipmap/icon_emergency_contact" />
+
+                <include
+                    android:id="@+id/in_contact_2st"
+                    layout="@layout/layout_emergency_contact_single" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/tv_next"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/drawable_select_state_btn"
+        android:gravity="center"
+        android:text="@string/text_suivant"
+        android:textColor="@color/color_FFFFFF"
+        android:textSize="18sp"
+        tools:enabled="false" />
+
+    <TextView
+        android:id="@+id/tv_read_privacy_policy_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="25dp"
+        android:text="@string/text_read_privacy_policy_guide"
+        android:textColor="@color/color_999999"
+        android:textSize="12sp" />
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -21,6 +21,23 @@ public class DateUtil {
         return calendar;
     }
 
+    public static Calendar getTarget(String source) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            Date date = simpleDateFormat.parse(source);
+            Calendar calendar = Calendar.getInstance();
+            if (date != null) {
+                calendar.setTime(date);
+                return calendar;
+            } else {
+                return null;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static String getWeek(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.CHINA);
         String week = sdf.format(date).replace("星期", "周");
@@ -47,14 +64,38 @@ public class DateUtil {
         return simpleDateFormat.format(date);
     }
 
-    public static String getHomeFormatStr(Date date){
+    public static String getHomeFormatStr(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd", Locale.ENGLISH);
         return simpleDateFormat.format(date);
     }
 
-    public static String getHourFormatStr(Date date){
+    public static String getHourFormatStr(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         return simpleDateFormat.format(date);
+    }
+
+    /**
+     * 根据日期获取 年/月/日/时/分/秒
+     *
+     * @param source   传入的日期数据
+     * @param timeType 传入的时间类型代码：{@link Calendar#YEAR,Calendar#MONTH,Calendar#DAY_OF_MONTH}
+     * @return 返回 年/月/日/时/分/秒
+     */
+    public static int getYearFromFormatStr(String source, int timeType) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(source, Locale.getDefault());
+        try {
+            Date date = simpleDateFormat.parse(source);
+            Calendar calendar = Calendar.getInstance();
+            if (date != null) {
+                calendar.setTime(date);
+                return calendar.get(timeType);
+            } else {
+                return -1;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     public static String getDateWithFormat(Date date, String format) {
