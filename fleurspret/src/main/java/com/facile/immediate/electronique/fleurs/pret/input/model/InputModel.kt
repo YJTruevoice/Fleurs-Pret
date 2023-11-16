@@ -53,4 +53,36 @@ class InputModel : IBaseModel {
             relationshipSec
         )
     }
+
+    suspend fun saveIdentityInfo(
+        pageType: Int,
+        phoneNo: String,
+        idCardNo: String
+    ): BaseResponse<Any?> {
+        return service.saveIdentityInfo(pageType, phoneNo, idCardNo)
+    }
+
+    suspend fun gatheringInfo(): BaseResponse<GatheringInfo?> {
+        return service.gatheringInfo()
+    }
+
+    suspend fun saveGatheringInfo(
+        pageType: Int,
+        bankCode: String,
+        bankName: String,
+        bankAccountNumber: String,
+        bankAccountType: String,
+    ): BaseResponse<Any?> {
+        return service.saveGatheringInfo(
+            pageType,
+            bankCode,
+            bankName,
+            bankAccountNumber,
+            bankAccountType
+        )
+    }
+
+    suspend fun identityAfrPic(pageType: Int): BaseResponse<IdentityPic?> {
+        return service.identityAfrPic(pageType)
+    }
 }

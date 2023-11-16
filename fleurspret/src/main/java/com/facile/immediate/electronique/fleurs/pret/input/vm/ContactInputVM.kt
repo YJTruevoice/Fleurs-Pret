@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.launchNet
 import com.facile.immediate.electronique.fleurs.pret.input.view.InputIdentityInformationActivity
 
-class ContactVM(app: Application) : BaseInputViewModel(app) {
+class ContactInputVM(app: Application) : BaseInputViewModel(app) {
     override fun processLogic() {
         super.processLogic()
         preInputInfo(3)

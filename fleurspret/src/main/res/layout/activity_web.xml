@@ -4,10 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@color/color_FFFFFF" />
+    <include
+        android:id="@+id/in_title_bar"
+        layout="@layout/title_bar_layout" />
 
     <WebView
         android:id="@+id/web_view"

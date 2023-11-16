@@ -1,10 +1,9 @@
 <resources>
-    <string name="app_name">Fleurs Pret</string>
+    <string name="app_name">Fleurs Prêt</string>
 
     <string name="title_one">Accueil</string>
     <string name="title_two">Commandes</string>
     <string name="title_three">Le mien</string>
-    <string name="text_preter_vite">Prêter Vite</string>
     <string name="text_policy_desc">Hi.there To access your eligibility and facilitate faster disbursal of your loan, we need these permissions</string>
     <string name="text_authorisation">Autorisation</string>
     <string name="text_read_privacy_policy_guide">J’ai lu attentivement la « Politique de Confidentialité ».</string>
@@ -81,6 +80,27 @@
     <string name="text_m_le">mâle</string>
     <string name="text_femelle">femelle</string>
     <string name="text_troisi_me_sexe">troisième sexe</string>
+    <string name="text_upload_failed_please_upload_again_carga_fallida_por_favor_sube_de_nuevo">Upload failed, please upload again-Carga fallida, por favor sube de nuevo.</string>
+    <string name="text_fallo_la_carga">Fallo la carga</string>
+    <string name="text_le_t_l_chargement_a_chou">Le téléchargement a échoué</string>
+    <string name="text_t_l_chargement_r_ussi">Téléchargement réussi</string>
+    <string name="text_les_num_ros_de_carte_bancaire_saisis_deux_fois_sont_incoh_rents">Les numéros de carte bancaire saisis deux fois sont incohérents</string>
+    <string name="text_demander_un_pr_t">Demander un prêt</string>
+    <string name="text_montant_du_pr_t">Montant du prêt</string>
+    <string name="text_date_du_remboursement">Date du remboursement</string>
+    <string name="text_d_tails_du_versement_amp_frais"><![CDATA[Détails du versement & Frais]]></string>
+    <string name="text_d_tails_du_remboursement">Détails du remboursement</string>
+    <string name="text_montant_recevoir">Montant à recevoir</string>
+    <string name="text_int_r_t">Intérêt</string>
+    <string name="text_frais_de_service">Frais de service</string>
+    <string name="text_t_v_a">T.V.A.</string>
+    <string name="text_montant_du_remboursement">Montant du remboursement</string>
+    <string name="text_annuler">Annuler</string>
+    <string name="text_payer">Payer</string>
+    <string name="text_moyen_de_remboursement_1">Moyen de remboursement 1</string>
+    <string name="text_moyen_de_remboursement_2">Moyen de remboursement 2</string>
+    <string name="text_prolonger_des_d_lais_de_remboursement">Prolonger des délais de remboursement</string>
+    <string name="text_d_tails">Détails</string>
 
     <string-array name="string_arr_months">
         <item>Janvier</item>

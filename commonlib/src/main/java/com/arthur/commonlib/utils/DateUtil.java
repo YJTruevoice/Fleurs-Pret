@@ -38,6 +38,36 @@ public class DateUtil {
         return null;
     }
 
+    public static String parseReverseDateStr(String source) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        try {
+            Date date = simpleDateFormat.parse(source);
+            if (date != null) {
+                return simpleDateFormat.format(date);
+            } else {
+                return "";
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static long targetTimeMillis(String source) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            Date date = simpleDateFormat.parse(source);
+            if (date != null) {
+                return date.getTime();
+            } else {
+                return 0L;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0L;
+    }
+
     public static String getWeek(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.CHINA);
         String week = sdf.format(date).replace("星期", "周");
@@ -101,6 +131,10 @@ public class DateUtil {
     public static String getDateWithFormat(Date date, String format) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
         return simpleDateFormat.format(date);
+    }
+    public static String getDateWithFormat(long timeMillis, String format) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        return simpleDateFormat.format(new Date(timeMillis));
     }
 
     public static int getDayDiffer(Date startDate, Date endDate) throws ParseException {

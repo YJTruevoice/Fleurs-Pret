@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#666666">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,16:9"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_picture_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#666666"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/img_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/text_s_il_vous_pla_t_mettre_votre_carte_d_identit_dans_ce_cadre_photo_pour_la_photo"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_mask"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="45dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="130dp"
+        android:background="@drawable/drawable_card_photo_mask"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,5:8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_tips" />
+
+    <!--显示焦点的框-->
+    <com.wld.mycamerax.util.FocusView
+        android:id="@+id/focus_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_switch"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_switch"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/rl_result_picture"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="109dp"
+        android:layout_marginBottom="-15dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/view_mask"
+        app:layout_constraintEnd_toEndOf="@id/view_mask"
+        app:layout_constraintStart_toStartOf="@id/view_mask"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/img_picture_cancel"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/failed" />
+
+        <ImageView
+            android:id="@+id/img_picture_save"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/success" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/rl_start"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:padding="20dp"
+            android:textColor="#fff"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/img_take_photo"
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/take_button" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

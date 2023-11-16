@@ -10,6 +10,7 @@ import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplay
 import com.facile.immediate.electronique.fleurs.pret.common.config.ConfigType
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputInformationBinding
 import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
+import com.facile.immediate.electronique.fleurs.pret.input.view.fragment.RegionDynamicLinkageFragment
 import com.facile.immediate.electronique.fleurs.pret.input.view.fragment.SelectDateFragment
 import com.facile.immediate.electronique.fleurs.pret.input.vm.BasicInputVM
 import com.gyf.immersionbar.ImmersionBar
@@ -68,11 +69,24 @@ class InputInformationActivity :
         }
 
         mBinding.tvSex.setOnClickListener {
-            mViewModel.config(ConfigType.sureChemistryBigFairness)//sex list
+            mViewModel.config(ConfigType.sex)//sex list
         }
 
         mBinding.tvRegion.setOnClickListener {
-            mViewModel.province()
+            RegionDynamicLinkageFragment.show(this) { province, city, district ->
+                val builder = StringBuilder()
+                if (province != null && province.normalAppointmentHeadmistressMachine.isNotEmpty()) {
+                    builder.append(province.normalAppointmentHeadmistressMachine)
+                }
+                if (city != null && city.normalAppointmentHeadmistressMachine.isNotEmpty()) {
+                    builder.append("-").append(city.normalAppointmentHeadmistressMachine)
+                }
+                if (district != null && district.normalAppointmentHeadmistressMachine.isNotEmpty()) {
+                    builder.append("-").append(district.normalAppointmentHeadmistressMachine)
+                }
+                mBinding.tvRegion.text = builder.toString()
+                isNextBtnEnable()
+            }
         }
 
         mBinding.tvNext.setOnClickListener {
@@ -86,7 +100,7 @@ class InputInformationActivity :
                 mBinding.tvDate.text.toString(),
                 sexSelectedItem?.value as String,
                 mBinding.etEmail.text.toString(),
-                mBinding.etAddress.text.toString()
+                "${mBinding.tvRegion.text} ${mBinding.etAddress.text}"
             )
         }
     }
@@ -125,7 +139,7 @@ class InputInformationActivity :
             }
             BottomSheet.showListBottomSheet(this, list, selected = sexSelectedItem) {
                 when (pair?.first) {
-                    ConfigType.sureChemistryBigFairness -> {
+                    ConfigType.sex -> {
                         mBinding.tvSex.text = it.name
                         isNextBtnEnable()
                         sexSelectedItem = it

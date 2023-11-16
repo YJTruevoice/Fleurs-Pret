@@ -16,6 +16,7 @@ import com.arthur.commonlib.utils.DensityUtils.Companion.dp2px
 import com.arthur.commonlib.utils.ValuesUtils
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.bean.CommonChooseListItem
+import com.facile.immediate.electronique.fleurs.pret.common.CommonItemDecoration
 import com.facile.immediate.electronique.fleurs.pret.databinding.DialogNcBottomsheetListViewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -52,7 +53,7 @@ object BottomSheet {
         val recyclerView =
             view.findViewById<RecyclerView>(R.id.rv_dialog_bottom_sheet_list)
         recyclerView.layoutManager = LinearLayoutManager(ac)
-        recyclerView.addItemDecoration(ListBottomSheetItemDecoration())
+        recyclerView.addItemDecoration(CommonItemDecoration())
 
         var selectedItem: CommonChooseListItem? = selected
         recyclerView.adapter =
@@ -218,20 +219,5 @@ object BottomSheet {
 
     }
 
-    private class ListBottomSheetItemDecoration() : RecyclerView.ItemDecoration() {
 
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State
-        ) {
-            parent.adapter?.let {
-                if (parent.getChildAdapterPosition(view) < it.itemCount - 1) {
-                    outRect.bottom = 14f.dp2px(view.context)
-                }
-            }
-        }
-
-    }
 }

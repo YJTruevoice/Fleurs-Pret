@@ -70,7 +70,7 @@ class NetMgr : BaseNetMgr() {
                     CommonParamsKey.DEVICE_ID_ to DeviceIdUtil.getDeviceId(),
                     CommonParamsKey.IMEI to DeviceIdUtil.getDeviceId(),
                     CommonParamsKey.IP to "",
-                    CommonParamsKey.CHANNEL to CommonValue.GOOGLE_PLAY,
+//                    CommonParamsKey.CHANNEL to CommonValue.GOOGLE_PLAY,
                     CommonParamsKey.SYSTEM_MODE to Build.MODEL,
                     CommonParamsKey.MOBILE_NO to "",
                     CommonParamsKey.GOOGLE_AD_ID to "",

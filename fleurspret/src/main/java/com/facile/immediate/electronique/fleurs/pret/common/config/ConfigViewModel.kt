@@ -71,7 +71,7 @@ open class ConfigViewModel<M : IBaseModel>(app: Application) : BaseViewModel<M>(
         }.showLoading(true).launch()
     }
 
-    fun distinct(cityId: String) {
+    fun district(cityId: String) {
         launchNet {
             configService.region(cityId, "3")
         }.success {

@@ -99,12 +99,14 @@ dependencies {
     implementation rootProject.ext.lifecycle.livedata_ktx
     implementation rootProject.ext.lifecycle.viewmodel_ktx
 
-    implementation project(path:':baselib')
-    implementation project(path:':commonlib')
-    implementation project(path:':network')
+    implementation project(path: ':baselib')
+    implementation project(path: ':commonlib')
+    implementation project(path: ':network')
+    implementation project(path: ':card-camera')
 
     implementation rootProject.ext.dependencies.smartRefreshLayout
     implementation rootProject.ext.dependencies.baseQuickAdapter
+    implementation rootProject.ext.dependencies.permissions
     implementation rootProject.ext.glides
     implementation rootProject.ext.stethosLibs
 

@@ -71,12 +71,6 @@ class Net private constructor() {
             builder.eventListenerFactory(it)
         }
 
-        builder.addInterceptor(RequestBodyConverterInterceptor())
-            .addInterceptor(CommonHeadersInterceptor(options.getCommonHeaders()))
-            .addInterceptor(MultiHostInterceptor(options.domainMap, options.domainMain))// 添加多baseUrl解析拦截器
-            .addInterceptor(HttpLoggingInterceptor(TAG)) // 添加网络请求log打印拦截
-            .addInterceptor(SaveServerTimeInterceptor()) // 保存服务器时间拦截器
-
         //添加外部拦截器
         val interceptors = options.getInterceptors()
         if (interceptors.isNotEmpty()) {
@@ -97,6 +91,12 @@ class Net private constructor() {
                 }
             }
         }
+
+        builder.addInterceptor(RequestBodyConverterInterceptor())
+            .addInterceptor(CommonHeadersInterceptor(options.getCommonHeaders()))
+            .addInterceptor(MultiHostInterceptor(options.domainMap, options.domainMain))// 添加多baseUrl解析拦截器
+            .addInterceptor(HttpLoggingInterceptor(TAG)) // 添加网络请求log打印拦截
+            .addInterceptor(SaveServerTimeInterceptor()) // 保存服务器时间拦截器
 
         //设置超时
         builder.connectTimeout(options.connectTimeout.toLong(), options.timeUnit)

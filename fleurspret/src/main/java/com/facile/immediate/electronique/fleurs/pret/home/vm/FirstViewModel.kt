@@ -36,7 +36,7 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
 
     fun singleProH() {
         launchNet {
-            mModel.singleProH("afraidDecemberSlimClassicalTechnology,brownTopic")
+            mModel.singleProH("afraidDecemberSlimClassicalTechnology")
         }.success { res ->
             res.aggressiveParentMethod?.let {
                 globalInfo = it

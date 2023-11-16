@@ -1,6 +1,7 @@
 package com.arthur.network.download
 
 import android.annotation.SuppressLint
+import com.arthur.network.Net
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,6 +12,7 @@ import okio.Source
 import okio.source
 import java.io.File
 import java.io.IOException
+import java.util.ArrayList
 
 class Uploader @SuppressLint("CheckResult") constructor(private val listener: UploadListener?) {
 
@@ -19,23 +21,44 @@ class Uploader @SuppressLint("CheckResult") constructor(private val listener: Up
     private var isCanceled = false
     private var listenTime: Long = 0
 
-    fun upload(url: String, formFileName: String, file: File, headers: Map<String, String?>?) {
+    fun upload(
+        url: String,
+        formFileName: String,
+        file: File,
+        params: HashMap<String, String> = hashMapOf(),
+        headers: HashMap<String, String> = hashMapOf()
+    ) {
         val builder: MultipartBody.Builder = MultipartBody.Builder().setType(MultipartBody.FORM)
-        builder.addFormDataPart(formFileName, file.name, createFileUploadBody(MultipartBody.FORM, file))
-        val requestBody: RequestBody = builder.build()
+        builder.addFormDataPart(
+            formFileName,
+            file.name,
+            createFileUploadBody(MultipartBody.FORM, file)
+        )
+
+        headers.putAll(Net.client.netOptions.getCommonHeaders().invoke())
         var hsBuilder: Headers.Builder? = null
-        if (headers != null && headers.isNotEmpty()) {
+        if (headers.isNotEmpty()) {
             hsBuilder = Headers.Builder()
             val keys = headers.keys
             for (key in keys) {
                 hsBuilder.add(key, headers[key] ?: "")
             }
         }
+
+        params.putAll(Net.client.netOptions.getCommonParams().invoke())
+        for ((key, value) in params.entries) {
+            builder.addFormDataPart(key, value)
+        }
+
+
+        val requestBody: MultipartBody = builder.build()
         val requestBuilder = Request.Builder()
+
         requestBuilder.url(url).post(requestBody)
         if (hsBuilder != null) {
             requestBuilder.headers(hsBuilder.build())
         }
+
         val request: Request = requestBuilder.build()
         val okBuilder = OkHttpClient.Builder()
         val client: OkHttpClient = okBuilder.build()

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:background="@drawable/shape_bg_stroke_e7e7e7_1_radius_6">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_repayment_way"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="3dp"
+        android:src="@mipmap/icon_repayment_way"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_repayment_way"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_moyen_de_remboursement_1"
+        android:textColor="@color/color_242237"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_repayment_way"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_payer"
+        android:layout_width="0dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/shape_bg_4635ff_radius_100"
+        android:gravity="center"
+        android:paddingHorizontal="18dp"
+        android:text="@string/text_payer"
+        android:textColor="@color/color_FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

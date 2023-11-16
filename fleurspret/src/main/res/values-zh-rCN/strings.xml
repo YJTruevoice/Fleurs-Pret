@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Fleurs Pret</string>
+    <string name="app_name">Fleurs Prêt</string>
 
     <string name="title_one">首页</string>
     <string name="title_two">订单</string>
     <string name="title_three">我的</string>
-    <string name="text_preter_vite">快速放款</string>
     <string name="text_policy_desc">您好。为了了解您的资格并促进更快地支付您的贷款，我们需要这些权限</string>
     <string name="text_authorisation">授权</string>
     <string name="text_read_privacy_policy_guide">我已仔细阅读《隐私政策》。</string>
@@ -82,6 +81,27 @@
     <string name="text_m_le">男</string>
     <string name="text_femelle">女</string>
     <string name="text_troisi_me_sexe">第三性别</string>
+    <string name="text_upload_failed_please_upload_again_carga_fallida_por_favor_sube_de_nuevo">上传失败，请重新上传</string>
+    <string name="text_fallo_la_carga">重新上传</string>
+    <string name="text_t_l_chargement_r_ussi">上传成功</string>
+    <string name="text_le_t_l_chargement_a_chou">上传失败</string>
+    <string name="text_les_num_ros_de_carte_bancaire_saisis_deux_fois_sont_incoh_rents">两次输入的银行卡号不一致</string>
+    <string name="text_demander_un_pr_t">申请贷款</string>
+    <string name="text_montant_du_pr_t">贷款金额</string>
+    <string name="text_date_du_remboursement">还款日期</string>
+    <string name="text_d_tails_du_versement_amp_frais"><![CDATA[付款详情和费用]]></string>
+    <string name="text_d_tails_du_remboursement">还款详情</string>
+    <string name="text_montant_recevoir">应收金额</string>
+    <string name="text_int_r_t">利息</string>
+    <string name="text_frais_de_service">服务费</string>
+    <string name="text_t_v_a">增值税</string>
+    <string name="text_montant_du_remboursement">报销金额</string>
+    <string name="text_annuler">取消</string>
+    <string name="text_payer">支付</string>
+    <string name="text_moyen_de_remboursement_1">还款方式 1</string>
+    <string name="text_moyen_de_remboursement_2">还款方式 2</string>
+    <string name="text_prolonger_des_d_lais_de_remboursement">延长还款期限</string>
+    <string name="text_d_tails">明细</string>
 
     <string-array name="string_arr_months">
         <item>1月</item>

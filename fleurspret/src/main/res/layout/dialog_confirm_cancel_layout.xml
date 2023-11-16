@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="15dp"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="20dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="title"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_bg_ffffff_radius_10"
+        android:backgroundTint="@color/color_F8F8F8"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+        <ScrollView
+            android:id="@+id/sv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginTop="0dp">
+
+            <FrameLayout
+                android:id="@+id/fl_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_default_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_242237"
+                    android:textSize="16sp"
+                    tools:text="Hi.there To access your eligibility and facilitate faster disbursal of your loan, we need these permissions\n
+SMS
+Collect and monitor only financial transaction Introducir texto messages including the name of the transaction party. The purpose is to conduct a credit risk assessment of the transaction and the description of the transaction amount. This credit risk assessment speeds up loan disbursement without any Perfil Introducir texto messages being deleted, read or collected\n
+Contacts
+The NBFC loan process and guidelines mandates us to verify references. This feature enables us to do that &amp; Why type in contact number when you can just choose from your contact book.\n
+Camera and Photos" />
+            </FrameLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_dialog_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/text_annuler"
+        android:textColor="@color/color_666666"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_content" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_666666"
+        app:layout_constraintEnd_toEndOf="@id/tv_dialog_cancel"
+        app:layout_constraintStart_toStartOf="@id/tv_dialog_cancel"
+        app:layout_constraintTop_toBottomOf="@id/tv_dialog_cancel" />
+
+    <TextView
+        android:id="@+id/tv_dialog_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/text_confirmer"
+        android:textColor="@color/color_4635FF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_content" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_4635FF"
+        app:layout_constraintEnd_toEndOf="@id/tv_dialog_confirm"
+        app:layout_constraintStart_toStartOf="@id/tv_dialog_confirm"
+        app:layout_constraintTop_toBottomOf="@id/tv_dialog_confirm" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

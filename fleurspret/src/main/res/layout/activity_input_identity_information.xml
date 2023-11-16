@@ -88,6 +88,22 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.0" />
+
+                        <TextView
+                            android:id="@+id/tv_card_front_upload_state"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
+                            android:backgroundTint="@color/color_B3CF1616"
+                            android:gravity="center"
+                            android:text="@string/text_t_l_chargement_r_ussi"
+                            android:textColor="@color/color_FFFFFF"
+                            android:textSize="10sp"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:visibility="visible" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -134,6 +150,23 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_card_back_upload_state"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
+                            android:backgroundTint="@color/color_B3CF1616"
+                            android:gravity="center"
+                            android:text="@string/text_t_l_chargement_r_ussi"
+                            android:textColor="@color/color_FFFFFF"
+                            android:textSize="10sp"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:visibility="visible" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -170,13 +203,13 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/et_name"
+                    android:id="@+id/et_phone"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
                     android:autofillHints=""
                     android:background="@drawable/shape_bg_ffffff_stroke_e7e7e7_1_radius_4"
                     android:hint="@string/text_saisissez"
-                    android:inputType="text"
+                    android:inputType="phone"
                     android:paddingHorizontal="10dp"
                     android:textColor="@color/color_999999"
                     android:textColorHint="@color/color_999999"
@@ -245,13 +278,30 @@
                         app:layout_constraintTop_toBottomOf="@id/iv_photo_label_afr" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_card_afr"
+                        android:id="@+id/iv_face_afr"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_face_afr_upload_state"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
+                        android:backgroundTint="@color/color_B3CF1616"
+                        android:gravity="center"
+                        android:text="@string/text_t_l_chargement_r_ussi"
+                        android:textColor="@color/color_FFFFFF"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:visibility="visible" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -260,10 +310,11 @@
     </androidx.core.widget.NestedScrollView>
 
     <TextView
+        android:id="@+id/tv_next"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="15dp"
-        android:background="@drawable/drawable_enable_state_btn"
+        android:background="@drawable/drawable_select_state_btn"
         android:gravity="center"
         android:text="@string/text_suivant"
         android:textColor="@color/color_FFFFFF"

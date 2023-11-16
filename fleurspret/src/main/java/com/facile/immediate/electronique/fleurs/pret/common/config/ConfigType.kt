@@ -43,15 +43,16 @@ import com.facile.immediate.electronique.fleurs.pret.R
 }
  */
 enum class ConfigType {
-    constantNovelistMessSureLibrary,
-    thirstyConditionSaturdayPunctualMiniskirt,
-    sureChemistryBigFairness,
-    safeVirtueClinicNewJewel,
-    aggressiveEarlyMidnight,
-    looseManSauce,
-    happyFreshTownPotato,
-    anotherChurchExcellentDate,
-    punctualPrizeLanternTechnique
+    relationship,
+    secRelationship,
+    sex,
+    curpType,
+    collectionType,
+    houseOwnership,
+    bankAccountType,
+    bankNameList,
+    incomeLevel,
+    newrealterm
 }
 
 enum class Sex(val code: String, val value: String) {

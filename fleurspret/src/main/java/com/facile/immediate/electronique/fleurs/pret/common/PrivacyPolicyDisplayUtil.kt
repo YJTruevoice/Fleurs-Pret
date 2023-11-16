@@ -24,16 +24,16 @@ object PrivacyPolicyDisplayUtil {
 
     fun displayPrivacyPolicyGuide(context: Context, textView: TextView) {
         val ssb = SpannableStringBuilder(context.getString(R.string.text_read_privacy_policy_guide))
-        val drawable = ContextCompat.getDrawable(context, R.mipmap.icon_read_privacy_guide)
-        drawable?.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
-        val imageSpan = drawable?.let { CenterVerticalImageSpan(it) }
-        ssb.insert(0, "   ")
-        ssb.setSpan(imageSpan, 0, 1, ImageSpan.ALIGN_BASELINE)
+//        val drawable = ContextCompat.getDrawable(context, R.mipmap.icon_read_privacy_guide)
+//        drawable?.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+//        val imageSpan = drawable?.let { CenterVerticalImageSpan(it) }
+//        ssb.insert(0, "   ")
+//        ssb.setSpan(imageSpan, 0, 1, ImageSpan.ALIGN_BASELINE)
 
         val blueTextStr = context.getString(R.string.text_privacy_policy)
         val blueTextStrIdx = ssb.indexOf(blueTextStr)
         ssb.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(context, R.color.color_3680D7)),
+            ForegroundColorSpan(ContextCompat.getColor(context, R.color.color_4635FF)),
             blueTextStrIdx,
             blueTextStrIdx + blueTextStr.length,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -45,7 +45,7 @@ object PrivacyPolicyDisplayUtil {
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
-                    ds.color = ContextCompat.getColor(context, R.color.color_3680D7)
+                    ds.color = ContextCompat.getColor(context, R.color.color_4635FF)
                     ds.isUnderlineText = false
                 }
             },

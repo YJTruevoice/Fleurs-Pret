@@ -3,14 +3,15 @@ package com.facile.immediate.electronique.fleurs.pret.web
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
 import com.arthur.commonlib.ability.Toaster
 import com.facile.immediate.electronique.fleurs.pret.AppConstants
+import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityWebBinding
-import com.gyf.immersionbar.ImmersionBar
 
 class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
     private var mUrl: String? = null
@@ -18,14 +19,17 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
         super.onInit(savedInstanceState)
         mBinding.webView.apply {
             this.settings.apply {
+                domStorageEnabled = true
                 javaScriptEnabled = true
                 useWideViewPort = true
                 loadWithOverviewMode = true
-                domStorageEnabled = true
+                setSupportZoom(true)
+                builtInZoomControls = true
+                displayZoomControls = true
+                javaScriptCanOpenWindowsAutomatically = true
+                setSupportMultipleWindows(true)
                 allowFileAccess = true
                 loadsImagesAutomatically = true
-                //专有配置
-                settings.setSupportMultipleWindows(true)
             }
             // 加快网页加载速度
             setLayerType(View.LAYER_TYPE_HARDWARE, null)
@@ -35,8 +39,36 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
 
     }
 
-    override fun setStatusBar() {
-        ImmersionBar.with(this).fullScreen(true).init()
+    override fun buildView() {
+        super.buildView()
+        mBinding.inTitleBar.tvTitle.visibility = View.GONE
+        mBinding.inTitleBar.ivCustomer.setImageResource(R.drawable.ic_close_black_28dp)
+    }
+
+    override fun setListener() {
+        super.setListener()
+        mBinding.inTitleBar.ivCustomer.setOnClickListener {
+            finish()
+        }
+        mBinding.inTitleBar.ivBack.setOnClickListener {
+            goBack()
+        }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            goBack()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    private fun goBack() {
+        if (mBinding.webView.canGoBack()) {
+            mBinding.webView.goBack()
+        } else {
+            finish()
+        }
     }
 
     override fun onResume() {

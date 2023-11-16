@@ -1,6 +1,7 @@
 package com.facile.immediate.electronique.fleurs.pret.input.model
 
 import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -17,4 +18,7 @@ data class Region(
     val readyBoringThemselvesBigMovie: String = "",
     val musicalHistoryPracticalFurnishedCost: String = "",
     val noblePileTheseFatTongue: String = "",
-) : Parcelable
+) : Parcelable {
+    @IgnoredOnParcel
+    var selected: Boolean = false
+}

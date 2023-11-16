@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.arthur.baselib.utils.AppLanguageUtil
+import com.arthur.commonlib.ability.Logger
 import com.gyf.immersionbar.ImmersionBar
 import com.arthur.commonlib.ability.MainThreadExecutor
 import com.arthur.commonlib.ability.Toaster
@@ -46,6 +47,7 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView()
         setStatusBar()
         mContext = this
+        Logger.logE(TAG, "onCreate")
     }
 
     protected open fun beforeOnCreate(savedInstanceState: Bundle?) {}
@@ -68,6 +70,7 @@ abstract class BaseActivity : AppCompatActivity() {
             .transparentStatusBar()
             .statusBarDarkFont(statusBarDarkMode)
             .titleBar(getViewBelowStatusBar())
+            .fitsSystemWindows(true)
             .init()
     }
 
@@ -144,6 +147,12 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         mIsForeground = false
+        Logger.logE(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Logger.logE(TAG, "onStop")
     }
 
     override fun onDestroy() {
@@ -154,11 +163,23 @@ abstract class BaseActivity : AppCompatActivity() {
             dialog = null
         }
         super.onDestroy()
+        Logger.logE(TAG, "onDestroy")
     }
 
     override fun onResume() {
         super.onResume()
         mIsForeground = true
+        Logger.logE(TAG, "onResume")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Logger.logE(TAG, "onStart")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Logger.logE(TAG, "onRestart")
     }
 
     open fun isValid(): Boolean {

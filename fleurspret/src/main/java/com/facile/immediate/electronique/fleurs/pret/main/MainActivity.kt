@@ -88,6 +88,8 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
         super.onNewIntent(intent)
         intent?.getIntExtra("selectedItemId", R.id.navigation_one)?.let {
             mBinding.inTabFirst.navigationOne.isSelected = true
+            mBinding.inTabSecond.navigationTwo.isSelected = false
+            mBinding.inTabThird.navigationThree.isSelected = false
         }
     }
 }

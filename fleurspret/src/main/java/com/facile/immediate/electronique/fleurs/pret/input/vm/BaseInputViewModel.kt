@@ -11,7 +11,7 @@ open class BaseInputViewModel(app: Application) : ConfigViewModel<InputModel>(ap
 
     val userBasicLiveData: SingleLiveEvent<UserBasicEntity?> = SingleLiveEvent()
 
-    fun preInputInfo(pageType:Int) {
+    fun preInputInfo(pageType: Int) {
         launchNet {
             mModel.preInputInfo(pageType = pageType)
         }.success {
