@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="text_s_il_vous_pla_t_mettre_votre_carte_d_identit_dans_ce_cadre_photo_pour_la_photo">请将您的身份证放入此相框内拍照。</string>
+    <string name="text_annuler">取消</string>
 </resources>

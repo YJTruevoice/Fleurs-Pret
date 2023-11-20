@@ -139,13 +139,14 @@ public final class Tools {
         return matrix;
     }
 
-    public static Bitmap bitmapClip(Context mContext, String imgPath, boolean front) {
+    public static Bitmap bitmapClip(Context mContext, String imgPath,View view, boolean front) {
         Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
         Log.d("wld__________bitmap", "width:" + bitmap.getWidth() + "--->height:" + bitmap.getHeight());
-        Matrix matrix = pictureDegree(imgPath, front);
+//        Matrix matrix = pictureDegree(imgPath, front);
+        Matrix matrix = new Matrix();
         double bitmapRatio = bitmap.getHeight() * 1. / bitmap.getWidth();//基本上都是16/9
-        int width = getScreenwidth(mContext);
-        int height = getScreenHeight(mContext);
+        int width = view.getMeasuredWidth();
+        int height = view.getMeasuredHeight();
         double screenRatio = height * 1. / width;//屏幕的宽高比
         if (bitmapRatio > screenRatio) {//胖的手机
             int clipHeight = (int) (bitmap.getWidth() * screenRatio);
@@ -156,23 +157,24 @@ public final class Tools {
         return bitmap;
     }
 
-    public static boolean saveBitmap(Context mContext, String originPath, String savePath, Rect rect, boolean front) {
-        Matrix matrix = pictureDegree(originPath, front);
+    public static boolean saveBitmap(Context mContext, String originPath, String savePath, View view, Rect rect, boolean front) {
+//        Matrix matrix = pictureDegree(originPath, front);
+        Matrix matrix = new Matrix();
         Bitmap clipBitmap = BitmapFactory.decodeFile(originPath);
         clipBitmap = Bitmap.createBitmap(clipBitmap, 0, 0, clipBitmap.getWidth(), clipBitmap.getHeight(), matrix, true);
         if (rect != null) {
             double bitmapRatio = clipBitmap.getHeight() * 1. / clipBitmap.getWidth();//基本上都是16/9
-            int width = getScreenwidth(mContext);
-            int height = getScreenHeight(mContext);
+            int width = view.getMeasuredWidth();
+            int height = view.getMeasuredHeight();
             double screenRatio = height * 1. / width;
             if (bitmapRatio > screenRatio) {//胖的手机
                 int clipHeight = (int) (clipBitmap.getWidth() * screenRatio);
                 clipBitmap = Bitmap.createBitmap(clipBitmap, 0, (clipBitmap.getHeight() - clipHeight) >> 1, clipBitmap.getWidth(), clipHeight, null, true);
-                scalRect(rect, clipBitmap.getWidth() * 1. / getScreenwidth(mContext));
+                scalRect(rect, clipBitmap.getWidth() * 1. / view.getMeasuredWidth());
             } else {//瘦长的手机
                 int marginTop = (int) ((height - width * bitmapRatio) / 2);
                 rect.top = rect.top - marginTop;
-                scalRect(rect, clipBitmap.getWidth() * 1. / getScreenwidth(mContext));
+                scalRect(rect, clipBitmap.getWidth() * 1. / view.getMeasuredWidth());
             }
             clipBitmap = Bitmap.createBitmap(clipBitmap, rect.left, rect.top, rect.right, rect.bottom, null, true);
         }

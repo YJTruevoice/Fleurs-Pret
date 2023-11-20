@@ -1,6 +1,7 @@
 package com.wld.mycamerax.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.camera2.Camera2Config;
+import androidx.camera.core.AspectRatio;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraControl;
 import androidx.camera.core.CameraSelector;
@@ -40,6 +42,7 @@ import androidx.camera.view.PreviewView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.arthur.baselib.utils.AppLanguageUtil;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.wld.mycamerax.R;
 import com.wld.mycamerax.util.CameraConstant;
@@ -70,6 +73,7 @@ public class CameraActivity extends AppCompatActivity {
     private ImageView img_picture_save;
     private FrameLayout rl_start;
     private TextView tv_back;
+    private TextView tv_tips;
     private ImageView img_take_photo;
 
     private ImageCapture imageCapture;
@@ -81,15 +85,21 @@ public class CameraActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        AppLanguageUtil.INSTANCE.setAppLanguage(this);
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_camera);
         mCameraParam = getIntent().getParcelableExtra(CameraConstant.CAMERA_PARAM_KEY);
         if (mCameraParam == null) {
             throw new IllegalArgumentException("CameraParam is null");
         }
+        if (mCameraParam.isFront()) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+        setContentView(R.layout.activity_camera);
 //        if (!Tools.checkPermission(this)) {
 //            throw new NoPermissionException("Need to have permission to take pictures and storage");
 //        }
@@ -138,16 +148,21 @@ public class CameraActivity extends AppCompatActivity {
                     layoutParams.topMargin = mCameraParam.getMaskMarginTop();
                 }
 
-                if (mCameraParam.getMaskRatioH() != -1) {
-                    Tools.reflectMaskRatio(view_mask, mCameraParam.getMaskRatioW(), mCameraParam.getMaskRatioH());
-                }
+//                if (mCameraParam.getMaskRatioH() != -1) {
+//                    Tools.reflectMaskRatio(view_mask, mCameraParam.getMaskRatioW(), mCameraParam.getMaskRatioH());
+//                }
                 view_mask.setLayoutParams(layoutParams);
             }
             if (mCameraParam.getMaskImgId() != -1) {
                 view_mask.setBackgroundResource(mCameraParam.getMaskImgId());
             }
         } else {
-            view_mask.setVisibility(View.GONE);
+            view_mask.setVisibility(View.INVISIBLE);
+        }
+        if (mCameraParam.isFront()) {
+            tv_tips.setVisibility(View.INVISIBLE);
+        } else {
+            tv_tips.setVisibility(View.VISIBLE);
         }
 
         if (mCameraParam.getBackText() != null) {
@@ -215,7 +230,7 @@ public class CameraActivity extends AppCompatActivity {
             layoutParams.leftMargin = mCameraParam.getBackLeft();
             tv_back.setLayoutParams(layoutParams);
         }
-        Tools.reflectPreviewRatio(previewView, Tools.aspectRatio(this));
+//        Tools.reflectPreviewRatio(previewView, Tools.aspectRatio(this));
     }
 
     private void initView() {
@@ -230,6 +245,7 @@ public class CameraActivity extends AppCompatActivity {
         img_picture_save = findViewById(R.id.img_picture_save);
         rl_start = findViewById(R.id.rl_start);
         tv_back = findViewById(R.id.tv_back);
+        tv_tips = findViewById(R.id.tv_tips);
         img_take_photo = findViewById(R.id.img_take_photo);
 
         //切换相机
@@ -269,11 +285,7 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private void switchOrition() {
-        if (front) {
-            front = false;
-        } else {
-            front = true;
-        }
+        front = !front;
     }
 
     private void intCamera() {
@@ -294,7 +306,7 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private void bindCameraUseCases() {
-        int screenAspectRatio = Tools.aspectRatio(this);
+        int screenAspectRatio = AspectRatio.RATIO_16_9;
         int rotation = previewView.getDisplay() == null ? Surface.ROTATION_0 : previewView.getDisplay().getRotation();
 
         Preview preview = new Preview.Builder()
@@ -357,7 +369,7 @@ public class CameraActivity extends AppCompatActivity {
                         rl_start.setVisibility(View.GONE);
                         rl_result_picture.setVisibility(View.VISIBLE);
                         ll_picture_parent.setVisibility(View.VISIBLE);
-                        Bitmap bitmap = Tools.bitmapClip(CameraActivity.this, photoFile, front);
+                        Bitmap bitmap = Tools.bitmapClip(CameraActivity.this, photoFile, img_picture,front);
                         img_picture.setImageBitmap(bitmap);
                     }
 
@@ -375,7 +387,7 @@ public class CameraActivity extends AppCompatActivity {
             rect = new Rect(outLocation[0], outLocation[1],
                     view_mask.getMeasuredWidth(), view_mask.getMeasuredHeight());
         }
-        Tools.saveBitmap(this, mCameraParam.getPictureTempPath(), mCameraParam.getPicturePath(), rect, front);
+        Tools.saveBitmap(this, mCameraParam.getPictureTempPath(), mCameraParam.getPicturePath(),img_picture, rect, front);
         Tools.deletTempFile(mCameraParam.getPictureTempPath());
 
         Intent intent = new Intent();
