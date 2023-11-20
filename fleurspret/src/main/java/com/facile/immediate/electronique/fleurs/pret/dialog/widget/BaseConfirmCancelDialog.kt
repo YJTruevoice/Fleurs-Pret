@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintSet
+import com.arthur.commonlib.utils.DensityUtils.Companion.dp2px
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.databinding.DialogConfirmCancelLayoutBinding
 import com.facile.immediate.electronique.fleurs.pret.dialog.entity.BaseDialogConfigEntity
@@ -25,28 +26,50 @@ open class BaseConfirmCancelDialog @JvmOverloads constructor(
 
     override fun setDialogData(config: BaseDialogConfigEntity?) {
         (config as? CommonDialogConfigEntity)?.let {
-            // 关闭按钮和是否显示图片有关
-            mBinding.tvDialogCancel.apply {
-                setOnClickListener {
-                    dismiss()
-                }
-            }
             // 公共初始化
             super.setDialogData(config)
 
             // 内容
             mBinding.flContent.apply {
-                if (contentView() == null) {
+                val contentView = contentView()
+                if (contentView == null) {
                     mBinding.tvDefaultContent.apply {
                         text = config.content
                         visibility = View.VISIBLE
                     }
                 } else {
                     visibility = View.GONE
-                    removeAllViews()
-                    addView(contentView())
+                    this.removeAllViews()
+                    this.addView(contentView)
                 }
             }
+            mBinding.tvTitle.apply {
+                if (config.title?.isNotEmpty() == true) {
+                    text = config.title
+                    visibility = View.VISIBLE
+                } else {
+                    visibility = View.GONE
+                }
+            }
+            mBinding.tvDialogConfirm.apply {
+                if (config.confirmText?.isNotEmpty() == true) {
+                    text = config.confirmText
+                }
+                setOnClickListener {
+                    config.confirmCallback?.invoke(this@BaseConfirmCancelDialog)
+                    dismiss()
+                }
+            }
+            mBinding.tvDialogCancel.apply {
+                if (config.cancelText?.isNotEmpty() == true) {
+                    text = config.cancelText
+                }
+                setOnClickListener {
+                    config.cancelCallback?.invoke(this@BaseConfirmCancelDialog)
+                    dismiss()
+                }
+            }
+            adjustContentMaxHeight(MAX_CONTENT_HEIGHT.dp2px(context))
         }
 
     }

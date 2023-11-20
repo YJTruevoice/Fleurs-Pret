@@ -61,7 +61,7 @@ open class BaseDialogConfigEntity(
 ) : Parcelable
 
 @Parcelize
-class CommonDialogConfigEntity(
+open class CommonDialogConfigEntity(
     /**
      * 主图资源id
      */

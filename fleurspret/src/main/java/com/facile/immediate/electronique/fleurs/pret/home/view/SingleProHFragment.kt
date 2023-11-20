@@ -38,14 +38,14 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
     override fun setListener() {
         super.setListener()
         mBinding.srlRefresh.setOnRefreshListener {
-            mViewModel.singleProH()
+            mViewModel.multiProH()
         }
 
         mBinding.tvAskNow.setOnClickListener {
             if (UserManager.isLogUp()) {
 //            startActivity(Intent(requireContext(), InputInformationActivity::class.java))
-//            startActivity(Intent(requireContext(), InputIdentityInformationActivity::class.java))
-                startActivity(Intent(requireContext(), ChooseGoldActivity::class.java))
+                startActivity(Intent(requireContext(), InputIdentityInformationActivity::class.java))
+//                startActivity(Intent(requireContext(), ChooseGoldActivity::class.java))
             }
         }
     }
@@ -62,11 +62,14 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
                 mBinding.srlRefresh.finishRefresh()
         }
 
-        mViewModel.singleProHLiveData.observe(viewLifecycleOwner) {
-            it?.let { globalInfo ->
-                mBinding.tvMaxAmount.text = globalInfo.afraidDecemberSlimClassicalTechnology
-                globalInfo.afraidDecemberSlimClassicalTechnology?.let { amount ->
-                    mBinding.drvDividingRuler.setCurMaxMount(amount)
+        mViewModel.multiProHLiveData.observe(viewLifecycleOwner) {
+            it?.let { multiPro ->
+                if (multiPro.isNotEmpty()) {
+                    val singlePro = multiPro[0]
+                    mBinding.tvMaxAmount.text = singlePro.afraidDecemberSlimClassicalTechnology
+                    singlePro.afraidDecemberSlimClassicalTechnology?.let { amount ->
+                        mBinding.drvDividingRuler.setCurMaxMount(amount)
+                    }
                 }
             }
         }

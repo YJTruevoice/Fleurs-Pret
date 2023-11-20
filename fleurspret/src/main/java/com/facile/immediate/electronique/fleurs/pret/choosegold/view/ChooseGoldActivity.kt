@@ -4,13 +4,15 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.recyclerview.widget.GridLayoutManager
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
-import com.arthur.commonlib.ability.Toaster
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.choosegold.model.ProdInfo
 import com.facile.immediate.electronique.fleurs.pret.choosegold.view.adapter.RePayDateAdapter
+import com.facile.immediate.electronique.fleurs.pret.choosegold.view.dialog.LockedRepaymentDateTip
+import com.facile.immediate.electronique.fleurs.pret.choosegold.view.dialog.PreOrdDialog
 import com.facile.immediate.electronique.fleurs.pret.choosegold.vm.ChooseGoldVM
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityChooseGoldInformationBinding
+import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseCountDownDialog
 
 class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding, ChooseGoldVM>() {
 
@@ -58,20 +60,48 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
         mViewModel.preComputeResultLiveData.observe(this) {
             it?.let {
                 mBinding.apply {
-                    tvXofReceive.text = it.theoreticalMoneyLawyerSupper
-                    tvXofInterest.text = it.unsafeAncestorBasement
-                    tvXofService.text = it.unfairSeamanThemselvesMess
-                    tvXofTva.text = it.crowdedSpecialistPunctuation
-                    tvXofMontant.text = mBinding.rbXofProgress.progress.toString()
+                    tvXofReceive.text =
+                        "${getString(R.string.text_xof)} ${it.theoreticalMoneyLawyerSupper}"
+                    tvXofInterest.text =
+                        "${getString(R.string.text_xof)} ${it.unsafeAncestorBasement}"
+                    tvXofService.text =
+                        "${getString(R.string.text_xof)} ${it.unfairSeamanThemselvesMess}"
+                    tvXofTva.text =
+                        "${getString(R.string.text_xof)} ${it.crowdedSpecialistPunctuation}"
+                    tvXofMontant.text =
+                        "${getString(R.string.text_xof)} ${mBinding.rbXofProgress.progress}"
 
-                    tvRepaymentGold.text = it.femaleSteamAsleepLifetime
+                    tvRepaymentGold.text =
+                        "${getString(R.string.text_xof)} ${it.femaleSteamAsleepLifetime}"
                     tvRepaymentDate.text = mViewModel.curProDate?.dateStr
                 }
             }
         }
 
         mViewModel.preOdrLiveData.observe(this) {
+            PreOrdDialog.with(
+                this,
+                mBinding.tvXofReceive.text.toString(),
+                mBinding.tvRepaymentGold.text.toString(),
+                mBinding.tvRepaymentDate.text.toString()
+            ).title(getString(R.string.text_d_tails))
+                .confirm(getString(R.string.text_confirmer)) {
+                    mViewModel.submitOrd(
+                        neatPhysicsPeasantCommonSport = mViewModel.curProDate?.neatPhysicsPeasantCommonSport.toString(),
+                        rudeHungryActionInformation = mBinding.rbXofProgress.progress.toString()
+                    )
+                }.cancel(getString(R.string.text_annuler)) {
 
+                }.build().show()
+        }
+
+        mViewModel.submitOdrLiveData.observe(this) {
+            BaseCountDownDialog.with(this)
+                .img(R.mipmap.pic_submit_success)
+                .content(getString(R.string.text_votre_pr_t_a_t_demand_avec_succ_s))
+                .confirmText(getString(R.string.text_ok))
+                .countDown(3)
+                .build().show()
         }
     }
 
@@ -93,8 +123,7 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
     private fun displayBasicInfo(prod: ProdInfo) {
 
         if (prod.isLocked) {
-            // TODO:
-            Toaster.showToast("dialog")
+            LockedRepaymentDateTip.with(this).build().show()
             return
         }
 

@@ -102,6 +102,10 @@
     <string name="text_moyen_de_remboursement_2">还款方式 2</string>
     <string name="text_prolonger_des_d_lais_de_remboursement">延长还款期限</string>
     <string name="text_d_tails">明细</string>
+    <string name="text_dur_e_du_pr_t">贷款期限</string>
+    <string name="text_montant_du_pr_t_augment_de_50_100">贷款金额从50%增加至100%</string>
+    <string name="text_ok">OK</string>
+    <string name="text_votre_pr_t_a_t_demand_avec_succ_s">您的贷款已成功申请。</string>
 
     <string-array name="string_arr_months">
         <item>1月</item>

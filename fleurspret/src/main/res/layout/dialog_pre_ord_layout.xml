@@ -37,7 +37,7 @@
         <ScrollView
             android:id="@+id/sv_content"
             android:layout_width="match_parent"
-            android:layout_height="480dp"
+            android:layout_height="wrap_content"
             android:scrollbars="none"
             app:layout_constrainedHeight="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,18 +50,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_default_content"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/color_242237"
-                    android:textSize="16sp"
-                    tools:text="Hi.there To access your eligibility and facilitate faster disbursal of your loan, we need these permissions\n
-SMS
-Collect and monitor only financial transaction Introducir texto messages including the name of the transaction party. The purpose is to conduct a credit risk assessment of the transaction and the description of the transaction amount. This credit risk assessment speeds up loan disbursement without any Perfil Introducir texto messages being deleted, read or collected\n
-Contacts
-The NBFC loan process and guidelines mandates us to verify references. This feature enables us to do that &amp; Why type in contact number when you can just choose from your contact book.\n
-Camera and Photos" />
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/in_xof_receive"
+                        layout="@layout/layout_information_between" />
+
+                    <include
+                        android:id="@+id/in_xof_repayment"
+                        layout="@layout/layout_information_between"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" />
+
+                    <include
+                        android:id="@+id/in_xof_repayment_date"
+                        layout="@layout/layout_information_between"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
             </FrameLayout>
         </ScrollView>
 

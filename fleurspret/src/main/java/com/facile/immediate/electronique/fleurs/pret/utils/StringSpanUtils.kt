@@ -82,9 +82,7 @@ class StringSpanUtils {
     }
 }
 
-class CenterVerticalImageSpan(drawable: Drawable) : ImageSpan(
-    drawable
-) {
+class CenterVerticalImageSpan(drawable: Drawable) : ImageSpan(drawable) {
     /**
      * update the text line height
      */

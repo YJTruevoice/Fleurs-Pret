@@ -30,28 +30,30 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
 
         mBinding.btnSendVerifyCode.setOnClickListener {
             mViewModel.getVerifyCode()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                mBinding.btnSendVerifyCode.apply {
+
+            mBinding.btnSendVerifyCode.apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     isCountDown = true
-                    base = SystemClock.elapsedRealtime() + 60L * 1000
-                    setOnChronometerTickListener {
-                        if (base >= SystemClock.elapsedRealtime()) {
-                            it.text =
-                                String.format(
-                                    "%s %ss",
-                                    getString(R.string.text_r_acqu_rir_otp),
-                                    (base - SystemClock.elapsedRealtime()) / 1000
-                                )
-                        } else {
-                            it.text = getString(R.string.text_obtenir_otp)
-                            stop()
-                            mBinding.btnSendVerifyCode.isEnabled =
-                                mBinding.etPhone.text.isNotEmpty()
-                        }
+                }
+                base = SystemClock.elapsedRealtime() + 60L * 1000
+                setOnChronometerTickListener {
+                    val curElapsedRealtime = SystemClock.elapsedRealtime()
+                    if (base >= curElapsedRealtime) {
+                        it.text =
+                            String.format(
+                                "%s %ss",
+                                getString(R.string.text_r_acqu_rir_otp),
+                                (base - curElapsedRealtime) / 1000
+                            )
+                    } else {
+                        it.text = getString(R.string.text_obtenir_otp)
+                        stop()
+                        mBinding.btnSendVerifyCode.isEnabled =
+                            mBinding.etPhone.text.isNotEmpty()
                     }
-                    isEnabled = false
-                }.start()
-            }
+                }
+                isEnabled = false
+            }.start()
         }
         mBinding.btnLogUp.setOnClickListener {
             mViewModel.logUp()
@@ -82,7 +84,7 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
             override fun afterTextChanged(s: Editable?) {
                 mBinding.btnSendVerifyCode.apply {
                     if (this.isTheFinalCountDown)
-                    isEnabled = s?.isNotEmpty() == true
+                        isEnabled = s?.isNotEmpty() == true
                 }
                 mViewModel.phone = s.toString()
                 mBinding.ivClearPhone.visibility =

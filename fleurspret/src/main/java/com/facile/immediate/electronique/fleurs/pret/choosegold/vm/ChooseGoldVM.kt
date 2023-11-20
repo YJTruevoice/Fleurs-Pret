@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.launchNet
 import com.arthur.baselib.structure.mvvm.BaseViewModel
 import com.arthur.baselib.structure.mvvm.SingleLiveEvent
+import com.facile.immediate.electronique.fleurs.pret.BuildConfig
 import com.facile.immediate.electronique.fleurs.pret.choosegold.model.ChooseGoldModel
 import com.facile.immediate.electronique.fleurs.pret.choosegold.model.OrdInfor
 import com.facile.immediate.electronique.fleurs.pret.choosegold.model.PreCompResult
@@ -14,9 +15,11 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
     val prodListLiveData: SingleLiveEvent<ProdList?> = SingleLiveEvent()
     val preComputeResultLiveData: SingleLiveEvent<PreCompResult?> = SingleLiveEvent()
     val preOdrLiveData: SingleLiveEvent<OrdInfor?> = SingleLiveEvent()
+    val submitOdrLiveData: SingleLiveEvent<Boolean?> = SingleLiveEvent()
 
     var prodList: ProdList? = null
     var curProDate: ProdInfo? = null
+    var preOrd: OrdInfor? = null
 
     override fun processLogic() {
         super.processLogic()
@@ -38,7 +41,8 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
                 if (it.size == 1) {
                     it.add(ProdInfo(
                         neatPhysicsPeasantCommonSport = System.currentTimeMillis().toString(),
-                        plainLungAppleGale = it[0].plainLungAppleGale * 2).apply {
+                        plainLungAppleGale = it[0].plainLungAppleGale * 2
+                    ).apply {
                         this.dampCabbageMaximumSorryCabbage =
                             prodList?.dampCabbageMaximumSorryCabbage ?: ""
                         this.isLocked = true
@@ -46,7 +50,8 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
                     })
                     it.add(ProdInfo(
                         neatPhysicsPeasantCommonSport = System.currentTimeMillis().toString(),
-                        plainLungAppleGale = it[0].plainLungAppleGale * 3).apply {
+                        plainLungAppleGale = it[0].plainLungAppleGale * 3
+                    ).apply {
                         this.dampCabbageMaximumSorryCabbage =
                             prodList?.dampCabbageMaximumSorryCabbage ?: ""
                         this.isLocked = true
@@ -55,7 +60,8 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
                 } else if (it.size > 1) {
                     it.add(ProdInfo(
                         neatPhysicsPeasantCommonSport = System.currentTimeMillis().toString(),
-                        plainLungAppleGale = it[0].plainLungAppleGale + it[it.size - 1].plainLungAppleGale).apply {
+                        plainLungAppleGale = it[0].plainLungAppleGale + it[it.size - 1].plainLungAppleGale
+                    ).apply {
                         this.dampCabbageMaximumSorryCabbage =
                             prodList?.dampCabbageMaximumSorryCabbage ?: ""
                         this.isLocked = true
@@ -63,7 +69,8 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
                     })
                     it.add(ProdInfo(
                         neatPhysicsPeasantCommonSport = System.currentTimeMillis().toString(),
-                        plainLungAppleGale = 2 * it[0].plainLungAppleGale + it[it.size - 1].plainLungAppleGale).apply {
+                        plainLungAppleGale = 2 * it[0].plainLungAppleGale + it[it.size - 1].plainLungAppleGale
+                    ).apply {
                         this.dampCabbageMaximumSorryCabbage =
                             prodList?.dampCabbageMaximumSorryCabbage ?: ""
                         this.isLocked = true
@@ -103,7 +110,32 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
                 rudeHungryActionInformation
             )
         }.success {
+            preOrd = it.aggressiveParentMethod
             preOdrLiveData.value = it.aggressiveParentMethod
+        }.failed {
+            if (BuildConfig.DEBUG) {
+                preOdrLiveData.value = null
+            }
+        }.launch()
+    }
+
+    fun submitOrd(
+        neatPhysicsPeasantCommonSport: String,
+        rudeHungryActionInformation: String
+    ) {
+        launchNet {
+            mModel.submitOrd(
+                prodList?.activeAsianBookcase.toString(),
+                neatPhysicsPeasantCommonSport,
+                rudeHungryActionInformation,
+                preOrd?.normalBillClinicMercifulBay ?: ""
+            )
+        }.success {
+            submitOdrLiveData.value = true
+        }.failed {
+            if (BuildConfig.DEBUG) {
+                submitOdrLiveData.value = false
+            }
         }.launch()
     }
 }

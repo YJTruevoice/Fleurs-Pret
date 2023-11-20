@@ -215,11 +215,21 @@ class InputIdentityInformationActivity :
             )
             .request { allGranted: Boolean, grantedList: List<String?>?, deniedList: List<String?>? ->
                 if (allGranted) {
-                    CameraParam.Builder()
-                        .setShowFocusTips(false)
-                        .setActivity(this@InputIdentityInformationActivity)
-                        .setRequestCode(requestCode)
-                        .build()
+                    if (requestCode == InputConstant.ReqCode.FACE_PIC_CODE) {
+                        CameraParam.Builder()
+                            .setShowFocusTips(false)
+                            .setShowMask(false)
+                            .setFront(true)
+                            .setActivity(this@InputIdentityInformationActivity)
+                            .setRequestCode(requestCode)
+                            .build()
+                    } else {
+                        CameraParam.Builder()
+                            .setShowFocusTips(false)
+                            .setActivity(this@InputIdentityInformationActivity)
+                            .setRequestCode(requestCode)
+                            .build()
+                    }
                 } else {
                     Toast.makeText(
                         applicationContext,

@@ -101,6 +101,10 @@
     <string name="text_moyen_de_remboursement_2">Moyen de remboursement 2</string>
     <string name="text_prolonger_des_d_lais_de_remboursement">Prolonger des délais de remboursement</string>
     <string name="text_d_tails">Détails</string>
+    <string name="text_dur_e_du_pr_t">Durée du prêt</string>
+    <string name="text_montant_du_pr_t_augment_de_50_100">Montant du prêt augmenté de 50% à 100%</string>
+    <string name="text_ok">OK</string>
+    <string name="text_votre_pr_t_a_t_demand_avec_succ_s">Votre prêt a été demandé avec succès.</string>
 
     <string-array name="string_arr_months">
         <item>Janvier</item>
