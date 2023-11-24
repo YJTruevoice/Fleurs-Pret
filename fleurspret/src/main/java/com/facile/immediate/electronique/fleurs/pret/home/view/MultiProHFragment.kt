@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
 import com.arthur.commonlib.utils.DensityUtils
+import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentMultiProHomeBinding
 import com.facile.immediate.electronique.fleurs.pret.home.view.adapter.MultiProAdapter
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
@@ -18,6 +19,9 @@ class MultiProHFragment : BaseMVVMFragment<FragmentMultiProHomeBinding, FirstVie
         super.setListener()
         mBinding.srlRefresh.setOnRefreshListener {
             mViewModel.multiProH()
+        }
+        mBinding.inTitle.ivCustomer.setOnClickListener {
+            ConsumerActivity.go(requireActivity())
         }
     }
 

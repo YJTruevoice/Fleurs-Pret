@@ -106,6 +106,33 @@
     <string name="text_montant_du_pr_t_augment_de_50_100">贷款金额从50%增加至100%</string>
     <string name="text_ok">OK</string>
     <string name="text_votre_pr_t_a_t_demand_avec_succ_s">您的贷款已成功申请。</string>
+    <string name="text_mes_ordres">我的订单</string>
+    <string name="text_s_il_vous_pla_t_attendez">请稍等</string>
+    <string name="text_remboursement">退款</string>
+    <string name="text_si_vous_refusez_toujours_de_rembourser_ou_retardez_le_remboursement_toutes_les_cons_quences_vous_serez_confront_y_compris_l_augmentation_des_amendes_la_r_duction_du_cr_dit_le_gel_des_cartes_bancaires_les_poursuites_judiciaires_etc">如果您仍拒绝还款或延迟还款，后果自负\n您将面临包括增加罚款、信用减免、信用卡冻结、法律诉讼等。</string>
+    <string name="text_voir_maintenant">立即查看</string>
+    <string name="text_d_sol_votre_commande_n_est_pas_approuv_e_cliquez_voir_les_raisons_probables">抱歉，您的订单未获批准，点击查看可能原因。</string>
+    <string name="text_mettre_jour_le_compte_de_r_ception">更新收款账户</string>
+    <string name="text_e_syst_me_a_d_tect_des_informations_fausses_dans_vos_informations_de_compte_de_r_ception_veuillez_les_remettre">系统检测到您的收款账户信息存在虚假信息，请重新提交。</string>
+    <string name="text_cette_commande_est_quitte_cliquez_sur_le_bouton_pour_en_emprunter_une_autre">此订单已清空，点击按钮再借一张</string>
+    <string name="text_aucune_commande_associ_e_trouv_e">没有找到相关订单</string>
+    <string name="text_la_demande_rejet_e">请求被拒绝</string>
+    <string name="text_nous_sommes_en_train_d_valuer_votre_demande_du_pr_t_veuillez_attendre_patiemment_le_r_sultat_d_valuation">目前我们正在评估您的贷款申请，请耐心等待评估结果。</string>
+    <string name="text_en_valuation">正在评估</string>
+    <string name="text_monto_del_pr_stamo">Monto del préstamo</string>
+    <string name="text_fecha_de_solicitud">Fecha de solicitud</string>
+    <string name="text_en_train_de_versement">放款处理中</string>
+    <string name="text_votre_demande_du_pr_t_a_t_approuv_e_le_versement_est_en_cours">您的贷款申请已获得批准。\n付款正在进行中。</string>
+    <string name="text_d_sol">对不起</string>
+    <string name="text_rejetee_desc">拒绝的原因可能是： - 提供的信息不正确 - 您的照片标识不清晰 - 您的信息需要彻底审核 您可以在 %s 天后重新申请。</string>
+    <string name="text_la_demande_a_t_rejet_e">请求被拒绝</string>
+    <string name="text_demander_miantenant">立即询问</string>
+    <string name="text_bonjour">早上好!</string>
+    <string name="text_veuillez_essayer_les_pr_ts_gratuits_suivants">请尝试以下免费贷款：</string>
+    <string name="text_t_l_phone">电话</string>
+    <string name="text_whatsapp">WhatsApp</string>
+    <string name="text_e_mail">E-mail</string>
+    <string name="text_copi">已复制</string>
 
     <string-array name="string_arr_months">
         <item>1月</item>

@@ -8,6 +8,7 @@ import com.facile.immediate.electronique.fleurs.pret.bottomsheet.BottomSheet
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.bean.CommonChooseListItem
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.config.ConfigType
+import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputInformationBinding
 import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
 import com.facile.immediate.electronique.fleurs.pret.input.view.fragment.RegionDynamicLinkageFragment
@@ -42,7 +43,7 @@ class InputInformationActivity :
             finish()
         }
         mBinding.inTitleBar.ivCustomer.setOnClickListener {
-
+            ConsumerActivity.go(this)
         }
 
         mBinding.etName.addTextChangedListener(mViewModel.textWatcher)

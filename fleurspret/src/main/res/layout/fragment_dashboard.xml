@@ -4,19 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".order.SecondFragment">
+    tools:context=".order.view.SecondFragment">
 
     <TextView
-        android:id="@+id/text_dashboard"
+        android:id="@+id/tv_title_bar_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
+        android:layout_height="44dp"
+        android:layout_marginHorizontal="15dp"
+        android:gravity="center"
+        android:text="@string/text_mes_ordres"
+        android:textColor="@color/color_333333"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/v_divider_top"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/color_F4F5F9"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_bar_title" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/v_divider_top"
+        tools:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="@color/color_D8D8D8"
+            android:src="@mipmap/pic_ord_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_aucune_commande_associ_e_trouv_e"
+            android:textColor="@color/color_242237"
+            android:textSize="18sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_ord"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_divider_top"
+        tools:listitem="@layout/item_ord_list_en_evaluation" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

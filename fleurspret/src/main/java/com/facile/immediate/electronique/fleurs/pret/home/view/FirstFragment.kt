@@ -1,10 +1,13 @@
 package com.facile.immediate.electronique.fleurs.pret.home.view
 
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentHomeHostBinding
-import com.facile.immediate.electronique.fleurs.pret.home.ProductType
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
+import com.facile.immediate.electronique.fleurs.pret.loan.model.ProState
+import com.facile.immediate.electronique.fleurs.pret.loan.view.EvaluationVersementFragment
+import com.facile.immediate.electronique.fleurs.pret.loan.view.RejeteeFragment
 
 class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>() {
 
@@ -15,30 +18,48 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
 
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
-        mViewModel.prodTypeLiveData.observe(viewLifecycleOwner) {
+        mViewModel.prodMultiTypeLiveData.observe(viewLifecycleOwner) {
             it?.let {
-                when (it) {
-                    ProductType.S -> {
-                        childFragmentManager.beginTransaction().apply {
-                            val singleProHFragment = SingleProHFragment()
-                            replace(mBinding.fcvHomeContainer.id, singleProHFragment)
-                            setMaxLifecycle(singleProHFragment, Lifecycle.State.RESUMED)
-                        }.commitAllowingStateLoss()
-                    }
-
-                    ProductType.M -> {
-                        childFragmentManager.beginTransaction().apply {
-                            val multiProHFragment = MultiProHFragment()
-                            replace(mBinding.fcvHomeContainer.id, multiProHFragment)
-                            setMaxLifecycle(multiProHFragment, Lifecycle.State.RESUMED)
-                        }.commitAllowingStateLoss()
-                    }
-
-                    else -> {
-                        isLoaded = false
-                    }
-                }
+                commitTargetFragment(MultiProHFragment())
             }
         }
+        mViewModel.prodSingleTypeLiveData.observe(viewLifecycleOwner) {
+            it?.let {
+                it.normalBillClinicMercifulBay?.let { normalBillClinicMercifulBay ->
+                    if (normalBillClinicMercifulBay.isEmpty() || normalBillClinicMercifulBay == "-1") {
+                        commitTargetFragment(SingleProHFragment())
+                    } else {
+                        when (it.rudeReceptionCyclistArcticHunger) {
+                            ProState.CAN_APPLY.value.toString(), ProState.VERSEMENT.value.toString() -> {
+                                commitTargetFragment(EvaluationVersementFragment())
+                            }
+
+                            ProState.REMBOURSEMENT.value.toString() -> {}
+
+                            ProState.RETARDE.value.toString() -> {}
+
+                            ProState.EN_EVALUATION.value.toString() -> {}
+
+                            ProState.REJETEE.value.toString() -> {
+                                commitTargetFragment(RejeteeFragment())
+                            }
+
+                            ProState.VERSEMENT_ECHOUE.value.toString() -> {}
+
+                            else -> {
+                                isLoaded = false
+                            }
+                        }
+                    }
+                } ?: commitTargetFragment(SingleProHFragment())
+            }
+        }
+    }
+
+    private fun commitTargetFragment(fragment: Fragment) {
+        childFragmentManager.beginTransaction().apply {
+            replace(mBinding.fcvHomeContainer.id, fragment)
+            setMaxLifecycle(fragment, Lifecycle.State.RESUMED)
+        }.commitAllowingStateLoss()
     }
 }

@@ -90,7 +90,7 @@ class NetMgr : BaseNetMgr() {
                     HeadersKey.DEVICE_ID to DeviceIdUtil.getDeviceId(),
                     HeadersKey.DEVICE_ID_ to DeviceIdUtil.getDeviceId(),
                     HeadersKey.IMEI to DeviceIdUtil.getDeviceId(),
-                    HeadersKey.MULTI_FLAG to CommonValue.MULTI_FLAG_DEFAULT,
+//                    HeadersKey.MULTI_FLAG to CommonValue.MULTI_FLAG_DEFAULT,
                     HeadersKey.V_FLAG to "",
                 )
             }

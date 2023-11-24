@@ -1,5 +1,6 @@
 package com.facile.immediate.electronique.fleurs.pret.choosegold.view
 
+import android.content.Intent
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,8 +12,10 @@ import com.facile.immediate.electronique.fleurs.pret.choosegold.view.dialog.Lock
 import com.facile.immediate.electronique.fleurs.pret.choosegold.view.dialog.PreOrdDialog
 import com.facile.immediate.electronique.fleurs.pret.choosegold.vm.ChooseGoldVM
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
+import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityChooseGoldInformationBinding
 import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseCountDownDialog
+import com.facile.immediate.electronique.fleurs.pret.main.MainActivity
 
 class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding, ChooseGoldVM>() {
 
@@ -39,7 +42,7 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
             finish()
         }
         mBinding.inTitleBar.ivCustomer.setOnClickListener {
-
+            ConsumerActivity.go(this)
         }
 
         mBinding.tvApplyLoan.setOnClickListener {
@@ -99,7 +102,11 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
             BaseCountDownDialog.with(this)
                 .img(R.mipmap.pic_submit_success)
                 .content(getString(R.string.text_votre_pr_t_a_t_demand_avec_succ_s))
-                .confirmText(getString(R.string.text_ok))
+                .confirm(getString(R.string.text_ok)) {
+                    startActivity(Intent(this, MainActivity::class.java).apply {
+                        putExtra("selectedItemId", R.id.navigation_one)
+                    })
+                }
                 .countDown(3)
                 .build().show()
         }

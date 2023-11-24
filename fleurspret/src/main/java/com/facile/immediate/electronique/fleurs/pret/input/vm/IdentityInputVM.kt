@@ -15,6 +15,8 @@ import java.io.File
 
 class IdentityInputVM(app: Application) : BaseInputViewModel(app) {
 
+    val updateStartLiveData: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val UpdateFinishLiveData: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val uploadPicSuccessLiveData: SingleLiveEvent<String> = SingleLiveEvent()
     val uploadPicFailedLiveData: SingleLiveEvent<String> = SingleLiveEvent()
 
@@ -45,6 +47,7 @@ class IdentityInputVM(app: Application) : BaseInputViewModel(app) {
     private fun uploadImg(imgPath: String, type: String, tag: String) {
         Uploader(object : UploadListener {
             override fun onStart(totalLength: Long) {
+                updateStartLiveData.value = true
                 Logger.logE("Uploader", "onStart totalLength:$totalLength")
             }
 
@@ -58,9 +61,11 @@ class IdentityInputVM(app: Application) : BaseInputViewModel(app) {
             override fun onFinish(response: String?) {
                 Logger.logE("Uploader", "onFinish response:$response")
                 uploadPicSuccessLiveData.value = tag
+                UpdateFinishLiveData.value = true
             }
 
             override fun onCancel() {
+                UpdateFinishLiveData.value = true
                 Logger.logE("Uploader", "onCancel")
             }
 
@@ -70,6 +75,7 @@ class IdentityInputVM(app: Application) : BaseInputViewModel(app) {
                         ?: AppKit.context.getString(R.string.text_upload_failed_please_upload_again_carga_fallida_por_favor_sube_de_nuevo)
                 )
                 uploadPicFailedLiveData.value = tag
+                UpdateFinishLiveData.value = true
             }
 
         }).upload(

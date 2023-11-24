@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_bg_ffffff_radius_6"
+    android:backgroundTint="@color/color_F3F4F8"
+    android:paddingHorizontal="14dp"
+    android:paddingVertical="10dp">
+
+    <TextView
+        android:id="@+id/tv_loan_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="6dp"
+        android:gravity="center"
+        android:textColor="@color/color_FFB02D"
+        android:textSize="14sp"
+        app:drawableStartCompat="@drawable/drawable_bg_width_2_height_10"
+        app:drawableTint="@color/color_FFB02D"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Retardé de 2 jours" />
+
+    <TextView
+        android:id="@+id/tv_repayment_gold_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textColor="@color/color_999999"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_loan_state"
+        tools:text="Retardé de 2 jours" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_repayment_gold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_repayment_gold_label">
+
+        <TextView
+            android:id="@+id/tv_xof_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:gravity="center"
+            android:text="@string/text_xof"
+            android:textColor="@color/color_242237"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_repayment_gold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/color_242237"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:text="300,702" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/tv_repayment_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textColor="@color/color_999999"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_loan_state"
+        tools:text="Retardé de 2 jours" />
+
+    <TextView
+        android:id="@+id/tv_repayment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textColor="@color/color_242237"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/ll_repayment_gold"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="30–11-2020" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="27dp"
+        android:background="@color/color_59979797"
+        app:layout_constraintBottom_toBottomOf="@id/ll_repayment_gold"
+        app:layout_constraintEnd_toStartOf="@id/tv_repayment_date"
+        app:layout_constraintStart_toEndOf="@id/ll_repayment_gold"
+        app:layout_constraintTop_toTopOf="@id/ll_repayment_gold" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,19 +4,19 @@ import android.app.Application
 import androidx.lifecycle.launchNet
 import com.arthur.baselib.structure.mvvm.BaseViewModel
 import com.arthur.baselib.structure.mvvm.SingleLiveEvent
-import com.facile.immediate.electronique.fleurs.pret.home.ProductType
+import com.facile.immediate.electronique.fleurs.pret.common.setting.GlobalSetting
 import com.facile.immediate.electronique.fleurs.pret.home.model.FirstModel
-import com.facile.immediate.electronique.fleurs.pret.home.model.GlobalInfo
 import com.facile.immediate.electronique.fleurs.pret.home.model.MultiP
+import com.facile.immediate.electronique.fleurs.pret.home.model.ProInfo
 
 class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(application) {
 
-    val prodTypeLiveData: SingleLiveEvent<ProductType> = SingleLiveEvent()
-    val singleProHLiveData: SingleLiveEvent<GlobalInfo?> = SingleLiveEvent()
+    val prodMultiTypeLiveData: SingleLiveEvent<List<MultiP>> = SingleLiveEvent()
+    val prodSingleTypeLiveData: SingleLiveEvent<ProInfo> = SingleLiveEvent()
     val multiProHLiveData: SingleLiveEvent<List<MultiP>?> = SingleLiveEvent()
     val refreshCompleteLiveData: SingleLiveEvent<Boolean?> = SingleLiveEvent()
 
-    var globalInfo: GlobalInfo? = null
+    var globalSetting: GlobalSetting? = null
 
     fun sOrM() {
         launchNet {
@@ -24,23 +24,20 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
         }.success { res ->
             res.aggressiveParentMethod?.let {
                 if (it.size > 1) {
-                    prodTypeLiveData.value = ProductType.M
-                } else {
-                    prodTypeLiveData.value = ProductType.S
+                    prodMultiTypeLiveData.value = it
+                } else if (it.size == 1) {
+                    prodSingleTypeLiveData.value = it[0]
                 }
             }
-        }.failed {
-            prodTypeLiveData.value = ProductType.UNKNOWN
         }.showLoading(true).launch()
     }
 
-    fun singleProH() {
+    fun globalSetting() {
         launchNet {
-            mModel.singleProH("afraidDecemberSlimClassicalTechnology")
+            mModel.globalSetting("afraidDecemberSlimClassicalTechnology")
         }.success { res ->
             res.aggressiveParentMethod?.let {
-                globalInfo = it
-                singleProHLiveData.value = it
+                globalSetting = it
             }
         }.finished {
             refreshCompleteLiveData.value = true

@@ -11,13 +11,13 @@ import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityMainBin
 import com.facile.immediate.electronique.fleurs.pret.home.view.FirstFragment
 import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
 import com.facile.immediate.electronique.fleurs.pret.mine.ThirdFragment
-import com.facile.immediate.electronique.fleurs.pret.order.SecondFragment
+import com.facile.immediate.electronique.fleurs.pret.order.view.SecondFragment
 import com.gyf.immersionbar.ImmersionBar
 
 
 class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
 
-    private val fragments = mutableMapOf<Int,Fragment>()
+    private val fragments = mutableMapOf<Int, Fragment>()
     override fun setStatusBar() {
         ImmersionBar.with(this)
             .transparentStatusBar()
@@ -44,7 +44,7 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
         initTab()
     }
 
-    private fun initTab(){
+    private fun initTab() {
         mBinding.inTabFirst.navigationOne.isSelected = true
         mBinding.inTabSecond.navigationTwo.isSelected = false
         mBinding.inTabThird.navigationThree.isSelected = false
@@ -87,9 +87,28 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         intent?.getIntExtra("selectedItemId", R.id.navigation_one)?.let {
-            mBinding.inTabFirst.navigationOne.isSelected = true
-            mBinding.inTabSecond.navigationTwo.isSelected = false
-            mBinding.inTabThird.navigationThree.isSelected = false
+
+            when (it) {
+                mBinding.inTabFirst.navigationOne.id -> {
+                    mBinding.inTabFirst.navigationOne.isSelected = true
+                    mBinding.inTabSecond.navigationTwo.isSelected = false
+                    mBinding.inTabThird.navigationThree.isSelected = false
+                }
+
+                mBinding.inTabSecond.navigationTwo.id -> {
+                    mBinding.inTabFirst.navigationOne.isSelected = false
+                    mBinding.inTabSecond.navigationTwo.isSelected = true
+                    mBinding.inTabThird.navigationThree.isSelected = false
+                }
+
+                mBinding.inTabThird.navigationThree.id -> {
+                    mBinding.inTabFirst.navigationOne.isSelected = false
+                    mBinding.inTabSecond.navigationTwo.isSelected = false
+                    mBinding.inTabThird.navigationThree.isSelected = true
+                }
+            }
+
+            showFragmentAndHideOthers(fragments[it])
         }
     }
 }

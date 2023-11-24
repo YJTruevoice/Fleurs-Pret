@@ -40,9 +40,9 @@ data class ProdInfo(
     val dateStr: String
         get() {
             return DateUtil.getDateWithFormat(
-                DateUtil.targetTimeMillis(
-                    dampCabbageMaximumSorryCabbage
-                ) + plainLungAppleGale * 1000 * 60 * 60 * 24, "dd-MM-yyyy"
+                DateUtil.targetTimeMillis(dampCabbageMaximumSorryCabbage)
+                        + plainLungAppleGale * 1000 * 60 * 60 * 24,
+                "dd-MM-yyyy"
             )
         }
 }

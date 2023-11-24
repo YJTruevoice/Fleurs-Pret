@@ -9,6 +9,7 @@ import com.facile.immediate.electronique.fleurs.pret.bottomsheet.BottomSheet
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.bean.CommonChooseListItem
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.config.ConfigType
+import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputContactInformationBinding
 import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
 import com.facile.immediate.electronique.fleurs.pret.input.vm.ContactInputVM
@@ -45,7 +46,7 @@ class InputContactInformationActivity :
             finish()
         }
         mBinding.inTitleBar.ivCustomer.setOnClickListener {
-
+            ConsumerActivity.go(this)
         }
         mBinding.inContact1st.tvRelation.setOnClickListener {
             mViewModel.config(ConfigType.relationship)
@@ -55,7 +56,9 @@ class InputContactInformationActivity :
         }
 
         mBinding.inContact1st.etPhone.addTextChangedListener(mViewModel.textWatcher)
-        mBinding.inContact2st.etPhone.addTextChangedListener(mViewModel.textWatcher)
+        mBinding.inContact1st.etNom.addTextChangedListener(mViewModel.textWatcher)
+        mBinding.inContact1st.etPhone.addTextChangedListener(mViewModel.textWatcher)
+        mBinding.inContact2st.etNom.addTextChangedListener(mViewModel.textWatcher)
 
         mBinding.tvNext.setOnClickListener {
             if (!isNextBtnEnable()) {
@@ -113,10 +116,10 @@ class InputContactInformationActivity :
 
     private fun isNextBtnEnable(): Boolean {
         mBinding.tvNext.isSelected = InputUtil.nextBtnEnable(
-//            mBinding.inContact1st.tvRelation,
+            mBinding.inContact1st.tvRelation,
             mBinding.inContact1st.etPhone,
             mBinding.inContact1st.etNom,
-//            mBinding.inContact2st.tvRelation,
+            mBinding.inContact2st.tvRelation,
             mBinding.inContact2st.etPhone,
             mBinding.inContact2st.etNom
         )

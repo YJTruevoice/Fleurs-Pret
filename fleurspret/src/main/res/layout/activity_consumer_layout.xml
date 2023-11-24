@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/in_title_bar"
+        layout="@layout/title_bar_layout" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/color_F6F7F9" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/shape_bg_stroke_e7e7e7_1_radius_6"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="18dp">
+
+        <TextView
+            android:id="@+id/tv_phone_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_t_l_phone"
+            android:textColor="@color/color_242237"
+            android:textSize="16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_phone_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_simple_text_list" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/shape_bg_stroke_e7e7e7_1_radius_6"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="18dp">
+
+        <TextView
+            android:id="@+id/tv_whats_app_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_whatsapp"
+            android:textColor="@color/color_242237"
+            android:textSize="16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_whats_app_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_simple_text_list" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/shape_bg_stroke_e7e7e7_1_radius_6"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="18dp">
+
+        <TextView
+            android:id="@+id/tv_email_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_e_mail"
+            android:textColor="@color/color_242237"
+            android:textSize="16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_email_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_simple_text_list" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/tv_consumer_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="16dp"
+        android:lineSpacingExtra="8dp"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"
+        tools:text="*Nous vous répondrons dans 24 heures." />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

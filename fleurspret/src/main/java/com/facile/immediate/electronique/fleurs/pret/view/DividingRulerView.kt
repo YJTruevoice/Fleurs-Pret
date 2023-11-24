@@ -20,7 +20,7 @@ class DividingRulerView @JvmOverloads constructor(
 
     fun setCurMaxMount(maxMount: String) {
         try {
-            val maxMountInt: Int = maxMount.toInt()
+            val maxMountInt: Int = maxMount.toFloat().toInt()
             binding.inDividingLeft.tvOffset1.text = "${maxMountInt - 1000}"
             binding.inDividingLeft.tvOffset2.text = "${maxMountInt - 2000}"
 

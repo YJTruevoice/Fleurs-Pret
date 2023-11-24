@@ -3,24 +3,8 @@ package com.facile.immediate.electronique.fleurs.pret.home.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-/**
-"afraidDecemberSlimClassicalTechnology": "maxCreditAmount",
-"energeticFightTobaccoSpade": "overdueDays",
-"lowTopicStraightImpression": "reapplicationDays",
-"foggyEveryoneLivingArmyPrinter": "appName",
-"chineseGeographyTenseHopefulSpirit": "logoUrl",
-"simplePlanetAugust": "mobiKey",
-"rudeReceptionCyclistArcticHunger": "viewStatus",
-"bigGrandsonPetrolLetter": "curUserId",
-"neitherFilmReligiousBuddhism": "extendDuration",
-"normalBillClinicMercifulBay": "orderId",
-"successfulStayIceHim": "appSsid",
-"theseMommyBroadHour": "jumpFlag",
-"comfortableMountain": "jumpStateTitle",
-"passiveEntireUnhappyValley": "jumpButtonTitle"
- */
 @Parcelize
-data class MultiOrSingle(
+open class ProInfo(
     val afraidDecemberSlimClassicalTechnology: String? = null,
     val energeticFightTobaccoSpade: String? = null,
     val lowTopicStraightImpression: String? = null,

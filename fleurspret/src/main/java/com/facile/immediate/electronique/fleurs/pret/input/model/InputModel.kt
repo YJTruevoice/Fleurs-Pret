@@ -62,24 +62,12 @@ class InputModel : IBaseModel {
         return service.saveIdentityInfo(pageType, phoneNo, idCardNo)
     }
 
-    suspend fun gatheringInfo(): BaseResponse<GatheringInfo?> {
+    suspend fun gatheringInfo(): BaseResponse<List<GatheringInfo>?> {
         return service.gatheringInfo()
     }
 
-    suspend fun saveGatheringInfo(
-        pageType: Int,
-        bankCode: String,
-        bankName: String,
-        bankAccountNumber: String,
-        bankAccountType: String,
-    ): BaseResponse<Any?> {
-        return service.saveGatheringInfo(
-            pageType,
-            bankCode,
-            bankName,
-            bankAccountNumber,
-            bankAccountType
-        )
+    suspend fun saveGatheringInfo(map: Map<String, String>): BaseResponse<Any?> {
+        return service.saveGatheringInfo(map)
     }
 
     suspend fun identityAfrPic(pageType: Int): BaseResponse<IdentityPic?> {

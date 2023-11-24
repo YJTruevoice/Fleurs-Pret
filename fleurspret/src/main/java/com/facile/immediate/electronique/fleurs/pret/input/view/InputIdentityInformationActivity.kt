@@ -8,12 +8,17 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
+import com.arthur.commonlib.ability.AppKit
+import com.arthur.commonlib.ability.Loading
+import com.arthur.commonlib.ability.Toaster
 import com.arthur.commonlib.utils.DensityUtils.Companion.dp2px
 import com.arthur.commonlib.utils.image.DisplayUtils
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
+import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputIdentityInformationBinding
 import com.facile.immediate.electronique.fleurs.pret.input.InputConstant
+import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
 import com.facile.immediate.electronique.fleurs.pret.input.vm.IdentityInputVM
 import com.gyf.immersionbar.ImmersionBar
 import com.permissionx.guolindev.PermissionX
@@ -43,7 +48,7 @@ class InputIdentityInformationActivity :
             finish()
         }
         mBinding.inTitleBar.ivCustomer.setOnClickListener {
-
+            ConsumerActivity.go(this)
         }
 
         mBinding.ivCardFront.setOnClickListener {
@@ -60,6 +65,10 @@ class InputIdentityInformationActivity :
         mBinding.etPhone.addTextChangedListener(mViewModel.textWatcher)
 
         mBinding.tvNext.setOnClickListener {
+            if (!isNextBtnEnable()) {
+                Toaster.showToast(AppKit.context.getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
+                return@setOnClickListener
+            }
             mViewModel.idNo = mBinding.etIdentityCard.text.toString()
             mViewModel.phoneNo = mBinding.etPhone.text.toString()
             mViewModel.identityPic()
@@ -73,6 +82,17 @@ class InputIdentityInformationActivity :
 
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
+        mViewModel.textWatcherLiveData.observe(this) {
+            isNextBtnEnable()
+        }
+
+        mViewModel.updateStartLiveData.observe(this) {
+            Loading.startLoading(this)
+        }
+        mViewModel.UpdateFinishLiveData.observe(this) {
+            Loading.closeLoading()
+        }
+
         mViewModel.uploadPicSuccessLiveData.observe(this) {
             it?.let {
                 when (it) {
@@ -115,6 +135,7 @@ class InputIdentityInformationActivity :
                         )
                     }
                 }
+                isNextBtnEnable()
             }
         }
 
@@ -238,5 +259,17 @@ class InputIdentityInformationActivity :
                     ).show()
                 }
             }
+    }
+
+    private fun isNextBtnEnable(): Boolean {
+        mBinding.tvNext.isSelected =
+            isPicUpdateAll() && InputUtil.nextBtnEnable(mBinding.etIdentityCard, mBinding.etPhone)
+        return mBinding.tvNext.isSelected
+    }
+
+    private fun isPicUpdateAll(): Boolean {
+        return mBinding.tvCardFrontUploadState.text.toString() == getString(R.string.text_t_l_chargement_r_ussi)
+                && mBinding.tvCardBackUploadState.text.toString() == getString(R.string.text_t_l_chargement_r_ussi)
+                && mBinding.tvFaceAfrUploadState.text.toString() == getString(R.string.text_t_l_chargement_r_ussi)
     }
 }

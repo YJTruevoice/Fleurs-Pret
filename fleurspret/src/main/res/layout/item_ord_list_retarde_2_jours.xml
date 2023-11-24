@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginVertical="6dp"
+    android:background="@drawable/shape_bg_stroke_e7e7e7_1_radius_4"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <include layout="@layout/view_name_and_state" />
+
+    <include
+        layout="@layout/view_montant_and_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/text_si_vous_refusez_toujours_de_rembourser_ou_retardez_le_remboursement_toutes_les_cons_quences_vous_serez_confront_y_compris_l_augmentation_des_amendes_la_r_duction_du_cr_dit_le_gel_des_cartes_bancaires_les_poursuites_judiciaires_etc"
+        android:textColor="@color/color_FF0000"
+        android:textSize="14sp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp">
+
+        <TextView
+            android:id="@+id/tv_delay_remboursement"
+            android:layout_width="150dp"
+            android:layout_height="38dp"
+            android:background="@drawable/shape_bg_stroke_4635ff_1_radius_100"
+            android:gravity="center"
+            android:text="@string/text_prolonger_des_d_lais_de_remboursement"
+            android:textColor="@color/color_4635FF"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_remboursement"
+            android:layout_width="150dp"
+            android:layout_height="38dp"
+            android:background="@drawable/shape_bg_4635ff_radius_100"
+            android:gravity="center"
+            android:text="@string/text_remboursement"
+            android:textColor="@color/color_FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -4,6 +4,7 @@ import android.content.Intent
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
 import com.arthur.commonlib.utils.image.DisplayUtils
 import com.facile.immediate.electronique.fleurs.pret.R
+import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentNotificationsBinding
 import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
 import com.facile.immediate.electronique.fleurs.pret.web.WebActivity
@@ -13,15 +14,13 @@ class ThirdFragment : BaseMVVMFragment<FragmentNotificationsBinding, ThirdViewMo
     override fun setListener() {
         super.setListener()
         mBinding.ivCustomer.setOnClickListener {
-            // 客服
+            ConsumerActivity.go(requireContext())
         }
         mBinding.tvServiceCenter.setOnClickListener {
-            // 客服
-
+            ConsumerActivity.go(requireContext())
         }
         mBinding.tvServiceOnline.setOnClickListener {
-            // 客服
-
+            ConsumerActivity.go(requireContext())
         }
         mBinding.tvPrivacyPolicy.setOnClickListener {
             WebActivity.open(requireContext(), "https://baidu.com")

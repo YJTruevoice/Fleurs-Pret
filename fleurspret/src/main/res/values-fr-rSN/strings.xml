@@ -105,6 +105,33 @@
     <string name="text_montant_du_pr_t_augment_de_50_100">Montant du prêt augmenté de 50% à 100%</string>
     <string name="text_ok">OK</string>
     <string name="text_votre_pr_t_a_t_demand_avec_succ_s">Votre prêt a été demandé avec succès.</string>
+    <string name="text_mes_ordres">Mes ordres</string>
+    <string name="text_s_il_vous_pla_t_attendez">S\'il vous plaît, attendez</string>
+    <string name="text_remboursement">Remboursement</string>
+    <string name="text_si_vous_refusez_toujours_de_rembourser_ou_retardez_le_remboursement_toutes_les_cons_quences_vous_serez_confront_y_compris_l_augmentation_des_amendes_la_r_duction_du_cr_dit_le_gel_des_cartes_bancaires_les_poursuites_judiciaires_etc">Si vous refusez toujours de rembourser ou retardez le remboursement, toutes les conséquences\nvous serez confronté, y compris l\'augmentation des amendes, la réduction du crédit, le gel des cartes bancaires, les poursuites judiciaires, etc.</string>
+    <string name="text_voir_maintenant">Voir maintenant</string>
+    <string name="text_d_sol_votre_commande_n_est_pas_approuv_e_cliquez_voir_les_raisons_probables">Désolé, votre commande n\'est pas approuvée, cliquez voir les raisons probables.</string>
+    <string name="text_mettre_jour_le_compte_de_r_ception">Mettre à jour le compte de réception</string>
+    <string name="text_e_syst_me_a_d_tect_des_informations_fausses_dans_vos_informations_de_compte_de_r_ception_veuillez_les_remettre">e système a détecté des informations fausses dans vos informations de compte de réception, veuillez les remettre.</string>
+    <string name="text_cette_commande_est_quitte_cliquez_sur_le_bouton_pour_en_emprunter_une_autre">Cette commande est quitte, cliquez sur le bouton pour en emprunter une autre</string>
+    <string name="text_aucune_commande_associ_e_trouv_e">Aucune commande associée trouvée</string>
+    <string name="text_la_demande_rejet_e">La demande rejetée</string>
+    <string name="text_nous_sommes_en_train_d_valuer_votre_demande_du_pr_t_veuillez_attendre_patiemment_le_r_sultat_d_valuation">Nous sommes en train d\'évaluer votre demande du prêt, veuillez attendre patiemment le résultat d\'évaluation.</string>
+    <string name="text_en_valuation">En évaluation</string>
+    <string name="text_monto_del_pr_stamo">Monto del préstamo</string>
+    <string name="text_fecha_de_solicitud">Fecha de solicitud</string>
+    <string name="text_en_train_de_versement">En train de versement</string>
+    <string name="text_votre_demande_du_pr_t_a_t_approuv_e_le_versement_est_en_cours">Votre demande du prêt a été approuvée.\nLe versement est en cours.</string>
+    <string name="text_d_sol">Désolé</string>
+    <string name="text_rejetee_desc">Les raisons du rejet peuvent être ： -Les informations fournies sont incorrectes -Votre photo n\'est pas clairement identifiée -Vos informations ont besoin d\'une révision approfondie Vous pouvez refaire une demande après %s jours.</string>
+    <string name="text_la_demande_a_t_rejet_e">La demande a été rejetée</string>
+    <string name="text_demander_miantenant">Demander miantenant</string>
+    <string name="text_bonjour">Bonjour!</string>
+    <string name="text_veuillez_essayer_les_pr_ts_gratuits_suivants">Veuillez essayer les prêts gratuits suivants :</string>
+    <string name="text_t_l_phone">Téléphone</string>
+    <string name="text_whatsapp">Whatsapp</string>
+    <string name="text_e_mail">E-mail</string>
+    <string name="text_copi">Copié</string>
 
     <string-array name="string_arr_months">
         <item>Janvier</item>

@@ -27,7 +27,6 @@ open class BaseCountDownDialog @JvmOverloads constructor(
 
     override fun setDialogData(config: BaseDialogConfigEntity?) {
         (config as? CountDownDialogConfigEntity)?.let {
-            config.touchOutsideCancelAble = true
             // 公共初始化
             super.setDialogData(config)
 
@@ -80,6 +79,7 @@ open class BaseCountDownDialog @JvmOverloads constructor(
     override fun dismiss() {
         mBinding.tvCountDown.stop()
         super.dismiss()
+        config?.confirmCallback?.invoke(this@BaseCountDownDialog)
     }
 
     companion object {
@@ -107,13 +107,6 @@ open class BaseCountDownDialog @JvmOverloads constructor(
         fun content(content: String?): Builder {
             content?.let {
                 (config as? CountDownDialogConfigEntity)?.content = it
-            }
-            return this
-        }
-
-        fun confirmText(confirmText: String?): Builder {
-            confirmText?.let {
-                (config as? CountDownDialogConfigEntity)?.confirmText = it
             }
             return this
         }

@@ -7,6 +7,7 @@ import androidx.lifecycle.launchNet
 import com.arthur.baselib.structure.base.IBaseModel
 import com.arthur.baselib.structure.mvvm.BaseViewModel
 import com.arthur.baselib.structure.mvvm.SingleLiveEvent
+import com.facile.immediate.electronique.fleurs.pret.BuildConfig
 import com.facile.immediate.electronique.fleurs.pret.input.model.Region
 import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
 
@@ -44,14 +45,16 @@ open class ConfigViewModel<M : IBaseModel>(app: Application) : BaseViewModel<M>(
         }.success {
             configLiveData.value = Pair(target, it.aggressiveParentMethod)
         }.failed {
-            configLiveData.value = Pair(
-                target, listOf(
-                    CommonConfigItem(code = Sex.man.code, value = Sex.man.value),
-                    CommonConfigItem(code = Sex.womon.code, value = Sex.womon.value),
-                    CommonConfigItem(code = Sex.other.code, value = Sex.other.value)
+            if (BuildConfig.DEBUG) {
+                configLiveData.value = Pair(
+                    target, listOf(
+                        CommonConfigItem(code = Sex.man.code, value = Sex.man.value),
+                        CommonConfigItem(code = Sex.womon.code, value = Sex.womon.value),
+                        CommonConfigItem(code = Sex.other.code, value = Sex.other.value)
+                    )
                 )
-            )
-        }.launch()
+            }
+        }.showLoading(true).launch()
     }
 
 

@@ -11,11 +11,7 @@ interface FirstAPI {
 
     @FormUrlEncoded
     @POST("/fleurspret/dampFrost/mustLiquidTrial")
-    suspend fun multiOrSingle(@Field(NetMgr.CommonParamsKey.USER_ID) uid: String = UserManager.userId()): BaseResponse<List<MultiOrSingle>?>
-
-    @FormUrlEncoded
-    @POST("/fleurspret/religiousLawyer/parkDeadEquipment")
-    suspend fun singleProH(@Field("solidAugustGuard") key: String): BaseResponse<GlobalInfo?>
+    suspend fun multiOrSingle(@Field(NetMgr.CommonParamsKey.USER_ID) uid: String = UserManager.userId()): BaseResponse<List<ProInfo>?>
 
     @FormUrlEncoded
     @POST("/fleurspret/dampFrost/mustLiquidTrial")

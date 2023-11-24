@@ -96,13 +96,13 @@
                             android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
                             android:backgroundTint="@color/color_B3CF1616"
                             android:gravity="center"
-                            android:text="@string/text_t_l_chargement_r_ussi"
                             android:textColor="@color/color_FFFFFF"
                             android:textSize="10sp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
+                            tools:text="@string/text_t_l_chargement_r_ussi"
                             tools:visibility="visible" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -158,13 +158,13 @@
                             android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
                             android:backgroundTint="@color/color_B3CF1616"
                             android:gravity="center"
-                            android:text="@string/text_t_l_chargement_r_ussi"
                             android:textColor="@color/color_FFFFFF"
                             android:textSize="10sp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
+                            tools:text="@string/text_t_l_chargement_r_ussi"
                             tools:visibility="visible" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -293,13 +293,13 @@
                         android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
                         android:backgroundTint="@color/color_B3CF1616"
                         android:gravity="center"
-                        android:text="@string/text_t_l_chargement_r_ussi"
                         android:textColor="@color/color_FFFFFF"
                         android:textSize="10sp"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        tools:text="@string/text_t_l_chargement_r_ussi"
                         tools:visibility="visible" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

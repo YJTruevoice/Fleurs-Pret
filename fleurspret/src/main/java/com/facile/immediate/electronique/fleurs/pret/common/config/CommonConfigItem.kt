@@ -7,8 +7,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 open class CommonConfigItem(
-    @SerializedName("code")
+    @SerializedName("greekCompetitorSquareBirdcage")
     val code: String = "",
-    @SerializedName("value")
+    @SerializedName("egyptianHeight")
     val value: String = ""
 ) : Parcelable

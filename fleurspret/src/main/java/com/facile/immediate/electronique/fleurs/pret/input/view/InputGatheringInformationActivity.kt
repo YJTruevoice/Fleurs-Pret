@@ -8,6 +8,7 @@ import com.facile.immediate.electronique.fleurs.pret.bottomsheet.BottomSheet
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.bean.CommonChooseListItem
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.config.ConfigType
+import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputGatheringInformationBinding
 import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
 import com.facile.immediate.electronique.fleurs.pret.input.vm.GatheringInputVM
@@ -16,7 +17,8 @@ import com.gyf.immersionbar.ImmersionBar
 class InputGatheringInformationActivity :
     BaseMVVMActivity<ActivityInputGatheringInformationBinding, GatheringInputVM>() {
 
-    private var gatheringSelectedItem: CommonChooseListItem? = null
+    private var collectionTypeSelectedItem: CommonChooseListItem? = null
+    private var bankAccountTypeSelectedItem: CommonChooseListItem? = null
 
     override fun setStatusBar() {
         ImmersionBar.with(this)
@@ -39,7 +41,7 @@ class InputGatheringInformationActivity :
             finish()
         }
         mBinding.inTitleBar.ivCustomer.setOnClickListener {
-
+            ConsumerActivity.go(this)
         }
 
         mBinding.etAccountNo.addTextChangedListener(mViewModel.textWatcher)
@@ -58,13 +60,15 @@ class InputGatheringInformationActivity :
                 Toaster.showToast(getString(R.string.text_les_num_ros_de_carte_bancaire_saisis_deux_fois_sont_incoh_rents))
                 return@setOnClickListener
             }
-
-            mViewModel.saveGatheringInfo(
-                bankCode = "",
-                bankName = "",
-                bankAccountType = "",
-                bankAccountNumber = ""
-            )
+            if (collectionTypeSelectedItem?.value == "1") {
+                mViewModel.config(ConfigType.bankAccountType)
+            } else {
+                mViewModel.saveGatheringInfo(
+                    bankAccountType = collectionTypeSelectedItem?.value.toString(),
+                    bankAccountNumber = mBinding.etAccountNoConfirm.text.toString(),
+                    collectionType = collectionTypeSelectedItem?.value.toString()
+                )
+            }
         }
     }
 
@@ -80,12 +84,27 @@ class InputGatheringInformationActivity :
             pair?.second?.forEach {
                 list.add(CommonChooseListItem(it.value, it.code))
             }
-            BottomSheet.showListBottomSheet(this, list, selected = gatheringSelectedItem) {
+            BottomSheet.showListBottomSheet(this, list, selected = collectionTypeSelectedItem) {
                 when (pair?.first) {
                     ConfigType.collectionType -> {
                         mBinding.tvGatheringWay.text = it.name
                         isNextBtnEnable()
-                        gatheringSelectedItem = it
+                        collectionTypeSelectedItem = it
+                    }
+
+                    ConfigType.bankAccountType -> {
+                        bankAccountTypeSelectedItem = it
+                        mViewModel.config(ConfigType.bankNameList)
+                    }
+
+                    ConfigType.bankNameList -> {
+                        mViewModel.saveGatheringInfo(
+                            bankCode = it.value.toString(),
+                            bankName = it.name,
+                            bankAccountType = bankAccountTypeSelectedItem?.value.toString(),
+                            bankAccountNumber = mBinding.etAccountNoConfirm.text.toString(),
+                            collectionType = collectionTypeSelectedItem?.value.toString()
+                        )
                     }
 
                     else -> {}

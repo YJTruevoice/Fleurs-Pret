@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_two"
-        android:name="com.facile.immediate.electronique.fleurs.pret.order.SecondFragment"
+        android:name="com.facile.immediate.electronique.fleurs.pret.order.view.SecondFragment"
         android:label="@string/title_two"
         tools:layout="@layout/fragment_dashboard" />
 

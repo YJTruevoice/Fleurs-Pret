@@ -1,6 +1,7 @@
 package com.arthur.commonlib.utils
 
 import android.content.Context
+import com.arthur.commonlib.ability.AppKit
 
 class DensityUtils {
     companion object {
@@ -37,16 +38,16 @@ class DensityUtils {
         }
 
         fun Float.dp2px(context: Context?): Int {
-            return dp2px(context?: com.arthur.commonlib.ability.AppKit.context, this)
+            return dp2px(context?: AppKit.context, this)
         }
         fun Float.px2dp(context: Context?): Int {
-            return px2dp(context?: com.arthur.commonlib.ability.AppKit.context, this)
+            return px2dp(context?: AppKit.context, this)
         }
         fun Float.sp2px(context: Context?): Int {
-            return sp2px(context?: com.arthur.commonlib.ability.AppKit.context, this)
+            return sp2px(context?: AppKit.context, this)
         }
         fun Float.px2sp(context: Context?): Int {
-            return px2sp(context?: com.arthur.commonlib.ability.AppKit.context, this)
+            return px2sp(context?: AppKit.context, this)
         }
 
     }
