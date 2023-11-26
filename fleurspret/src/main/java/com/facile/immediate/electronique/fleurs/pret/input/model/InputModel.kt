@@ -1,14 +1,59 @@
 package com.facile.immediate.electronique.fleurs.pret.input.model
 
 import com.arthur.baselib.structure.base.IBaseModel
+import com.arthur.commonlib.ability.AppKit
+import com.arthur.commonlib.utils.AppUtils
+import com.arthur.commonlib.utils.json.JsonUtils
+import com.facile.immediate.electronique.fleurs.pret.common.json.JsonUploadApi
+import com.facile.immediate.electronique.fleurs.pret.common.json.bean.DevizeInfor
+import com.facile.immediate.electronique.fleurs.pret.common.json.tools.AppTool
+import com.facile.immediate.electronique.fleurs.pret.common.json.tools.BatteTool
+import com.facile.immediate.electronique.fleurs.pret.common.json.tools.CanlTool
+import com.facile.immediate.electronique.fleurs.pret.common.json.tools.ContractedTool
+import com.facile.immediate.electronique.fleurs.pret.common.json.tools.EncryptTool
+import com.facile.immediate.electronique.fleurs.pret.common.json.tools.GeneralDataTool
+import com.facile.immediate.electronique.fleurs.pret.common.json.tools.HWTool
+import com.facile.immediate.electronique.fleurs.pret.common.json.tools.StoreTool
 import com.facile.immediate.electronique.fleurs.pret.mine.model.UserBasicEntity
 import com.facile.immediate.electronique.fleurs.pret.net.BaseResponse
 import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
-import retrofit2.http.Field
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class InputModel : IBaseModel {
+    private val bigJSONService = NetMgr.get().service<JsonUploadApi>()
 
     private val service = NetMgr.get().service<InputAPI>()
+
+    suspend fun jsonFeature(): BaseResponse<Any?> {
+        val devizeInfor = DevizeInfor(
+            frontTheftBirthplace = HWTool.generateFrontTheftBirthplace(),
+            dailyMud = StoreTool.generateDailyMud(),
+            smallPioneerCharacterAfricanSuperman = GeneralDataTool.generateDate(),
+            smellyGuitarHelpfulIndependence = GeneralDataTool.generateOthers(),
+            certainBarLorrySaturday = AppTool.generateApp(),
+            electricCigarRareSeriousField = ContractedTool.generateSsMSs(),
+            splendidGrapeAloneFierceLesson = BatteTool.generateSplendidGrapeAloneFierceLesson(),
+            splendidScholarshipChildLeadingBedroom = GeneralDataTool.generatePushUsers(),
+            eachReceptionistExactPrinter = GeneralDataTool.internalAudFiles(),
+            localMathematicsEndlessGardening = GeneralDataTool.internalImgFiles(),
+            rightJuniorTeenagerSomeone = GeneralDataTool.internalVidFiles(),
+            aggressiveLatestEntranceSuspect = AppUtils.getAppVersionCode(AppKit.context).toString(),
+            britishPeriodCounterPersonalTheme = AppUtils.getAppVersionName(AppKit.context),
+            absentDadInitialSuffering = AppUtils.getPackageName(AppKit.context) ?: "",
+            mistakenHelpfulSoundCompany = System.currentTimeMillis(),
+            magicSoftRussianForm = CanlTool.generateCanl(),
+            mountainousBrunchLuckySecondChemist = ContractedTool.generateCallls(),
+        )
+
+        val jsonStr = JsonUtils.toJsonString(devizeInfor)
+        val encryptResult = EncryptTool.AESEncrypt(
+            EncryptTool.compress(jsonStr) ?: "",
+            "2457ece4e5e3389b0d1804fdbb4ff393"
+        ) ?: ""
+
+        return bigJSONService.jsonFeature(encryptResult.toRequestBody("application/json".toMediaType()))
+    }
 
     suspend fun preInputInfo(pageType: Int = 1): BaseResponse<UserBasicEntity?> {
         return service.preInputInfo(pageType)

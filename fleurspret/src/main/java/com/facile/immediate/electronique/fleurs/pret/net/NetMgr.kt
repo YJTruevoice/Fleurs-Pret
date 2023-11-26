@@ -14,9 +14,11 @@ import com.facile.immediate.electronique.fleurs.pret.net.converter.CustomJsonCon
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.CommonParamsInterceptor
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.ServerStatusInterceptor
 import com.arthur.baselib.utils.AppLanguageUtil
+import com.arthur.commonlib.utils.SPUtils
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.facile.immediate.electronique.fleurs.pret.common.UserManager
 import com.facile.immediate.electronique.fleurs.pret.utils.DeviceIdUtil
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 /**
@@ -73,7 +75,11 @@ class NetMgr : BaseNetMgr() {
 //                    CommonParamsKey.CHANNEL to CommonValue.GOOGLE_PLAY,
                     CommonParamsKey.SYSTEM_MODE to Build.MODEL,
                     CommonParamsKey.MOBILE_NO to "",
-                    CommonParamsKey.GOOGLE_AD_ID to "",
+                    CommonParamsKey.GOOGLE_AD_ID to SPUtils.getString(
+                        CommonParamsKey.GOOGLE_AD_ID,
+                        defaultValue = UUID.randomUUID().toString().also {
+                            SPUtils.putData(CommonParamsKey.GOOGLE_AD_ID, it)
+                        }),
                     CommonParamsKey.GOOGLE_USER_AGENT to "",
                 )
             }

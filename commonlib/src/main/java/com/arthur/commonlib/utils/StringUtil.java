@@ -1,5 +1,6 @@
 package com.arthur.commonlib.utils;
 
+import android.os.Build;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -314,7 +315,7 @@ public class StringUtil {
      * StringUtils.isBlank("  bob  ") = false
      * </pre>
      *
-     * @param cs  the CharSequence to check, may be null
+     * @param cs the CharSequence to check, may be null
      * @return {@code true} if the CharSequence is null, empty or whitespace
      * @since 2.0
      * @since 3.0 Changed signature from isBlank(String) to isBlank(CharSequence)
@@ -518,6 +519,42 @@ public class StringUtil {
             }
         }
         return outPut;
+    }
+
+    /**
+     * 对string进行gzip操作
+     *
+     * @param str
+     * @return
+     * @throws IOException
+     */
+    public static String compress(String str) throws IOException {
+        if (str == null || str.length() == 0) {
+            return null;
+        }
+        ByteArrayOutputStream byteOut = null;
+        GZIPOutputStream gzipOut;
+        try {
+            byteOut = new ByteArrayOutputStream();
+
+            gzipOut = new GZIPOutputStream(byteOut);
+            gzipOut.write(str.getBytes(StandardCharsets.UTF_8));
+
+            gzipOut.finish();
+            gzipOut.close();
+
+            byteOut.flush();
+            byteOut.close();
+        } finally {
+            if (byteOut != null) {
+                byteOut.close();
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return byteOut.toString(StandardCharsets.ISO_8859_1);
+        } else {
+            return byteOut.toString("ISO-8859-1");
+        }
     }
 
 
@@ -741,7 +778,6 @@ public class StringUtil {
     }
 
 
-
     /**
      * 删除所有的空白符：换行、空格、tab
      */
@@ -791,11 +827,11 @@ public class StringUtil {
         char[] chars = str.toCharArray();
         int len = chars.length;
         int st = 0;
-        while ( (st < len) && (chars[st] == c) ){
-            st ++;
+        while ((st < len) && (chars[st] == c)) {
+            st++;
         }
-        while ( (st < len) && (chars[len-1] == c) ){
-            len --;
+        while ((st < len) && (chars[len - 1] == c)) {
+            len--;
         }
 
         return (st > 0) || (len < chars.length) ? str.substring(st, len) : str;

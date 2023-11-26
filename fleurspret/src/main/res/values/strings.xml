@@ -136,6 +136,7 @@
     <string name="text_s_il_vous_pla_t_donner_une_bonne_critique">S\'il vous plaît donner une bonne critique</string>
     <string name="text_error_de_red">Error de red</string>
     <string name="text_actualizar">Actualizar</string>
+    <string name="text_afin_de_vous_fournir_un_bon_service_activez_les_autorisations_correspondantes_dans_les_param_tres_de_votre_t_l_phone">Afin de vous fournir un bon service, activez les autorisations correspondantes dans les paramètres de votre téléphone</string>
 
     <string-array name="string_arr_months">
         <item>Janvier</item>

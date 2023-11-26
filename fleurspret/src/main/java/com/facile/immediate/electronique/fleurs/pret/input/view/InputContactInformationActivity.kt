@@ -1,5 +1,10 @@
 package com.facile.immediate.electronique.fleurs.pret.input.view
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import android.view.MotionEvent
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
 import com.arthur.commonlib.ability.AppKit
@@ -11,9 +16,12 @@ import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplay
 import com.facile.immediate.electronique.fleurs.pret.common.config.ConfigType
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputContactInformationBinding
+import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseConfirmCancelDialog
 import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
 import com.facile.immediate.electronique.fleurs.pret.input.vm.ContactInputVM
 import com.gyf.immersionbar.ImmersionBar
+import com.permissionx.guolindev.PermissionX
+
 
 class InputContactInformationActivity :
     BaseMVVMActivity<ActivityInputContactInformationBinding, ContactInputVM>() {
@@ -111,6 +119,51 @@ class InputContactInformationActivity :
 
         mViewModel.textWatcherLiveData.observe(this) {
             isNextBtnEnable()
+        }
+
+        mViewModel.saveContactSucLiveData.observe(this) {
+            BaseConfirmCancelDialog.with(this)
+                .content(getString(R.string.text_permission_declare))
+                .confirm(getString(R.string.text_confirmer)) {
+                    PermissionX.init(this)
+                        .permissions(
+                            Manifest.permission.READ_PHONE_STATE,
+                            Manifest.permission.READ_CALENDAR,
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_SMS,
+                            Manifest.permission.READ_SMS,
+                        )
+                        .request { allGranted: Boolean, grantedList: List<String?>?, deniedList: List<String?>? ->
+                            if (allGranted) {
+                                mViewModel.bigJsonUp()
+                            } else {
+                                BaseConfirmCancelDialog.with(this)
+                                    .content(getString(R.string.text_afin_de_vous_fournir_un_bon_service_activez_les_autorisations_correspondantes_dans_les_param_tres_de_votre_t_l_phone))
+                                    .confirm(getString(R.string.text_confirmer)) {
+                                        val intent = Intent()
+
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                            intent.action =
+                                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                            val uri =
+                                                Uri.fromParts("package", this.packageName, null)
+                                            intent.data = uri
+                                        } else {
+                                            intent.action = Settings.ACTION_APPLICATION_SETTINGS
+                                        }
+
+                                        startActivity(intent)
+                                    }.cancel(getString(R.string.text_fermer)) {
+
+                                    }.build().show()
+                            }
+                        }
+                }.cancel(getString(R.string.text_fermer)) {
+
+                }.build().show()
         }
     }
 

@@ -137,6 +137,7 @@
     <string name="text_s_il_vous_pla_t_donner_une_bonne_critique">请给个好评</string>
     <string name="text_error_de_red">红色错误</string>
     <string name="text_actualizar">更新</string>
+    <string name="text_afin_de_vous_fournir_un_bon_service_activez_les_autorisations_correspondantes_dans_les_param_tres_de_votre_t_l_phone">为了给您提供良好的服务，请在您的手机设置中启用相应的权限</string>
 
     <string-array name="string_arr_months">
         <item>1月</item>
