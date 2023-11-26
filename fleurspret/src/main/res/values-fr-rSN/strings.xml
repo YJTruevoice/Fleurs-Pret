@@ -132,6 +132,10 @@
     <string name="text_whatsapp">Whatsapp</string>
     <string name="text_e_mail">E-mail</string>
     <string name="text_copi">Copié</string>
+    <string name="text_notification">Notification</string>
+    <string name="text_s_il_vous_pla_t_donner_une_bonne_critique">S\'il vous plaît donner une bonne critique</string>
+    <string name="text_error_de_red">Error de red</string>
+    <string name="text_actualizar">Actualizar</string>
 
     <string-array name="string_arr_months">
         <item>Janvier</item>

@@ -29,6 +29,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/shape_bg_ffffff_radius_10"
         android:backgroundTint="@color/color_F8F8F8"
+        android:maxHeight="480dp"
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +38,7 @@
         <ScrollView
             android:id="@+id/sv_content"
             android:layout_width="match_parent"
-            android:layout_height="480dp"
+            android:layout_height="wrap_content"
             android:scrollbars="none"
             app:layout_constrainedHeight="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,9 +55,15 @@
                     android:id="@+id/tv_default_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxHeight="450dp"
                     android:textColor="@color/color_242237"
                     android:textSize="16sp"
                     tools:text="Hi.there To access your eligibility and facilitate faster disbursal of your loan, we need these permissions\n
+SMS
+Collect and monitor only financial transaction Introducir texto messages including the name of the transaction party. The purpose is to conduct a credit risk assessment of the transaction and the description of the transaction amount. This credit risk assessment speeds up loan disbursement without any Perfil Introducir texto messages being deleted, read or collected\n
+Contacts
+The NBFC loan process and guidelines mandates us to verify references. This feature enables us to do that &amp; Why type in contact number when you can just choose from your contact book.\n
+Camera and Photos
 SMS
 Collect and monitor only financial transaction Introducir texto messages including the name of the transaction party. The purpose is to conduct a credit risk assessment of the transaction and the description of the transaction amount. This credit risk assessment speeds up loan disbursement without any Perfil Introducir texto messages being deleted, read or collected\n
 Contacts

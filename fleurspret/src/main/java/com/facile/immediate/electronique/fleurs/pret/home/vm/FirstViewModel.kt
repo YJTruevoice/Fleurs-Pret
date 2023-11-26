@@ -15,6 +15,7 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
     val prodSingleTypeLiveData: SingleLiveEvent<ProInfo> = SingleLiveEvent()
     val multiProHLiveData: SingleLiveEvent<List<MultiP>?> = SingleLiveEvent()
     val refreshCompleteLiveData: SingleLiveEvent<Boolean?> = SingleLiveEvent()
+    val globalSettingLiveData: SingleLiveEvent<GlobalSetting?> = SingleLiveEvent()
 
     var globalSetting: GlobalSetting? = null
 
@@ -32,15 +33,12 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
         }.showLoading(true).launch()
     }
 
-    fun globalSetting() {
+    fun globalSetting(keys: String) {
         launchNet {
-            mModel.globalSetting("afraidDecemberSlimClassicalTechnology")
+            mModel.globalSetting(keys)
         }.success { res ->
-            res.aggressiveParentMethod?.let {
-                globalSetting = it
-            }
-        }.finished {
-            refreshCompleteLiveData.value = true
+            globalSetting = res.aggressiveParentMethod
+            globalSettingLiveData.value = res.aggressiveParentMethod
         }.launch()
     }
 

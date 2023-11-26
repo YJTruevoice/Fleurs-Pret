@@ -133,6 +133,10 @@
     <string name="text_whatsapp">WhatsApp</string>
     <string name="text_e_mail">E-mail</string>
     <string name="text_copi">已复制</string>
+    <string name="text_notification">通知</string>
+    <string name="text_s_il_vous_pla_t_donner_une_bonne_critique">请给个好评</string>
+    <string name="text_error_de_red">红色错误</string>
+    <string name="text_actualizar">更新</string>
 
     <string-array name="string_arr_months">
         <item>1月</item>

@@ -14,8 +14,8 @@ class FirstModel : IBaseModel {
         return service.multiOrSingle()
     }
 
-    suspend fun globalSetting(key: String): BaseResponse<GlobalSetting?> {
-        return settingService.globalSetting(key)
+    suspend fun globalSetting(keys: String): BaseResponse<GlobalSetting?> {
+        return settingService.globalSetting(keys)
     }
     suspend fun multiProH(): BaseResponse<List<MultiP>?> {
         return service.multiProH()

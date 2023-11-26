@@ -51,7 +51,7 @@ open class RecommendProDialog @JvmOverloads constructor(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     isCountDown = true
                 }
-                base = SystemClock.elapsedRealtime() + (60 + 1) * 1000
+                base = SystemClock.elapsedRealtime() + (config.countDown + 1) * 1000
                 setOnChronometerTickListener {
                     val curElapsedRealtime = SystemClock.elapsedRealtime()
                     if (base <= curElapsedRealtime) {
@@ -126,7 +126,7 @@ open class RecommendProDialog @JvmOverloads constructor(
             return this
         }
 
-        fun countDown(count: Int = 60): Builder {
+        fun countDown(count: Int): Builder {
             (config as? RecommendProDialogConfigEntity)?.countDown = count
             return this
         }
@@ -134,7 +134,7 @@ open class RecommendProDialog @JvmOverloads constructor(
 
     @Parcelize
     class RecommendProDialogConfigEntity(
-        var countDown: Int = 3,
+        var countDown: Int = 30,
         var recommendPros: List<RecommendPro> = emptyList(),
     ) : CommonDialogConfigEntity(), Parcelable
 

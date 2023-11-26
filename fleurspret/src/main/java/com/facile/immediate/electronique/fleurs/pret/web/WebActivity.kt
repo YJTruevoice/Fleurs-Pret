@@ -2,19 +2,37 @@ package com.facile.immediate.electronique.fleurs.pret.web
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebChromeClient
+import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
-import com.arthur.commonlib.ability.Toaster
 import com.facile.immediate.electronique.fleurs.pret.AppConstants
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityWebBinding
 
 class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
-    private var mUrl: String? = null
+    private var mUrl: String = ""
+
+    private var secondsRemaining = 0L
+    private val timeoutCountDown = object : CountDownTimer(30000, 1000) {
+        override fun onTick(millisUntilFinished: Long) {
+            secondsRemaining = millisUntilFinished / 1000
+        }
+
+        override fun onFinish() {
+            WebLoadTimeoutDialog.with(this@WebActivity)
+                .confirm(getString(R.string.text_actualizar)) {
+                    mBinding.webView.loadUrl(mUrl)
+                }
+                .build().show()
+        }
+    }
+
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         mBinding.webView.apply {
@@ -33,8 +51,26 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
             }
             // 加快网页加载速度
             setLayerType(View.LAYER_TYPE_HARDWARE, null)
-            webViewClient = WebViewClient()
-            webChromeClient = WebChromeClient()
+
+            webViewClient = object : WebViewClient() {
+                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                    super.onPageStarted(view, url, favicon)
+                    timeoutCountDown.start()
+                    mBinding.pbProgress.visibility = View.VISIBLE
+                }
+
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                    timeoutCountDown.cancel()
+                    mBinding.pbProgress.visibility = View.GONE
+                }
+            }
+            webChromeClient = object : WebChromeClient() {
+                override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                    super.onProgressChanged(view, newProgress)
+                    mBinding.pbProgress.progress = newProgress
+                }
+            }
         }
 
     }
@@ -91,8 +127,8 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
 
     override fun processLogic() {
         super.processLogic()
-        mUrl = intent.getStringExtra(AppConstants.KEY_WEB_VIEW_URL)
-        mUrl?.let { mBinding.webView.loadUrl(it) } ?: let { Toaster.showToast("") }
+        mUrl = intent.getStringExtra(AppConstants.KEY_WEB_VIEW_URL) ?: ""
+        mBinding.webView.loadUrl(mUrl)
     }
 
     companion object {
