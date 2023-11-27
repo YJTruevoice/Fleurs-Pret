@@ -42,7 +42,7 @@ interface InputAPI {
     suspend fun saveIdentityInfo(
         @Field("necessaryRapidCustoms") pageType: Int,
         @Field("radioactiveCheekChalkDeliciousAirmail") phoneNo: String,
-        @Field("distantGratefulStove") idCardNo: String
+        @Field("gratefulTourismFool") idCardNo: String
     ): BaseResponse<Any?>
 
     @FormUrlEncoded

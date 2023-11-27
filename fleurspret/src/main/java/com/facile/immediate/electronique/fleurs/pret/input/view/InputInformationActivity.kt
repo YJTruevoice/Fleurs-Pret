@@ -117,7 +117,7 @@ class InputInformationActivity :
                 mBinding.etName.setText(it.dirtyCrowdedEarthquakePrivateLevel)
                 mBinding.etNom.setText(it.dustyChocolateEaster)
                 mBinding.etEmail.setText(it.moralPressure)
-                mBinding.etAddress.setText(it.dangerousGoatContraryDueSemicircle)
+//                mBinding.etAddress.setText(it.dangerousGoatContraryDueSemicircle)
                 mBinding.tvDate.text = it.messyChapterLemonDozen
                 mBinding.tvSex.text =
                     InputUtil.sexMap(it.sureChemistryBigFairness ?: "")?.let { item ->

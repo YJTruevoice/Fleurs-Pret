@@ -34,12 +34,11 @@
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/v_divider_top"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:background="@color/color_D8D8D8"
             android:src="@mipmap/pic_ord_empty" />
 
         <TextView

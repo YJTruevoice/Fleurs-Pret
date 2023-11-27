@@ -14,6 +14,7 @@ import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerAct
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentHomeBinding
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
 import com.facile.immediate.electronique.fleurs.pret.input.view.InputInformationActivity
+import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
 import com.facile.immediate.electronique.fleurs.pret.main.FeatureAdapter
 import com.facile.immediate.electronique.fleurs.pret.main.UniqueFeatureUtil
 
@@ -37,7 +38,11 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
     override fun setListener() {
         super.setListener()
         mBinding.srlRefresh.setOnRefreshListener {
-            mViewModel.multiProH()
+            if (UserManager.isLogUp()) {
+                mViewModel.multiProH()
+            } else {
+                mViewModel.globalSetting("afraidDecemberSlimClassicalTechnology,brownTopic")
+            }
         }
 
         mBinding.inTitle.ivCustomer.setOnClickListener {
@@ -45,9 +50,11 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
         }
 
         mBinding.tvAskNow.setOnClickListener {
-            if (UserManager.isLogUp()) {
-                startActivity(Intent(requireContext(), InputInformationActivity::class.java))
+            if (!UserManager.isLogUp()) {
+                startActivity(Intent(requireContext(), LogUpActivity::class.java))
+                return@setOnClickListener
             }
+            startActivity(Intent(requireContext(), InputInformationActivity::class.java))
         }
     }
 
@@ -71,6 +78,14 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
                     singlePro.afraidDecemberSlimClassicalTechnology?.let { amount ->
                         mBinding.drvDividingRuler.setCurMaxMount(amount)
                     }
+                }
+            }
+        }
+        mViewModel.globalSettingLiveData.observe(viewLifecycleOwner) {
+            it?.let {
+                if (it.afraidDecemberSlimClassicalTechnology?.isNotEmpty() == true) {
+                    mBinding.tvMaxAmount.text = it.afraidDecemberSlimClassicalTechnology
+                    mBinding.drvDividingRuler.setCurMaxMount(it.afraidDecemberSlimClassicalTechnology)
                 }
             }
         }

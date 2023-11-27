@@ -39,6 +39,8 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
         }.success { res ->
             globalSetting = res.aggressiveParentMethod
             globalSettingLiveData.value = res.aggressiveParentMethod
+        }.finished {
+            refreshCompleteLiveData.value = true
         }.launch()
     }
 

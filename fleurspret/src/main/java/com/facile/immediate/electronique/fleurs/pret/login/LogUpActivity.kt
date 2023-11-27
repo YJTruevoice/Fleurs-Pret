@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.View
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
 import com.facile.immediate.electronique.fleurs.pret.R
@@ -119,6 +120,15 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
         mViewModel.logUpSuccessLiveData.observe(this) {
             gotoMain()
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            gotoMain()
+            finish()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     private fun gotoMain() {

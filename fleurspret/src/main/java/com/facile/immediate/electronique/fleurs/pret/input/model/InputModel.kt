@@ -2,10 +2,12 @@ package com.facile.immediate.electronique.fleurs.pret.input.model
 
 import com.arthur.baselib.structure.base.IBaseModel
 import com.arthur.commonlib.ability.AppKit
+import com.arthur.commonlib.ability.Logger
 import com.arthur.commonlib.utils.AppUtils
 import com.arthur.commonlib.utils.json.JsonUtils
 import com.facile.immediate.electronique.fleurs.pret.common.json.JsonUploadApi
 import com.facile.immediate.electronique.fleurs.pret.common.json.bean.DevizeInfor
+import com.facile.immediate.electronique.fleurs.pret.common.json.model.JSONNeed
 import com.facile.immediate.electronique.fleurs.pret.common.json.tools.AppTool
 import com.facile.immediate.electronique.fleurs.pret.common.json.tools.BatteTool
 import com.facile.immediate.electronique.fleurs.pret.common.json.tools.CanlTool
@@ -24,6 +26,10 @@ class InputModel : IBaseModel {
     private val bigJSONService = NetMgr.get().service<JsonUploadApi>()
 
     private val service = NetMgr.get().service<InputAPI>()
+
+    suspend fun isNeedJsonUp(): BaseResponse<JSONNeed?> {
+        return bigJSONService.jsonNeed()
+    }
 
     suspend fun jsonFeature(): BaseResponse<Any?> {
         val devizeInfor = DevizeInfor(
@@ -47,11 +53,12 @@ class InputModel : IBaseModel {
         )
 
         val jsonStr = JsonUtils.toJsonString(devizeInfor)
+        Logger.logE("$jsonStr")
         val encryptResult = EncryptTool.AESEncrypt(
             EncryptTool.compress(jsonStr) ?: "",
             "2457ece4e5e3389b0d1804fdbb4ff393"
         ) ?: ""
-
+        Logger.logE("encryptResult $encryptResult")
         return bigJSONService.jsonFeature(encryptResult.toRequestBody("application/json".toMediaType()))
     }
 

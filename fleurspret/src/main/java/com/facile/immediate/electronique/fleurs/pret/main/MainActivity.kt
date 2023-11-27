@@ -29,16 +29,16 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
     override fun buildView() {
         super.buildView()
 
-        fragments[mBinding.inTabFirst.navigationOne.id] = FirstFragment()
-        fragments[mBinding.inTabSecond.navigationTwo.id] = SecondFragment()
-        fragments[mBinding.inTabThird.navigationThree.id] = ThirdFragment()
+        fragments[R.id.navigation_one] = FirstFragment()
+        fragments[R.id.navigation_two] = SecondFragment()
+        fragments[R.id.navigation_three] = ThirdFragment()
 
         loadFragments(
             R.id.nav_host_fragment_activity_main,
             showPosition = 0,
-            fragments[mBinding.inTabFirst.navigationOne.id],
-            fragments[mBinding.inTabSecond.navigationTwo.id],
-            fragments[mBinding.inTabThird.navigationThree.id]
+            fragments[R.id.navigation_one],
+            fragments[R.id.navigation_two],
+            fragments[R.id.navigation_three]
         )
 
         initTab()
@@ -54,33 +54,35 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
 
     override fun setListener() {
         super.setListener()
-        mBinding.inTabFirst.navigationOne.setOnClickListener { item ->
+        mBinding.inTabFirst.navigationOne.setOnClickListener {
             mBinding.inTabFirst.navigationOne.isSelected = true
             mBinding.inTabSecond.navigationTwo.isSelected = false
             mBinding.inTabThird.navigationThree.isSelected = false
 
-            showFragmentAndHideOthers(fragments[item.id])
+            showFragmentAndHideOthers(fragments[R.id.navigation_one])
         }
-        mBinding.inTabSecond.navigationTwo.setOnClickListener { item ->
+        mBinding.inTabSecond.navigationTwo.setOnClickListener {
+            if (!UserManager.isLogUp()) {
+                startActivity(Intent(this@MainActivity, LogUpActivity::class.java))
+                return@setOnClickListener
+            }
             mBinding.inTabSecond.navigationTwo.isSelected = true
             mBinding.inTabFirst.navigationOne.isSelected = false
             mBinding.inTabThird.navigationThree.isSelected = false
 
-            showFragmentAndHideOthers(fragments[item.id])
+            showFragmentAndHideOthers(fragments[R.id.navigation_two])
         }
 
-        mBinding.inTabThird.navigationThree.setOnClickListener { item ->
-            if (item.id == R.id.navigation_three) {
-                if (!UserManager.isLogUp()) {
-                    startActivity(Intent(this@MainActivity, LogUpActivity::class.java))
-                    return@setOnClickListener
-                }
+        mBinding.inTabThird.navigationThree.setOnClickListener {
+            if (!UserManager.isLogUp()) {
+                startActivity(Intent(this@MainActivity, LogUpActivity::class.java))
+                return@setOnClickListener
             }
             mBinding.inTabSecond.navigationTwo.isSelected = false
             mBinding.inTabFirst.navigationOne.isSelected = false
             mBinding.inTabThird.navigationThree.isSelected = true
 
-            showFragmentAndHideOthers(fragments[item.id])
+            showFragmentAndHideOthers(fragments[R.id.navigation_three])
         }
     }
 
@@ -89,19 +91,19 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
         intent?.getIntExtra("selectedItemId", R.id.navigation_one)?.let {
 
             when (it) {
-                mBinding.inTabFirst.navigationOne.id -> {
+                R.id.navigation_one -> {
                     mBinding.inTabFirst.navigationOne.isSelected = true
                     mBinding.inTabSecond.navigationTwo.isSelected = false
                     mBinding.inTabThird.navigationThree.isSelected = false
                 }
 
-                mBinding.inTabSecond.navigationTwo.id -> {
+                R.id.navigation_two -> {
                     mBinding.inTabFirst.navigationOne.isSelected = false
                     mBinding.inTabSecond.navigationTwo.isSelected = true
                     mBinding.inTabThird.navigationThree.isSelected = false
                 }
 
-                mBinding.inTabThird.navigationThree.id -> {
+                R.id.navigation_three -> {
                     mBinding.inTabFirst.navigationOne.isSelected = false
                     mBinding.inTabSecond.navigationTwo.isSelected = false
                     mBinding.inTabThird.navigationThree.isSelected = true

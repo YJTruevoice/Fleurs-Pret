@@ -138,7 +138,7 @@ class InputContactInformationActivity :
                         )
                         .request { allGranted: Boolean, grantedList: List<String?>?, deniedList: List<String?>? ->
                             if (allGranted) {
-                                mViewModel.bigJsonUp()
+                                mViewModel.jsonNeed()
                             } else {
                                 BaseConfirmCancelDialog.with(this)
                                     .content(getString(R.string.text_afin_de_vous_fournir_un_bon_service_activez_les_autorisations_correspondantes_dans_les_param_tres_de_votre_t_l_phone))
@@ -164,6 +164,18 @@ class InputContactInformationActivity :
                 }.cancel(getString(R.string.text_fermer)) {
 
                 }.build().show()
+        }
+
+        mViewModel.jsonNeedUpLiveData.observe(this) {
+            it?.let {
+                if (it.agriculturalLidSingleFurnishedBush == "0") {
+                    mViewModel.bigJsonUp()
+                }
+            }
+        }
+
+        mViewModel.jsonUpSucLiveData.observe(this) {
+            startActivity(InputIdentityInformationActivity::class.java)
         }
     }
 

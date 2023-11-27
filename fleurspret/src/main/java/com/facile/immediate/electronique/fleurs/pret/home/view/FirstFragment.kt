@@ -1,22 +1,18 @@
 package com.facile.immediate.electronique.fleurs.pret.home.view
 
-import android.content.Intent
-import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
-import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.utils.DateUtil
 import com.arthur.commonlib.utils.SPUtils
 import com.facile.immediate.electronique.fleurs.pret.R
+import com.facile.immediate.electronique.fleurs.pret.common.UserManager
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentHomeHostBinding
-import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseConfirmCancelDialog
 import com.facile.immediate.electronique.fleurs.pret.home.Constant
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
 import com.facile.immediate.electronique.fleurs.pret.loan.model.ProState
 import com.facile.immediate.electronique.fleurs.pret.loan.view.EvaluationVersementFragment
 import com.facile.immediate.electronique.fleurs.pret.loan.view.RejeteeFragment
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -25,10 +21,13 @@ import java.util.Date
 
 class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>() {
 
-    private var isNotifyDialogShowing = false
     override fun onLazyInit() {
         super.onLazyInit()
-        mViewModel.sOrM()
+        if (UserManager.isLogUp()) {
+            mViewModel.sOrM()
+        } else {
+            mViewModel.globalSetting("afraidDecemberSlimClassicalTechnology,brownTopic")
+        }
     }
 
     override fun initLiveDataObserver() {
@@ -77,6 +76,10 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
 
         mViewModel.globalSettingLiveData.observe(viewLifecycleOwner) {
             it?.let {
+                if (it.afraidDecemberSlimClassicalTechnology?.isNotEmpty() ==true){
+                    commitTargetFragment(SingleProHFragment())
+                    return@observe
+                }
                 val curTime = System.currentTimeMillis()
                 var lastShowTime = SPUtils.getLong(Constant.KEY_NOTIFY_SHOW_TIME)
 
@@ -89,18 +92,18 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
                         .title(it.toughHydrogenMedicalTriangleSuffering)
                         .content(it.honestDessertUnableReceiptHotIceland)
                         .confirm(getString(R.string.text_ok)) {
-                            isNotifyDialogShowing = false
                             SPUtils.putData(
                                 Constant.KEY_NOTIFY_SHOW_TIME,
                                 System.currentTimeMillis()
                             )
                         }
                         .build().show()
-                    isNotifyDialogShowing = true
+                    return@observe
                 }
 
                 lastShowTime = SPUtils.getLong(Constant.KEY_GOOD_VIEWS_SHOW_TIME)
-                if (!isNotifyDialogShowing
+                if (it.thirstyTranslatorMusicalCeilingIdea == "1"
+                    && it.skillfulSkin == "1"
                     && DateUtil.getDayDiffer(Date(lastShowTime), Date(curTime)) >= 7
                     && isResumed
                 ) {
@@ -123,17 +126,17 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
         //平台埋点
 //        UploadPoint("本包对应的google好评弹框埋点位置")
         //
-        request.addOnCompleteListener(OnCompleteListener<ReviewInfo?> { task ->
+        request.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val reviewInfo = task.result
                 reviewInfo.describeContents()
                 activity?.let {
                     val flow: Task<Void> = manager.launchReviewFlow(it, reviewInfo)
-                    flow.addOnCompleteListener(OnCompleteListener<Void?> {
+                    flow.addOnCompleteListener {
 
-                    })
+                    }
                 }
             }
-        })
+        }
     }
 }

@@ -11,6 +11,7 @@ import android.text.style.ImageSpan
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.facile.immediate.electronique.fleurs.pret.BuildConfig
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.view.CenterVerticalImageSpan
 import com.facile.immediate.electronique.fleurs.pret.web.WebActivity
@@ -41,7 +42,7 @@ object PrivacyPolicyDisplayUtil {
         ssb.setSpan(
             object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    WebActivity.open(context, "https://baidu.com")
+                    WebActivity.open(context, privacyLink())
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
@@ -56,5 +57,13 @@ object PrivacyPolicyDisplayUtil {
 
         textView.text = ssb
         textView.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    fun privacyLink(): String {
+        return if (BuildConfig.MODE == 1 || BuildConfig.MODE == 2) {
+            "https://test.fleurspret.com/fleursprets/privacy.html"
+        } else {
+            "https://www.fleurspret.com/fleursprets/privacy.html"
+        }
     }
 }
