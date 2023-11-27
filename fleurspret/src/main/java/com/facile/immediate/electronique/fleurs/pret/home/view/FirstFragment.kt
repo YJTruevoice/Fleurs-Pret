@@ -16,6 +16,10 @@ import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
 import com.facile.immediate.electronique.fleurs.pret.loan.model.ProState
 import com.facile.immediate.electronique.fleurs.pret.loan.view.EvaluationVersementFragment
 import com.facile.immediate.electronique.fleurs.pret.loan.view.RejeteeFragment
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManagerFactory
 import java.util.Date
 
 
@@ -100,36 +104,7 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
                     && DateUtil.getDayDiffer(Date(lastShowTime), Date(curTime)) >= 7
                     && isResumed
                 ) {
-                    BaseConfirmCancelDialog.with(requireContext())
-                        .content(getString(R.string.text_s_il_vous_pla_t_donner_une_bonne_critique))
-                        .confirm(getString(R.string.text_confirmer)) {
-                            SPUtils.putData(
-                                Constant.KEY_GOOD_VIEWS_SHOW_TIME,
-                                System.currentTimeMillis()
-                            )
-                            // 应用的包名
-                            val packageName = AppKit.context.packageName
-                            // 创建一个Intent，打开应用在Google Play商店的页面
-                            val uri = Uri.parse("market://details?id=$packageName")
-                            val rateIntent = Intent(Intent.ACTION_VIEW, uri)
-                            // 判断是否有能够处理这个Intent的应用，如果没有，就打开浏览器
-                            if (rateIntent.resolveActivity(AppKit.context.packageManager) != null) {
-                                startActivity(rateIntent)
-                            } else {
-                                // 如果没有Google Play商店应用，打开应用在浏览器中的页面
-                                val playStoreWebUrl =
-                                    "https://play.google.com/store/apps/details?id=$packageName"
-                                val webIntent =
-                                    Intent(Intent.ACTION_VIEW, Uri.parse(playStoreWebUrl))
-                                startActivity(webIntent)
-                            }
-                        }.cancel(getString(R.string.text_annuler)) {
-                            SPUtils.putData(
-                                Constant.KEY_GOOD_VIEWS_SHOW_TIME,
-                                System.currentTimeMillis()
-                            )
-                        }
-                        .build().show()
+                    startGooglePlay()
                 }
             }
         }
@@ -140,5 +115,25 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
             replace(mBinding.fcvHomeContainer.id, fragment)
             setMaxLifecycle(fragment, Lifecycle.State.RESUMED)
         }.commitAllowingStateLoss()
+    }
+
+    private fun startGooglePlay() {
+        val manager = ReviewManagerFactory.create(requireContext())
+        val request: Task<ReviewInfo> = manager.requestReviewFlow()
+        //平台埋点
+//        UploadPoint("本包对应的google好评弹框埋点位置")
+        //
+        request.addOnCompleteListener(OnCompleteListener<ReviewInfo?> { task ->
+            if (task.isSuccessful) {
+                val reviewInfo = task.result
+                reviewInfo.describeContents()
+                activity?.let {
+                    val flow: Task<Void> = manager.launchReviewFlow(it, reviewInfo)
+                    flow.addOnCompleteListener(OnCompleteListener<Void?> {
+
+                    })
+                }
+            }
+        })
     }
 }
