@@ -2,6 +2,7 @@ package com.facile.immediate.electronique.fleurs.pret.web
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -10,6 +11,7 @@ import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.content.ContextCompat
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
 import com.facile.immediate.electronique.fleurs.pret.AppConstants
 import com.facile.immediate.electronique.fleurs.pret.R
@@ -78,7 +80,11 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
     override fun buildView() {
         super.buildView()
         mBinding.inTitleBar.tvTitle.visibility = View.GONE
-        mBinding.inTitleBar.ivCustomer.setImageResource(R.drawable.ic_close_black_28dp)
+        mBinding.inTitleBar.ivCustomer.apply {
+            setImageResource(R.mipmap.icon_close_page)
+            imageTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(context, R.color.color_242237))
+        }
     }
 
     override fun setListener() {
