@@ -17,6 +17,7 @@ class GatheringInputVM(app: Application) : BaseInputViewModel(app) {
     override fun processLogic() {
         super.processLogic()
         gatheringInfo()
+        ordId = getArgumentsIntent()?.getStringExtra("ordId")?:""
     }
 
     private fun gatheringInfo() {

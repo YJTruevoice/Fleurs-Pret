@@ -11,6 +11,7 @@ import android.text.style.ImageSpan
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.arthur.commonlib.utils.ValuesUtils
 import com.facile.immediate.electronique.fleurs.pret.BuildConfig
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.view.CenterVerticalImageSpan
@@ -42,7 +43,11 @@ object PrivacyPolicyDisplayUtil {
         ssb.setSpan(
             object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    WebActivity.open(context, privacyLink())
+                    WebActivity.open(
+                        context,
+                        privacyLink(),
+                        ValuesUtils.getString(R.string.app_name)
+                    )
                 }
 
                 override fun updateDrawState(ds: TextPaint) {

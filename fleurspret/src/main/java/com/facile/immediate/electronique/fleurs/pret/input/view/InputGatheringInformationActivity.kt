@@ -1,5 +1,6 @@
 package com.facile.immediate.electronique.fleurs.pret.input.view
 
+import android.view.View
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
 import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Toaster
@@ -33,6 +34,12 @@ class InputGatheringInformationActivity :
         initTitleBar()
 
         PrivacyPolicyDisplayUtil.displayPrivacyPolicyGuide(this, mBinding.tvReadPrivacyPolicyGuide)
+    }
+
+    override fun processLogic() {
+        super.processLogic()
+        mBinding.tvStateTips.visibility =
+            if (mViewModel.ordId.isNotEmpty()) View.VISIBLE else View.GONE
     }
 
     override fun setListener() {
@@ -79,6 +86,9 @@ class InputGatheringInformationActivity :
 
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
+        mViewModel.gatheringLiveData.observe(this){
+
+        }
         mViewModel.configLiveData.observe(this) { pair ->
             val list = mutableListOf<CommonChooseListItem>()
             pair?.second?.forEach {

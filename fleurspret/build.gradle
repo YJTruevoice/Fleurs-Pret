@@ -120,4 +120,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     implementation 'com.google.android.play:review:2.0.1'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
 }

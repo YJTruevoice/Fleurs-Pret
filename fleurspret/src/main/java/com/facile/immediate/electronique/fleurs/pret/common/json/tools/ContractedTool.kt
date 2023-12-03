@@ -2,13 +2,16 @@ package com.facile.immediate.electronique.fleurs.pret.common.json.tools
 
 import android.content.ContentResolver
 import android.database.Cursor
+import android.location.Location
 import android.net.Uri
 import android.provider.CallLog
 import android.provider.Telephony
 import android.text.TextUtils
 import com.arthur.commonlib.ability.AppKit
+import com.arthur.commonlib.utils.GPSUtils
 import com.facile.immediate.electronique.fleurs.pret.common.json.bean.ElectricCigarRareSeriousField
 import com.facile.immediate.electronique.fleurs.pret.common.json.bean.LivePolice
+import com.facile.immediate.electronique.fleurs.pret.common.json.bean.MistakenBrownLifePersonalRank
 import com.facile.immediate.electronique.fleurs.pret.common.json.bean.MountainousBrunchLuckySecondChemist
 import org.json.JSONArray
 import org.json.JSONObject
@@ -110,22 +113,23 @@ object ContractedTool {
         val locationData = LivePolice()
 
         try {
-//            val location: GoogleLocation = LocationInformation.getLocalLocation(AppKit.context)
-//            var latitude = ""
-//            var longitude = ""
-//            if (location != null) {
-//                latitude = location.getGoogleLatitude()
-//                longitude = location.getGoogleLongitude()
-//            }
-//            val latlng = "$latitude,$longitude"
-//
-//            locationData.put("gps_address_city", latlng)
-//            locationData.put("gps_address_province", latlng)
-//            locationData.put("gps_address_street", latlng)
-//            val gpsJSONject = JSONObject()
-//            gpsJSONject.put("latitude", latitude)
-//            gpsJSONject.put("longitude", longitude)
-//            locationData.put("gps", gpsJSONject)
+            val location: Location? = GPSUtils().getLocation(AppKit.context)
+            var latitude = ""
+            var longitude = ""
+            if (location != null) {
+                latitude = location.latitude.toString()
+                longitude = location.longitude.toString()
+            }
+            val latlng = "$latitude,$longitude"
+            return LivePolice(
+                fatMedalBellBeautifulExercise = latlng,
+                nervousPeasantChemicalCupboardVain = latlng,
+                indeedPurseEagerSailorAntarcticRobot = latlng,
+                mistakenBrownLifePersonalRank = MistakenBrownLifePersonalRank(
+                    interestingModelFunnyDatePlainBean = latitude,
+                    taxSugarDeafPassport = longitude
+                )
+            )
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }

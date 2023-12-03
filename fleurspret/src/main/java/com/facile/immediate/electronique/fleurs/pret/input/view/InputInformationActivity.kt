@@ -1,5 +1,6 @@
 package com.facile.immediate.electronique.fleurs.pret.input.view
 
+import android.Manifest
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
 import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Toaster
@@ -15,6 +16,7 @@ import com.facile.immediate.electronique.fleurs.pret.input.view.fragment.RegionD
 import com.facile.immediate.electronique.fleurs.pret.input.view.fragment.SelectDateFragment
 import com.facile.immediate.electronique.fleurs.pret.input.vm.BasicInputVM
 import com.gyf.immersionbar.ImmersionBar
+import com.permissionx.guolindev.PermissionX
 
 class InputInformationActivity :
     BaseMVVMActivity<ActivityInputInformationBinding, BasicInputVM>() {
@@ -35,6 +37,15 @@ class InputInformationActivity :
         initTitleBar()
 
         PrivacyPolicyDisplayUtil.displayPrivacyPolicyGuide(this, mBinding.tvReadPrivacyPolicyGuide)
+    }
+
+    override fun processLogic() {
+        super.processLogic()
+        PermissionX.init(this)
+            .permissions(Manifest.permission.ACCESS_COARSE_LOCATION)
+            .request { _: Boolean, _: List<String?>?, _: List<String?>? ->
+
+            }
     }
 
     override fun setListener() {

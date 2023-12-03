@@ -4,35 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@mipmap/pic_bg_splash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/sp_logo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="154dp"
         android:src="@mipmap/ic_launcher"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         android:text="@string/app_name"
         android:textColor="@color/color_333333"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/sp_logo"
-        app:layout_constraintStart_toEndOf="@+id/sp_logo"
-        app:layout_constraintTop_toTopOf="@+id/sp_logo" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/pic_bg_splash"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/sp_logo"
+        app:layout_constraintStart_toStartOf="@+id/sp_logo"
+        app:layout_constraintTop_toBottomOf="@+id/sp_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

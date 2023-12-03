@@ -111,6 +111,13 @@ open class BaseCountDownDialog @JvmOverloads constructor(
             return this
         }
 
+        fun content(content: CharSequence?): Builder {
+            content?.let {
+                (config as? CountDownDialogConfigEntity)?.content = it
+            }
+            return this
+        }
+
         fun countDown(count: Int?): Builder {
             count?.let {
                 (config as? CountDownDialogConfigEntity)?.countDown = it

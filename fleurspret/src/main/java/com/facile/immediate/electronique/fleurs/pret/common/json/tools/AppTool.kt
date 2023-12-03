@@ -34,7 +34,7 @@ object AppTool {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }else{
+        } else {
             val pm: PackageManager = AppKit.context.packageManager
             val process = Runtime.getRuntime().exec("pm list packages")
             val bis = BufferedReader(InputStreamReader(process.inputStream))

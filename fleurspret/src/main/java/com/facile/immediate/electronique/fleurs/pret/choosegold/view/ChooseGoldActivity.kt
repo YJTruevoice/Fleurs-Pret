@@ -1,5 +1,6 @@
 package com.facile.immediate.electronique.fleurs.pret.choosegold.view
 
+import android.Manifest
 import android.content.Intent
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
@@ -13,9 +14,11 @@ import com.facile.immediate.electronique.fleurs.pret.choosegold.view.dialog.PreO
 import com.facile.immediate.electronique.fleurs.pret.choosegold.vm.ChooseGoldVM
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
+import com.facile.immediate.electronique.fleurs.pret.common.ext.addThousandSeparator
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityChooseGoldInformationBinding
 import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseCountDownDialog
 import com.facile.immediate.electronique.fleurs.pret.main.MainActivity
+import com.permissionx.guolindev.PermissionX
 
 class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding, ChooseGoldVM>() {
 
@@ -30,6 +33,15 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
         initTitleBar()
 
         PrivacyPolicyDisplayUtil.displayPrivacyPolicyGuide(this, mBinding.tvReadPrivacyPolicyGuide)
+    }
+
+    override fun processLogic() {
+        super.processLogic()
+        PermissionX.init(this)
+            .permissions(Manifest.permission.ACCESS_COARSE_LOCATION)
+            .request { _: Boolean, _: List<String?>?, _: List<String?>? ->
+
+            }
     }
 
     private fun initTitleBar() {
@@ -64,18 +76,18 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
             it?.let {
                 mBinding.apply {
                     tvXofReceive.text =
-                        "${getString(R.string.text_xof)} ${it.theoreticalMoneyLawyerSupper}"
+                        "${getString(R.string.text_xof)} ${it.theoreticalMoneyLawyerSupper.addThousandSeparator()}"
                     tvXofInterest.text =
-                        "${getString(R.string.text_xof)} ${it.unsafeAncestorBasement}"
+                        "${getString(R.string.text_xof)} ${it.unsafeAncestorBasement.addThousandSeparator()}"
                     tvXofService.text =
-                        "${getString(R.string.text_xof)} ${it.unfairSeamanThemselvesMess}"
+                        "${getString(R.string.text_xof)} ${it.unfairSeamanThemselvesMess.addThousandSeparator()}"
                     tvXofTva.text =
-                        "${getString(R.string.text_xof)} ${it.crowdedSpecialistPunctuation}"
+                        "${getString(R.string.text_xof)} ${it.crowdedSpecialistPunctuation.addThousandSeparator()}"
                     tvXofMontant.text =
-                        "${getString(R.string.text_xof)} ${mBinding.rbXofProgress.progress}"
+                        "${getString(R.string.text_xof)} ${mBinding.rbXofProgress.progress.toString().addThousandSeparator()}"
 
                     tvRepaymentGold.text =
-                        "${getString(R.string.text_xof)} ${it.femaleSteamAsleepLifetime}"
+                        "${getString(R.string.text_xof)} ${it.femaleSteamAsleepLifetime.addThousandSeparator()}"
                     tvRepaymentDate.text = mViewModel.curProDate?.dateStr
                 }
             }
@@ -134,9 +146,9 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
             return
         }
 
-        mBinding.tvXof.text = "${prod.afraidDecemberSlimClassicalTechnology}"
-        mBinding.tvXofDecrease.text = "-${prod.hugeFogPepper}"
-        mBinding.tvXofIncrease.text = "+${prod.afraidDecemberSlimClassicalTechnology}"
+        mBinding.tvXof.text = prod.afraidDecemberSlimClassicalTechnology.toString().addThousandSeparator()
+        mBinding.tvXofDecrease.text = "-${prod.hugeFogPepper.toString().addThousandSeparator()}"
+        mBinding.tvXofIncrease.text = "+${prod.afraidDecemberSlimClassicalTechnology.toString().addThousandSeparator()}"
 
         mBinding.rbXofProgress.apply {
             max = prod.afraidDecemberSlimClassicalTechnology
@@ -149,9 +161,9 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
                     fromUser: Boolean
                 ) {
                     if (progress >= prod.hugeFogPepper) {
-                        mBinding.tvXof.text = progress.toString()
+                        mBinding.tvXof.text = progress.toString().addThousandSeparator()
                     } else {
-                        mBinding.tvXof.text = prod.hugeFogPepper.toString()
+                        mBinding.tvXof.text = prod.hugeFogPepper.toString().addThousandSeparator()
                         seekBar?.progress = prod.hugeFogPepper
                     }
                 }
@@ -159,7 +171,7 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
                     seekBar?.apply {
                         if (progress < prod.hugeFogPepper) {
-                            mBinding.tvXof.text = prod.hugeFogPepper.toString()
+                            mBinding.tvXof.text = prod.hugeFogPepper.toString().addThousandSeparator()
                             progress = prod.hugeFogPepper
                         }
                     }
@@ -168,7 +180,7 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
                     seekBar?.apply {
                         if (progress < prod.hugeFogPepper) {
-                            mBinding.tvXof.text = prod.hugeFogPepper.toString()
+                            mBinding.tvXof.text = prod.hugeFogPepper.toString().addThousandSeparator()
                             progress = prod.hugeFogPepper
                         }
                     }

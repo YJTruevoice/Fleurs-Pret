@@ -95,7 +95,7 @@
     <string name="text_int_r_t">利息</string>
     <string name="text_frais_de_service">服务费</string>
     <string name="text_t_v_a">增值税</string>
-    <string name="text_montant_du_remboursement">报销金额</string>
+    <string name="text_montant_du_remboursement">还款金额</string>
     <string name="text_annuler">取消</string>
     <string name="text_payer">支付</string>
     <string name="text_moyen_de_remboursement_1">还款方式 1</string>
@@ -138,6 +138,21 @@
     <string name="text_error_de_red">红色错误</string>
     <string name="text_actualizar">更新</string>
     <string name="text_afin_de_vous_fournir_un_bon_service_activez_les_autorisations_correspondantes_dans_les_param_tres_de_votre_t_l_phone">为了给您提供良好的服务，请在您的手机设置中启用相应的权限</string>
+    <string name="text_versement_chou">放款失败</string>
+    <string name="text_le_syst_me_a_d_tect_des_informations_fausses_dans_vos_informations_de_compte_de_r_ception_veuillez_les_remettre">系统检测到您的收款账户信息存在虚假信息，请重新提交。</string>
+    <string name="text_afin_de_verser_doucement_sur_votre_compte_veuillez_remettre_les_informations_de_r_ception_correctes">为了顺利存入您的账户，请汇出正确的收款信息。</string>
+    <string name="text_votre_commande_est_en_retard">您的订单晚了 %s 天，请立即退货。 如有恶意过期，我们将通过法律途径对您采取法律行动！</string>
+    <string name="text_retard_de_s_jours">延期 %s 天</string>
+    <string name="text_remboursement_en_attente">退款待处理</string>
+    <string name="text_tarif_r_duit">减免金额</string>
+    <string name="text_frais_de_report">逾期金额</string>
+    <string name="text_la_date_limite_sera_prolong_e">截止日期将延长至</string>
+    <string name="text_montant_payer">支付金额</string>
+    <string name="text_mauvais_lien_de_paiement">支付链接有误</string>
+    <string name="text_vous_avez_rembours_le_pr_t_avec_succ_s">您已成功还清贷款！</string>
+    <string name="text_demander_un_nouveau_pr_t">申请新贷款</string>
+    <string name="text_retourner">返回</string>
+    <string name="text_votre_date_de_remboursement_final_a_t_modifi_e_s">Votre date de remboursement final a été modifiée à %s</string>
 
     <string-array name="string_arr_months">
         <item>1月</item>

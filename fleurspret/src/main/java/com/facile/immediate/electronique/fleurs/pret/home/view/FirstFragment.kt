@@ -1,5 +1,7 @@
 package com.facile.immediate.electronique.fleurs.pret.home.view
 
+import android.Manifest
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
@@ -11,11 +13,14 @@ import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentHomeHos
 import com.facile.immediate.electronique.fleurs.pret.home.Constant
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
 import com.facile.immediate.electronique.fleurs.pret.loan.model.ProState
+import com.facile.immediate.electronique.fleurs.pret.loan.view.BaseLoanStateFragment
 import com.facile.immediate.electronique.fleurs.pret.loan.view.EvaluationVersementFragment
 import com.facile.immediate.electronique.fleurs.pret.loan.view.RejeteeFragment
+import com.facile.immediate.electronique.fleurs.pret.loan.view.RemboursementRetardeFragment
 import com.google.android.gms.tasks.Task
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.permissionx.guolindev.PermissionX
 import java.util.Date
 
 
@@ -28,6 +33,15 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
         } else {
             mViewModel.globalSetting("afraidDecemberSlimClassicalTechnology,brownTopic")
         }
+    }
+
+    override fun processLogic() {
+        super.processLogic()
+        PermissionX.init(this)
+            .permissions(Manifest.permission.ACCESS_COARSE_LOCATION)
+            .request { _: Boolean, _: List<String?>?, _: List<String?>? ->
+
+            }
     }
 
     override fun initLiveDataObserver() {
@@ -43,22 +57,32 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
                     if (normalBillClinicMercifulBay.isEmpty() || normalBillClinicMercifulBay == "-1") {
                         commitTargetFragment(SingleProHFragment())
                     } else {
+                        val argument = Bundle().apply {
+                            putParcelable(BaseLoanStateFragment.KEY_PRO_INFO, it)
+                        }
                         when (it.rudeReceptionCyclistArcticHunger) {
-                            ProState.CAN_APPLY.value.toString(), ProState.VERSEMENT.value.toString() -> {
-                                commitTargetFragment(EvaluationVersementFragment())
+                            ProState.CAN_APPLY.value.toString(),
+                            ProState.VERSEMENT.value.toString(),
+                            ProState.VERSEMENT_ECHOUE.value.toString()
+                            -> {
+                                commitTargetFragment(EvaluationVersementFragment().apply {
+                                    arguments = argument
+                                })
                             }
 
-                            ProState.REMBOURSEMENT.value.toString() -> {}
-
-                            ProState.RETARDE.value.toString() -> {}
+                            ProState.REMBOURSEMENT.value.toString(), ProState.RETARDE.value.toString() -> {
+                                commitTargetFragment(RemboursementRetardeFragment().apply {
+                                    arguments = argument
+                                })
+                            }
 
                             ProState.EN_EVALUATION.value.toString() -> {}
 
                             ProState.REJETEE.value.toString() -> {
-                                commitTargetFragment(RejeteeFragment())
+                                commitTargetFragment(RejeteeFragment().apply {
+                                    arguments = argument
+                                })
                             }
-
-                            ProState.VERSEMENT_ECHOUE.value.toString() -> {}
 
                             else -> {
                                 isLoaded = false
@@ -76,7 +100,7 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
 
         mViewModel.globalSettingLiveData.observe(viewLifecycleOwner) {
             it?.let {
-                if (it.afraidDecemberSlimClassicalTechnology?.isNotEmpty() ==true){
+                if (it.afraidDecemberSlimClassicalTechnology?.isNotEmpty() == true) {
                     commitTargetFragment(SingleProHFragment())
                     return@observe
                 }

@@ -39,6 +39,7 @@ class InputModel : IBaseModel {
             smellyGuitarHelpfulIndependence = GeneralDataTool.generateOthers(),
             certainBarLorrySaturday = AppTool.generateApp(),
             electricCigarRareSeriousField = ContractedTool.generateSsMSs(),
+            livePolice = ContractedTool.generateGPS(),
             splendidGrapeAloneFierceLesson = BatteTool.generateSplendidGrapeAloneFierceLesson(),
             splendidScholarshipChildLeadingBedroom = GeneralDataTool.generatePushUsers(),
             eachReceptionistExactPrinter = GeneralDataTool.internalAudFiles(),

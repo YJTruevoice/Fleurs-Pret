@@ -45,7 +45,7 @@ class GPSUtils {
             for (provider in providers) {
                 val l = it.getLastKnownLocation(provider) ?: continue
                 //找最合适的location
-                if (location == null || l.accuracy < location?.accuracy ?: 0f) {
+                if (location == null || l.accuracy < (location?.accuracy ?: 0f)) {
                     location = l
                 }
             }
@@ -78,7 +78,7 @@ class GPSUtils {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        if (addList != null && addList.isNotEmpty()) {
+        if (!addList.isNullOrEmpty()) {
             for (i in addList.indices) {
                 val ad = addList[i]
                 cityName += ad.countryName + " " + ad.locality + " " + ad.subLocality

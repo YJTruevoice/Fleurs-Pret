@@ -9,16 +9,25 @@ import com.facile.immediate.electronique.fleurs.pret.common.setting.RecommendBan
 import com.facile.immediate.electronique.fleurs.pret.home.model.ProInfo
 import com.facile.immediate.electronique.fleurs.pret.loan.model.LoanModel
 import com.facile.immediate.electronique.fleurs.pret.loan.model.OrdStateInfo
+import com.facile.immediate.electronique.fleurs.pret.loan.model.PayDetail
+import com.facile.immediate.electronique.fleurs.pret.loan.model.PayLink
+import com.facile.immediate.electronique.fleurs.pret.loan.model.PayType
+import com.facile.immediate.electronique.fleurs.pret.net.BaseResponse
 
 class LoanVM(app: Application) : BaseViewModel<LoanModel>(app) {
 
     val settingLiveData: SingleLiveEvent<GlobalSetting?> = SingleLiveEvent()
     val ordStateInfoLiveData: SingleLiveEvent<OrdStateInfo?> = SingleLiveEvent()
-    val RecommendBannerLiveData: SingleLiveEvent<RecommendBanner?> = SingleLiveEvent()
+
+    val recommendBannerLiveData: SingleLiveEvent<RecommendBanner?> = SingleLiveEvent()
+
+    val payTypeLiveData: SingleLiveEvent<List<PayType>?> = SingleLiveEvent()
+    val payLinkLiveData: SingleLiveEvent<PayLink?> = SingleLiveEvent()
 
     var proInfo: ProInfo? = null
+    var ordStateInfo: OrdStateInfo? = null
 
-    fun globalSetting(keys:String) {
+    fun globalSetting(keys: String) {
         launchNet {
             mModel.globalSetting(keys)
         }.success {
@@ -30,6 +39,7 @@ class LoanVM(app: Application) : BaseViewModel<LoanModel>(app) {
         launchNet {
             mModel.checkOrdInfo()
         }.success {
+            ordStateInfo = it.aggressiveParentMethod
             ordStateInfoLiveData.value = it.aggressiveParentMethod
         }.showLoading(true).launch()
     }
@@ -38,8 +48,42 @@ class LoanVM(app: Application) : BaseViewModel<LoanModel>(app) {
         launchNet {
             mModel.recommendBanner()
         }.success {
-            RecommendBannerLiveData.value = it.aggressiveParentMethod
+            recommendBannerLiveData.value = it.aggressiveParentMethod
         }.showLoading(true).launch()
     }
 
+    fun payList() {
+        launchNet {
+            mModel.getPayList()
+        }.success {
+            payTypeLiveData.value = it.aggressiveParentMethod
+        }.launch()
+    }
+
+    fun payLink(
+        expensiveRadioGreyPetScientificSystem: String,
+        someMidnightThisSentenceEnglishQuilt: String
+    ) {
+        launchNet {
+            mModel.getPayLink(
+                normalBillClinicMercifulBay = ordStateInfo?.normalBillClinicMercifulBay.toString(),
+                metalCancerVirtueRainfall = "00",
+                expensiveRadioGreyPetScientificSystem = expensiveRadioGreyPetScientificSystem,
+                someMidnightThisSentenceEnglishQuilt = someMidnightThisSentenceEnglishQuilt
+            )
+        }.success {
+            payLinkLiveData.value = it.aggressiveParentMethod
+        }.showLoading(true).launch()
+    }
+
+    suspend fun getPayDt(): BaseResponse<PayDetail?> {
+        return mModel.getPayDt(
+            normalBillClinicMercifulBay = ordStateInfo?.normalBillClinicMercifulBay.toString(),
+            metalCancerVirtueRainfall = "01"
+        )
+    }
+
+    suspend fun payTypes(): BaseResponse<List<PayType>?> {
+        return mModel.getPayList()
+    }
 }

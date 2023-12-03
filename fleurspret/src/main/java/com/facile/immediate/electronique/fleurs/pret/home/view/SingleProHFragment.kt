@@ -11,6 +11,7 @@ import com.arthur.commonlib.utils.DensityUtils
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.UserManager
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
+import com.facile.immediate.electronique.fleurs.pret.common.ext.addThousandSeparator
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentHomeBinding
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
 import com.facile.immediate.electronique.fleurs.pret.input.view.InputInformationActivity
@@ -74,7 +75,7 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
             it?.let { multiPro ->
                 if (multiPro.isNotEmpty()) {
                     val singlePro = multiPro[0]
-                    mBinding.tvMaxAmount.text = singlePro.afraidDecemberSlimClassicalTechnology
+                    mBinding.tvMaxAmount.text = singlePro.afraidDecemberSlimClassicalTechnology.addThousandSeparator()
                     singlePro.afraidDecemberSlimClassicalTechnology?.let { amount ->
                         mBinding.drvDividingRuler.setCurMaxMount(amount)
                     }
@@ -84,7 +85,7 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
         mViewModel.globalSettingLiveData.observe(viewLifecycleOwner) {
             it?.let {
                 if (it.afraidDecemberSlimClassicalTechnology?.isNotEmpty() == true) {
-                    mBinding.tvMaxAmount.text = it.afraidDecemberSlimClassicalTechnology
+                    mBinding.tvMaxAmount.text = it.afraidDecemberSlimClassicalTechnology.addThousandSeparator()
                     mBinding.drvDividingRuler.setCurMaxMount(it.afraidDecemberSlimClassicalTechnology)
                 }
             }

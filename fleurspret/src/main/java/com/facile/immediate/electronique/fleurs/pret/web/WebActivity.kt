@@ -1,5 +1,6 @@
 package com.facile.immediate.electronique.fleurs.pret.web
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -13,12 +14,14 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.content.ContextCompat
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
+import com.arthur.commonlib.ability.Logger
 import com.facile.immediate.electronique.fleurs.pret.AppConstants
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityWebBinding
 
 class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
     private var mUrl: String = ""
+    private var mBundle: Bundle? = null
 
     private var secondsRemaining = 0L
     private val timeoutCountDown = object : CountDownTimer(30000, 1000) {
@@ -63,6 +66,15 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
+                    Logger.logE("onPageFinished url : $url")
+                    // TODO: 支付成功后返回弹窗
+//                    if (url?.contains("") == true){
+                    setResult(RESULT_OK, Intent().apply {
+                        putExtra(AppConstants.KEY_WEB_VIEW_URL, url)
+                        putExtra(AppConstants.KEY_WEB_VIEW_BUNDLE, mBundle)
+                    })
+//                        finish()
+//                    }
                     timeoutCountDown.cancel()
                     mBinding.pbProgress.visibility = View.GONE
                 }
@@ -79,7 +91,8 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
 
     override fun buildView() {
         super.buildView()
-        mBinding.inTitleBar.tvTitle.visibility = View.GONE
+        mBinding.inTitleBar.tvTitle.text =
+            intent.getStringExtra(AppConstants.KEY_WEB_VIEW_TITLE) ?: ""
         mBinding.inTitleBar.ivCustomer.apply {
             setImageResource(R.mipmap.icon_close_page)
             imageTintList =
@@ -134,14 +147,31 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
     override fun processLogic() {
         super.processLogic()
         mUrl = intent.getStringExtra(AppConstants.KEY_WEB_VIEW_URL) ?: ""
+        mBundle = intent.getBundleExtra(AppConstants.KEY_WEB_VIEW_BUNDLE)
         mBinding.webView.loadUrl(mUrl)
     }
 
     companion object {
-        fun open(context: Context, url: String) {
+        fun open(context: Context, url: String, title: String = "", bundle: Bundle? = null) {
             context.startActivity(Intent(context, WebActivity::class.java).apply {
                 putExtra(AppConstants.KEY_WEB_VIEW_URL, url)
+                putExtra(AppConstants.KEY_WEB_VIEW_TITLE, title)
+                putExtra(AppConstants.KEY_WEB_VIEW_BUNDLE, bundle)
             })
+        }
+
+        fun openForResult(
+            context: Activity,
+            url: String,
+            requestCode: Int,
+            title: String = "",
+            bundle: Bundle? = null
+        ) {
+            context.startActivityForResult(Intent(context, WebActivity::class.java).apply {
+                putExtra(AppConstants.KEY_WEB_VIEW_URL, url)
+                putExtra(AppConstants.KEY_WEB_VIEW_TITLE, title)
+                putExtra(AppConstants.KEY_WEB_VIEW_BUNDLE, bundle)
+            }, requestCode)
         }
     }
 }

@@ -19,10 +19,9 @@ import com.facile.immediate.electronique.fleurs.pret.web.WebActivity
 
 class RejeteeFragment :
     BaseLoanStateFragment<FragmentLoanStateRejeteeLayoutBinding>() {
-
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
-        mViewModel.RecommendBannerLiveData.observe(viewLifecycleOwner) {
+        mViewModel.recommendBannerLiveData.observe(viewLifecycleOwner) {
             it?.let { recommendBanner ->
                 mBinding.ivBanner.apply {
                     DisplayUtils.displayImageAsRound(
@@ -51,6 +50,7 @@ class RejeteeFragment :
 
     override fun setOrdInfo(ordInfo: OrdStateInfo) {
         mViewModel.globalSetting("australianPublicChallenge,thoseLongBaseball,swiftInnExcellentContribution")
+        mViewModel.recommendBanner()
         mBinding.apply {
             inProInfo.apply {
                 tvLoanState.apply {
@@ -85,6 +85,6 @@ class RejeteeFragment :
             blueTextStartIdx, blueTextStartIdx + thoseLongBaseball.length,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        mBinding.tvStateTips.text = ValuesUtils.getString(R.string.text_rejetee_desc)
+        mBinding.tvStateTips.text = ssb
     }
 }

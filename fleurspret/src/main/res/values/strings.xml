@@ -137,6 +137,21 @@
     <string name="text_error_de_red">Error de red</string>
     <string name="text_actualizar">Actualizar</string>
     <string name="text_afin_de_vous_fournir_un_bon_service_activez_les_autorisations_correspondantes_dans_les_param_tres_de_votre_t_l_phone">Afin de vous fournir un bon service, activez les autorisations correspondantes dans les paramètres de votre téléphone</string>
+    <string name="text_versement_chou">Versement échoué</string>
+    <string name="text_le_syst_me_a_d_tect_des_informations_fausses_dans_vos_informations_de_compte_de_r_ception_veuillez_les_remettre">Le système a détecté des informations fausses dans vos informations de compte de réception, veuillez les remettre.</string>
+    <string name="text_afin_de_verser_doucement_sur_votre_compte_veuillez_remettre_les_informations_de_r_ception_correctes">Afin de verser doucement sur votre compte, veuillez remettre les informations de réception correctes.</string>
+    <string name="text_votre_commande_est_en_retard">Votre commande est en retard de %s jours, veuillez la retourner immédiatement. En cas d\'expiration malveillante, nous intenterons une action en justice contre vous par des voies légales!</string>
+    <string name="text_retard_de_s_jours">Retardé de %s jours</string>
+    <string name="text_remboursement_en_attente">Remboursement en attente</string>
+    <string name="text_tarif_r_duit">Tarif réduit</string>
+    <string name="text_frais_de_report">Frais de report</string>
+    <string name="text_la_date_limite_sera_prolong_e">La date limite sera prolongée à</string>
+    <string name="text_montant_payer">Montant à payer</string>
+    <string name="text_mauvais_lien_de_paiement">Mauvais lien de paiement</string>
+    <string name="text_vous_avez_rembours_le_pr_t_avec_succ_s">Vous avez remboursé le prêt avec succès !</string>
+    <string name="text_demander_un_nouveau_pr_t">Demander un nouveau prêt</string>
+    <string name="text_retourner">Retourner</string>
+    <string name="text_votre_date_de_remboursement_final_a_t_modifi_e_s">Votre date de remboursement final a été modifiée à %s</string>
 
     <string-array name="string_arr_months">
         <item>Janvier</item>
