@@ -5,7 +5,8 @@ import android.content.Context
 import android.content.Intent
 import com.arthur.commonlib.ability.Logger
 import com.arthur.commonlib.ability.Toaster
-import com.facile.immediate.electronique.fleurs.pret.net.NetConstant
+import com.facile.immediate.electronique.fleurs.pret.common.UserManager
+import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
 
 /**
  * @Author Arthur
@@ -25,7 +26,9 @@ class ServerStatusReceiver : BroadcastReceiver() {
                 Logger.logE("$msg")
                 Toaster.showToast("$msg")
                 // 如果token则将token失效的消息通知handler
-                // todo 登录失效跳转登录页
+                // 登录失效跳转登录页
+                UserManager.logout()
+                context?.startActivity(Intent(context, LogUpActivity::class.java))
             }
         }
     }
