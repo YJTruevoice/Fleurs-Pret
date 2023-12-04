@@ -30,12 +30,13 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:lines="1"
             android:textColor="@color/color_333333"
             android:textSize="18sp"
-            app:drawableStartCompat="8dp"
+            app:drawableStartCompat="@mipmap/icon_read_privacy_guide"
             app:drawableTint="@color/color_FF9784"
             tools:text="Prolongation des délais" />
 

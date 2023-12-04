@@ -4,12 +4,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.SystemClock
 import android.text.Editable
-import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
 import com.facile.immediate.electronique.fleurs.pret.R
+import com.facile.immediate.electronique.fleurs.pret.common.EditTextFilter
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.ext.tryCompleteZero
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityLogUpBinding
@@ -18,23 +18,21 @@ import com.facile.immediate.electronique.fleurs.pret.main.MainActivity
 
 class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
 
-    private val filter = InputFilter { source, start, end, dest, dstart, dend ->
-        for (i in start until end) {
-            if (!Character.isDigit(source[i])) {
-                return@InputFilter ""
-            }
-        }
-        null
-    }
+    private var isCountDown = false
 
     override fun buildView() {
         super.buildView()
         PrivacyPolicyDisplayUtil.displayPrivacyPolicyGuide(this, mBinding.tvReadPrivacyPolicyGuide)
         mBinding.btnSendVerifyCode.text = getString(R.string.text_obtenir_otp)
-        mBinding.etPhone.filters = arrayOf(filter)
-        mBinding.etVerifyCode.filters = arrayOf(filter)
+        mBinding.etPhone.filters =
+            arrayOf(EditTextFilter.getPhoneEditFilter(), EditTextFilter.getEditLengthFilter(10))
+        mBinding.etVerifyCode.filters =
+            arrayOf(EditTextFilter.getPhoneEditFilter(), EditTextFilter.getEditLengthFilter(4))
     }
 
+    override fun getViewBelowStatusBar(): View {
+        return mBinding.clLogUpHead
+    }
     override fun setListener() {
         super.setListener()
         mBinding.ivBack.setOnClickListener {
@@ -72,9 +70,12 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                mBinding.btnSendVerifyCode.apply {
-                    if (this.isTheFinalCountDown)
-                        isEnabled = s?.isNotEmpty() == true
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    mBinding.btnSendVerifyCode.isEnabled =
+                        s?.isNotEmpty() == true && !mBinding.btnSendVerifyCode.isCountDown
+                } else {
+                    mBinding.btnSendVerifyCode.isEnabled =
+                        s?.toString()?.isNotEmpty() == true && !isCountDown
                 }
                 mBinding.btnLogUp.isEnabled =
                     s?.isNotEmpty() == true && mBinding.etVerifyCode.text.toString().isNotEmpty()
@@ -109,6 +110,8 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
             mBinding.btnSendVerifyCode.apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     isCountDown = true
+                } else {
+                    this@LogUpActivity.isCountDown = true
                 }
                 base = SystemClock.elapsedRealtime() + 60L * 1000
                 setOnChronometerTickListener {
@@ -125,6 +128,7 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
                         stop()
                         mBinding.btnSendVerifyCode.isEnabled =
                             mBinding.etPhone.text.isNotEmpty()
+                        this@LogUpActivity.isCountDown = false
                     }
                 }
                 isEnabled = false
