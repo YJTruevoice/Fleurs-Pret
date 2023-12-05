@@ -2,13 +2,17 @@ package com.facile.immediate.electronique.fleurs.pret.home.view
 
 import android.Manifest
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
 import com.arthur.commonlib.utils.DateUtil
+import com.arthur.commonlib.utils.DensityUtils.Companion.dp2px
 import com.arthur.commonlib.utils.SPUtils
+import com.arthur.commonlib.utils.image.DisplayUtils
 import com.facile.immediate.electronique.fleurs.pret.R
-import com.facile.immediate.electronique.fleurs.pret.common.UserManager
+import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
+import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentHomeHostBinding
 import com.facile.immediate.electronique.fleurs.pret.home.Constant
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
@@ -26,17 +30,38 @@ import java.util.Date
 
 class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>() {
 
-    override fun onLazyInit() {
-        super.onLazyInit()
-        if (UserManager.isLogUp()) {
-            mViewModel.sOrM()
-        } else {
-            mViewModel.globalSetting("afraidDecemberSlimClassicalTechnology,brownTopic")
-        }
+    private val multiProHFragment: Fragment by lazy {
+        MultiProHFragment()
+    }
+    private val singleProHFragment: Fragment by lazy {
+        SingleProHFragment()
+    }
+    private val evaluationVersementFragment: Fragment by lazy {
+        EvaluationVersementFragment()
+    }
+    private val remboursementRetardeFragment: Fragment by lazy {
+        RemboursementRetardeFragment()
+    }
+    private val rejeteeFragment: Fragment by lazy {
+        RejeteeFragment()
+    }
+
+    override fun buildView() {
+        super.buildView()
+        PrivacyPolicyDisplayUtil.displayPrivacyPolicyGuide(
+            requireContext(), mBinding.tvReadPrivacyPolicyGuide
+        )
     }
 
     override fun processLogic() {
         super.processLogic()
+        DisplayUtils.displayImageAsRound(
+            R.mipmap.ic_launcher,
+            mBinding.inTitle.ivLogo,
+            R.mipmap.ic_launcher,
+            radius = 6f.dp2px(requireContext())
+        )
+        mViewModel.getHomeData()
         PermissionX.init(this)
             .permissions(Manifest.permission.ACCESS_COARSE_LOCATION)
             .request { _: Boolean, _: List<String?>?, _: List<String?>? ->
@@ -44,64 +69,84 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
             }
     }
 
+    override fun setListener() {
+        super.setListener()
+        mBinding.srlRefresh.setOnRefreshListener {
+            mViewModel.getHomeData()
+        }
+        mBinding.inTitle.ivCustomer.setOnClickListener {
+            ConsumerActivity.go(requireActivity())
+        }
+    }
+
+    override fun onPageResume() {
+        super.onPageResume()
+        mBinding.srlRefresh.autoRefresh()
+    }
+
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
-        mViewModel.prodMultiTypeLiveData.observe(viewLifecycleOwner) {
+        mViewModel.refreshCompleteLiveData.observe(viewLifecycleOwner) {
+            if (mBinding.srlRefresh.isRefreshing)
+                mBinding.srlRefresh.finishRefresh()
+        }
+
+        mViewModel.multiProHLiveData.observe(viewLifecycleOwner) {
             it?.let {
-                commitTargetFragment(MultiProHFragment())
+                mBinding.tvReadPrivacyPolicyGuide.visibility = View.VISIBLE
+                commitTargetFragment(multiProHFragment)
             }
         }
-        mViewModel.prodSingleTypeLiveData.observe(viewLifecycleOwner) {
+        mViewModel.singleProHLiveData.observe(viewLifecycleOwner) {
             it?.let {
-                it.normalBillClinicMercifulBay?.let { normalBillClinicMercifulBay ->
-                    if (normalBillClinicMercifulBay.isEmpty() || normalBillClinicMercifulBay == "-1") {
-                        commitTargetFragment(SingleProHFragment())
-                    } else {
-                        val argument = Bundle().apply {
-                            putParcelable(BaseLoanStateFragment.KEY_PRO_INFO, it)
-                        }
-                        when (it.rudeReceptionCyclistArcticHunger) {
-                            ProState.CAN_APPLY.value.toString(),
-                            ProState.VERSEMENT.value.toString(),
-                            ProState.VERSEMENT_ECHOUE.value.toString()
-                            -> {
-                                commitTargetFragment(EvaluationVersementFragment().apply {
-                                    arguments = argument
-                                })
-                            }
-
-                            ProState.REMBOURSEMENT.value.toString(), ProState.RETARDE.value.toString() -> {
-                                commitTargetFragment(RemboursementRetardeFragment().apply {
-                                    arguments = argument
-                                })
-                            }
-
-                            ProState.EN_EVALUATION.value.toString() -> {}
-
-                            ProState.REJETEE.value.toString() -> {
-                                commitTargetFragment(RejeteeFragment().apply {
-                                    arguments = argument
-                                })
-                            }
-
-                            else -> {
-                                isLoaded = false
-                            }
-                        }
-                        // 好评弹窗
-                        mViewModel.globalSetting("skillfulSkin,coolFoolishLondon,thirstyTranslatorMusicalCeilingIdea")
-                    }
-                } ?: commitTargetFragment(SingleProHFragment())
+                mBinding.tvReadPrivacyPolicyGuide.visibility = View.GONE
+                commitTargetFragment(singleProHFragment)
             }
+        }
 
-            // 消息公告弹窗
-            mViewModel.globalSetting("peacefulPartBrain,toughHydrogenMedicalTriangleSuffering,honestDessertUnableReceiptHotIceland")
+        mViewModel.ordStateLiveData.observe(viewLifecycleOwner) {
+            it?.let {
+                mBinding.tvReadPrivacyPolicyGuide.visibility = View.VISIBLE
+                val argument = Bundle().apply {
+                    putParcelable(BaseLoanStateFragment.KEY_PRO_INFO, it)
+                }
+                when (it.rudeReceptionCyclistArcticHunger) {
+                    ProState.CAN_APPLY.value.toString(),
+                    ProState.VERSEMENT.value.toString(),
+                    ProState.VERSEMENT_ECHOUE.value.toString(),
+                    ProState.EN_EVALUATION.value.toString()
+                    -> {
+                        commitTargetFragment(evaluationVersementFragment.apply {
+                            arguments = argument
+                        })
+                    }
+
+                    ProState.REMBOURSEMENT.value.toString(), ProState.RETARDE.value.toString() -> {
+                        commitTargetFragment(remboursementRetardeFragment.apply {
+                            arguments = argument
+                        })
+                    }
+
+                    ProState.REJETEE.value.toString() -> {
+                        commitTargetFragment(rejeteeFragment.apply {
+                            arguments = argument
+                        })
+                    }
+
+                    else -> {
+                        isLoaded = false
+                    }
+                }
+            }
+            // 好评弹窗
+            mViewModel.globalSetting("skillfulSkin,coolFoolishLondon,thirstyTranslatorMusicalCeilingIdea")
         }
 
         mViewModel.globalSettingLiveData.observe(viewLifecycleOwner) {
             it?.let {
                 if (it.afraidDecemberSlimClassicalTechnology?.isNotEmpty() == true) {
-                    commitTargetFragment(SingleProHFragment())
+                    mBinding.tvReadPrivacyPolicyGuide.visibility = View.GONE
+                    commitTargetFragment(singleProHFragment)
                     return@observe
                 }
                 val curTime = System.currentTimeMillis()

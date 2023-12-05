@@ -2,6 +2,7 @@ package com.facile.immediate.electronique.fleurs.pret.dialog.widget
 
 import android.app.ActionBar.LayoutParams
 import android.content.Context
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintSet
@@ -35,6 +36,7 @@ open class BaseConfirmCancelDialog @JvmOverloads constructor(
                 if (contentView == null) {
                     mBinding.tvDefaultContent.apply {
                         text = config.content
+                        movementMethod = ScrollingMovementMethod.getInstance()
                         visibility = View.VISIBLE
                     }
                 } else {

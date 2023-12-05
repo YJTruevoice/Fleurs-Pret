@@ -1,208 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_F9FAFC"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".home.view.FirstFragment">
 
-    <include
-        android:id="@+id/in_title"
-        layout="@layout/view_title_common"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_FFFFFF"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <com.scwang.smart.refresh.layout.SmartRefreshLayout
-        android:id="@+id/srl_refresh"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/in_title">
-
-        <include layout="@layout/layout_loading_head" />
-
-        <androidx.core.widget.NestedScrollView
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_bg_f5f6f8_radius_8"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="@string/text_dur_e_maximale_du_remboursement"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/color_FFFFFF"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/text_91_jours"
+                android:textColor="@color/color_4635FF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/shape_bg_f5f6f8_radius_8"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/text_dur_e_maximale_du_remboursement"
-                            android:textColor="@color/color_666666"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:text="@string/text_91_jours"
-                            android:textColor="@color/color_4635FF"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/text_montant_maximal"
-                        android:textColor="@color/color_999999"
-                        android:textSize="16sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/text_montant_maximal"
+            android:textColor="@color/color_999999"
+            android:textSize="16sp" />
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/text_xof"
-                            android:textColor="@color/color_242237"
-                            android:textSize="26sp"
-                            android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_xof"
+                android:textColor="@color/color_242237"
+                android:textSize="26sp"
+                android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/tv_max_amount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/color_242237"
-                            android:textSize="48sp"
-                            android:textStyle="bold"
-                            tools:text="100000" />
+            <TextView
+                android:id="@+id/tv_max_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_242237"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                tools:text="100000" />
 
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <com.facile.immediate.electronique.fleurs.pret.view.DividingRulerView
-                        android:id="@+id/drv_dividing_ruler"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginHorizontal="15dp" />
+        <com.facile.immediate.electronique.fleurs.pret.view.DividingRulerView
+            android:id="@+id/drv_dividing_ruler"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="15dp" />
 
-                    <TextView
-                        android:id="@+id/tv_ask_now"
-                        android:layout_width="match_parent"
-                        android:layout_height="44dp"
-                        android:layout_marginHorizontal="28dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="14dp"
-                        android:background="@drawable/shape_bg_4635ff_radius_6"
-                        android:gravity="center"
-                        android:text="@string/text_demander_maintenant"
-                        android:textColor="@color/color_FFFFFF"
-                        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tv_ask_now"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/shape_bg_4635ff_radius_6"
+            android:gravity="center"
+            android:text="@string/text_demander_maintenant"
+            android:textColor="@color/color_FFFFFF"
+            android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tv_read_privacy_policy_guide"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="20dp"
-                        android:text="@string/text_read_privacy_policy_guide"
-                        android:textColor="@color/color_999999"
-                        android:textSize="12sp" />
+        <TextView
+            android:id="@+id/tv_read_privacy_policy_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="@string/text_read_privacy_policy_guide"
+            android:textColor="@color/color_999999"
+            android:textSize="12sp" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_FFFFFF"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="15dp">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_FFFFFF"
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/text_pourquoi_nous_choisi"
-                        android:textColor="@color/color_333333"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_pourquoi_nous_choisi"
+            android:textColor="@color/color_333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_choose_reason"
-                        android:layout_width="match_parent"
-                        android:layout_height="94dp"
-                        android:layout_marginTop="14dp"
-                        android:layout_marginBottom="20dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_choose_reason"
+            android:layout_width="match_parent"
+            android:layout_height="94dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="20dp" />
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/color_FFFFFF"
-                    android:paddingHorizontal="15dp"
-                    android:paddingVertical="16dp">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_FFFFFF"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="16dp">
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/shape_bg_fafafa_radius_8"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:paddingVertical="16dp"
-                        android:paddingHorizontal="14dp">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_bg_fafafa_radius_8"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="16dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/text_fleurs_pret_des_services_milliers_d_utilisateurs"
-                            android:textColor="@color/color_242237"
-                            android:textSize="16sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_fleurs_pret_des_services_milliers_d_utilisateurs"
+                android:textColor="@color/color_242237"
+                android:textSize="16sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/text_dont_98_sont_satisfaits"
-                            android:textColor="@color/color_999999"
-                            android:textSize="14sp" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/text_dont_98_sont_satisfaits"
+                android:textColor="@color/color_999999"
+                android:textSize="14sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-                </FrameLayout>
+    </FrameLayout>
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.core.widget.NestedScrollView>
-    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

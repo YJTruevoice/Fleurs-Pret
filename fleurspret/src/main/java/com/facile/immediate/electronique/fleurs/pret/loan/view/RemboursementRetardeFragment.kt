@@ -35,10 +35,6 @@ import com.facile.immediate.electronique.fleurs.pret.web.WebActivity
 class RemboursementRetardeFragment :
     BaseLoanStateFragment<FragmentLoanStateRemboursementLayoutBinding>() {
 
-    override fun privacyPolicyGuideView(): TextView {
-        return mBinding.tvReadPrivacyPolicyGuide
-    }
-
     override fun setOrdInfo(ordInfo: OrdStateInfo) {
         //banner, 展期弹窗开关，展期弹窗标题，展期弹窗内容
         mViewModel.globalSetting("brownTopic,challengingDevelopmentTechnicalMineral,rainyIncomeUnhealthyPie,surroundingMedicineTriangleHarmlessHeadline")

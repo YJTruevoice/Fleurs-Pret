@@ -76,10 +76,10 @@ class InputContactInformationActivity :
             mViewModel.saveContactInfo(
                 phoneNumber = mBinding.inContact1st.etPhone.text.toString(),
                 name = mBinding.inContact1st.etNom.text.toString(),
-                relationship = "",
+                relationship = firstShipSelectedItem?.value?.toString() ?: "",
                 phoneNumberSec = mBinding.inContact2st.etPhone.text.toString(),
                 nameSec = mBinding.inContact2st.etNom.text.toString(),
-                relationshipSec = ""
+                relationshipSec = secShipSelectedItem?.value?.toString() ?: ""
             )
         }
     }

@@ -14,12 +14,12 @@ import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
 
 class MultiProHFragment : BaseMVVMFragment<FragmentMultiProHomeBinding, FirstViewModel>() {
 
-
+    override fun buildView() {
+        super.buildView()
+        mBinding.srlRefresh.setEnableRefresh(false)
+    }
     override fun setListener() {
         super.setListener()
-        mBinding.srlRefresh.setOnRefreshListener {
-            mViewModel.multiProH()
-        }
         mBinding.inTitle.ivCustomer.setOnClickListener {
             ConsumerActivity.go(requireActivity())
         }
@@ -27,7 +27,7 @@ class MultiProHFragment : BaseMVVMFragment<FragmentMultiProHomeBinding, FirstVie
 
     override fun onPageResume() {
         super.onPageResume()
-        mBinding.srlRefresh.autoRefresh()
+        mViewModel.multiProH()
     }
 
     override fun initLiveDataObserver() {

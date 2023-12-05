@@ -1,10 +1,12 @@
 package com.facile.immediate.electronique.fleurs.pret.main
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.common.UserManager
+import com.facile.immediate.electronique.fleurs.pret.common.event.HomeOrdState
 import com.facile.immediate.electronique.fleurs.pret.common.loadFragments
 import com.facile.immediate.electronique.fleurs.pret.common.showFragmentAndHideOthers
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityMainBinding
@@ -13,11 +15,18 @@ import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
 import com.facile.immediate.electronique.fleurs.pret.mine.ThirdFragment
 import com.facile.immediate.electronique.fleurs.pret.order.view.SecondFragment
 import com.gyf.immersionbar.ImmersionBar
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
 
     private val fragments = mutableMapOf<Int, Fragment>()
+    override fun onInit(savedInstanceState: Bundle?) {
+        super.onInit(savedInstanceState)
+        EventBus.getDefault().register(this)
+    }
     override fun setStatusBar() {
         ImmersionBar.with(this)
             .transparentStatusBar()
@@ -112,5 +121,14 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
 
             showFragmentAndHideOthers(fragments[it])
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(homeOrdState: HomeOrdState){
+        mBinding.inTabFirst.navigationOne.performClick()
     }
 }

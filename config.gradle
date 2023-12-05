@@ -119,7 +119,7 @@ ext {
 
     dependencies = [
             gson              : "com.google.code.gson:gson:2.10.1",
-            eventBus          : "org.greenrobot:eventbus:3.1.1",
+            eventBus          : "org.greenrobot:eventbus:3.3.1",
             java_lang         : "org.apache.commons:commons-lang3:3.13.0",
             lottie            : "com.airbnb.android:lottie:6.0.0",
             magicIndicator    : "com.github.hackware1993:MagicIndicator:1.7.0",

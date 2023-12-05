@@ -44,10 +44,6 @@ class RejeteeFragment :
         }
     }
 
-    override fun privacyPolicyGuideView(): TextView {
-        return mBinding.tvReadPrivacyPolicyGuide
-    }
-
     override fun setOrdInfo(ordInfo: OrdStateInfo) {
         mViewModel.globalSetting("australianPublicChallenge,thoseLongBaseball,swiftInnExcellentContribution")
         mViewModel.recommendBanner()

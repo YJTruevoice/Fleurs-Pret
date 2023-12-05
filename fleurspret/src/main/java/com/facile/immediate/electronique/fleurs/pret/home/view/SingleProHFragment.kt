@@ -10,7 +10,6 @@ import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
 import com.arthur.commonlib.utils.DensityUtils
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.UserManager
-import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.common.ext.addThousandSeparator
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentHomeBinding
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
@@ -38,17 +37,6 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
 
     override fun setListener() {
         super.setListener()
-        mBinding.srlRefresh.setOnRefreshListener {
-            if (UserManager.isLogUp()) {
-                mViewModel.multiProH()
-            } else {
-                mViewModel.globalSetting("afraidDecemberSlimClassicalTechnology,brownTopic")
-            }
-        }
-
-        mBinding.inTitle.ivCustomer.setOnClickListener {
-            ConsumerActivity.go(requireActivity())
-        }
 
         mBinding.tvAskNow.setOnClickListener {
             if (!UserManager.isLogUp()) {
@@ -61,31 +49,30 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
 
     override fun onPageResume() {
         super.onPageResume()
-        mBinding.srlRefresh.autoRefresh()
+        if (UserManager.isLogUp()) {
+            mViewModel.multiProH()
+        } else {
+            mViewModel.globalSetting("afraidDecemberSlimClassicalTechnology,brownTopic")
+        }
     }
 
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
-        mViewModel.refreshCompleteLiveData.observe(viewLifecycleOwner) {
-            if (mBinding.srlRefresh.isRefreshing)
-                mBinding.srlRefresh.finishRefresh()
-        }
 
-        mViewModel.multiProHLiveData.observe(viewLifecycleOwner) {
-            it?.let { multiPro ->
-                if (multiPro.isNotEmpty()) {
-                    val singlePro = multiPro[0]
-                    mBinding.tvMaxAmount.text = singlePro.afraidDecemberSlimClassicalTechnology.addThousandSeparator()
-                    singlePro.afraidDecemberSlimClassicalTechnology?.let { amount ->
-                        mBinding.drvDividingRuler.setCurMaxMount(amount)
-                    }
+        mViewModel.singleProHLiveData.observe(viewLifecycleOwner) {
+            it?.let { singlePro ->
+                mBinding.tvMaxAmount.text =
+                    singlePro.afraidDecemberSlimClassicalTechnology.addThousandSeparator()
+                singlePro.afraidDecemberSlimClassicalTechnology?.let { amount ->
+                    mBinding.drvDividingRuler.setCurMaxMount(amount)
                 }
             }
         }
         mViewModel.globalSettingLiveData.observe(viewLifecycleOwner) {
             it?.let {
                 if (it.afraidDecemberSlimClassicalTechnology?.isNotEmpty() == true) {
-                    mBinding.tvMaxAmount.text = it.afraidDecemberSlimClassicalTechnology.addThousandSeparator()
+                    mBinding.tvMaxAmount.text =
+                        it.afraidDecemberSlimClassicalTechnology.addThousandSeparator()
                     mBinding.drvDividingRuler.setCurMaxMount(it.afraidDecemberSlimClassicalTechnology)
                 }
             }

@@ -41,7 +41,7 @@ class LoanVM(app: Application) : BaseViewModel<LoanModel>(app) {
         }.success {
             ordStateInfo = it.aggressiveParentMethod
             ordStateInfoLiveData.value = it.aggressiveParentMethod
-        }.showLoading(true).launch()
+        }.launch()
     }
 
     fun recommendBanner() {

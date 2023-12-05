@@ -33,8 +33,9 @@
         android:layout_marginTop="18dp"
         android:gravity="center"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/v_divider_top"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="300dp"
@@ -54,6 +55,7 @@
         android:id="@+id/rv_ord"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipToPadding="false"
         android:paddingTop="10dp"
         android:paddingBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"

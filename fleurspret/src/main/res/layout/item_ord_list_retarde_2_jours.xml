@@ -9,9 +9,12 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <include layout="@layout/view_name_and_state" />
+    <include
+        android:id="@+id/in_ord_basic"
+        layout="@layout/view_name_and_state" />
 
     <include
+        android:id="@+id/in_ord_montant"
         layout="@layout/view_montant_and_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,6 +29,7 @@
         android:textSize="14sp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_btns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp">

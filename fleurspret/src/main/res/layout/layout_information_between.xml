@@ -8,14 +8,17 @@
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:maxLines="2"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/text_montant_du_remboursement" />
+        tools:text="Montant du remboursement Montant du remboursement Montant du remboursement" />
 
     <TextView
         android:id="@+id/tv_value"
@@ -26,6 +29,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="XOF 0.00" />
+        tools:text="XOF 10000000000.00" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

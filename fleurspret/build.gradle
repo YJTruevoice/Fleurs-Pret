@@ -107,6 +107,7 @@ dependencies {
     implementation rootProject.ext.dependencies.smartRefreshLayout
     implementation rootProject.ext.dependencies.baseQuickAdapter
     implementation rootProject.ext.dependencies.permissions
+    implementation rootProject.ext.dependencies.eventBus
     implementation rootProject.ext.glides
     implementation rootProject.ext.stethosLibs
 
@@ -121,4 +122,7 @@ dependencies {
 
     implementation 'com.google.android.play:review:2.0.1'
     implementation 'com.google.android.gms:play-services-location:19.0.1'
+
+    // Facebook Android SDK (everything)
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 }

@@ -8,7 +8,9 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <include layout="@layout/view_name_and_state" />
+    <include
+        android:id="@+id/in_ord_basic"
+        layout="@layout/view_name_and_state" />
 
     <TextView
         android:layout_width="match_parent"
