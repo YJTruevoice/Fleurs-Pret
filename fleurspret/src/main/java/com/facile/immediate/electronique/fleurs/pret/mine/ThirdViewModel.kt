@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.launchNet
 import com.arthur.baselib.structure.mvvm.BaseViewModel
 import com.arthur.baselib.structure.mvvm.SingleLiveEvent
-import com.facile.immediate.electronique.fleurs.pret.common.UserManager
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.mine.model.ThirdModel
-import com.facile.immediate.electronique.fleurs.pret.mine.model.UserBasicEntity
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserBasicEntity
 
 class ThirdViewModel(app: Application) : BaseViewModel<ThirdModel>(app) {
 

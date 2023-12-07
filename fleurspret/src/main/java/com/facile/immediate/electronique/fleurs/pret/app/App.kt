@@ -9,6 +9,7 @@ import com.arthur.commonlib.utils.ActivityManager
 import com.facebook.stetho.Stetho
 import com.facile.immediate.electronique.fleurs.pret.BuildConfig
 import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
+import com.facile.immediate.electronique.fleurs.pret.view.toast.TextToastImpl
 
 /**
  * @Author arthur
@@ -21,10 +22,10 @@ class App : Application() {
         AppLanguageUtil.setAppLanguage(this)
         registerActivityLifecycleCallbacks(ActivityManager)
         AppKit.initContext(this.applicationContext)
-        Toaster.init(this.applicationContext)
+        Toaster.init(this.applicationContext).register(toast = TextToastImpl())
         NetMgr.get().init(this.applicationContext)
 
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this)
         }
     }

@@ -96,6 +96,10 @@ object NetConstant {
         const val SERVICE_TIMEOUT = "网络超时，请稍后重试"
         const val CONNECT_ERROR = "网络不可用，请检查网络设置"
         const val CONNECT_ERROR_OTHER = "网络异常，请确认网络正常"
+        const val DATA_EMPTY_ERROR = "数据不合规异常 数据为空"
         const val DATA_PARSE_ERROR = "数据解析异常"
+        const val DATA_ILLEGAL_ERROR = "数据不合规异常"
+        const val UNKNOWN_ERROR = "未知异常"
+        const val DEFAULT_BUSINESS_ERROR = "发生错误"
     }
 }

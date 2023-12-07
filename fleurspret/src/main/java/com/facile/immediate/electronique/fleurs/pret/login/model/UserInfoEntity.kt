@@ -15,4 +15,5 @@ data class UserInfoEntity(
     val thoroughBriefGreatSomebody: String? = null,//testCustFlag
     val dirtyCompositionUpsetRealBelief: String? = null,//token
     val radioactiveTeacherBasicBankLaserSuspect: String? = null,//userId
+    var usualExtraordinaryScholarshipQuickHardship: String? = null,//phone
 ) : Parcelable

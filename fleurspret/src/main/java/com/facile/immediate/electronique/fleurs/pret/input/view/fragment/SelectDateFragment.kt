@@ -20,6 +20,7 @@ class SelectDateFragment(private var selectConfirmed: ((Int, Int, Int) -> Unit)?
         super.buildView()
         arguments?.getString("dateSource")?.let { mBinding.cvCalendar.setDateSource(it) }
     }
+
     override fun setListener() {
         super.setListener()
         mBinding.tvCalendarConfirm.setOnClickListener {
@@ -38,7 +39,7 @@ class SelectDateFragment(private var selectConfirmed: ((Int, Int, Int) -> Unit)?
             dateSource: String = "",
             selectConfirmed: ((Int, Int, Int) -> Unit)? = null
         ) {
-            show(ac.supportFragmentManager, dateSource,selectConfirmed)
+            show(ac.supportFragmentManager, dateSource, selectConfirmed)
         }
 
         fun show(
@@ -52,6 +53,7 @@ class SelectDateFragment(private var selectConfirmed: ((Int, Int, Int) -> Unit)?
                 .content(SelectDateFragment(selectConfirmed).apply {
                     arguments = Bundle().apply { putString("dateSource", dateSource) }
                 })
+                .cancelOnTouchOutsize(false)
                 .build()
                 .show(fm, "SelectDatePanel")
         }

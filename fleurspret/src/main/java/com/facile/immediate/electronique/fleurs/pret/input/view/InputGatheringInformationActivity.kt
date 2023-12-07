@@ -1,5 +1,6 @@
 package com.facile.immediate.electronique.fleurs.pret.input.view
 
+import android.text.SpannableStringBuilder
 import android.view.View
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
 import com.arthur.commonlib.ability.AppKit
@@ -20,6 +21,7 @@ class InputGatheringInformationActivity :
 
     private var collectionTypeSelectedItem: CommonChooseListItem? = null
     private var bankAccountTypeSelectedItem: CommonChooseListItem? = null
+    private var bankSelectedItem: CommonChooseListItem? = null
 
     override fun setStatusBar() {
         ImmersionBar.with(this)
@@ -60,11 +62,11 @@ class InputGatheringInformationActivity :
 
         mBinding.tvNext.setOnClickListener {
             if (!isNextBtnEnable()) {
-                Toaster.showToast(AppKit.context.getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
+                Toaster.showToast(getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
                 return@setOnClickListener
             }
             if (!differAccountNo()) {
-                Toaster.showToast(getString(R.string.text_les_num_ros_de_carte_bancaire_saisis_deux_fois_sont_incoh_rents))
+                Toaster.showToast(getString(R.string.text_veuillez_remplir_les_m_mes_informations_de_compte))
                 return@setOnClickListener
             }
             if (collectionTypeSelectedItem?.value == "1") {
@@ -86,20 +88,60 @@ class InputGatheringInformationActivity :
 
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
-        mViewModel.gatheringLiveData.observe(this){
+        mViewModel.gatheringLiveData.observe(this) {
+            it?.let {
+                if (it.isNotEmpty()) {
+                    val gathering = it[0]
+                    mBinding.etAccountNo.text =
+                        SpannableStringBuilder(gathering.lastBuildingTroublesomeRainbowChapter)
+                    mBinding.etAccountNoConfirm.text =
+                        SpannableStringBuilder(gathering.lastBuildingTroublesomeRainbowChapter)
 
+                    if (gathering.nextNovelPuzzledCouple?.isNotEmpty() == true
+                        && gathering.safeVirtueClinicNewJewel?.isNotEmpty() == true
+                    ) {
+                        mBinding.tvGatheringWay.text = gathering.nextNovelPuzzledCouple
+                        collectionTypeSelectedItem = CommonChooseListItem(
+                            gathering.nextNovelPuzzledCouple,
+                            gathering.safeVirtueClinicNewJewel
+                        )
+                    }
+                }
+                isNextBtnEnable()
+            }
         }
         mViewModel.configLiveData.observe(this) { pair ->
             val list = mutableListOf<CommonChooseListItem>()
             pair?.second?.forEach {
                 list.add(CommonChooseListItem(it.value, it.code))
             }
-            BottomSheet.showListBottomSheet(this, list, selected = collectionTypeSelectedItem) {
+            val selectedItem: CommonChooseListItem? = when (pair?.first) {
+                ConfigType.collectionType -> {
+                    collectionTypeSelectedItem
+                }
+
+                ConfigType.bankAccountType -> {
+                    bankAccountTypeSelectedItem
+                }
+
+                ConfigType.bankNameList -> {
+                    bankSelectedItem
+                }
+
+                else -> {
+                    null
+                }
+            }
+            BottomSheet.showListBottomSheet(this, list, selected = selectedItem) {
                 when (pair?.first) {
                     ConfigType.collectionType -> {
                         mBinding.tvGatheringWay.text = it.name
-                        isNextBtnEnable()
+                        if (collectionTypeSelectedItem?.value != it.value) {
+                            mBinding.etAccountNo.text = SpannableStringBuilder("")
+                            mBinding.etAccountNoConfirm.text = SpannableStringBuilder("")
+                        }
                         collectionTypeSelectedItem = it
+                        isNextBtnEnable()
                     }
 
                     ConfigType.bankAccountType -> {
@@ -108,13 +150,16 @@ class InputGatheringInformationActivity :
                     }
 
                     ConfigType.bankNameList -> {
+                        bankSelectedItem = it
                         mViewModel.saveGatheringInfo(
-                            bankCode = it.value.toString(),
-                            bankName = it.name,
-                            bankAccountType = bankAccountTypeSelectedItem?.value.toString(),
+                            bankCode = bankSelectedItem?.value?.toString() ?: "",
+                            bankName = bankSelectedItem?.name ?: "",
+                            bankAccountType = bankAccountTypeSelectedItem?.value?.toString() ?: "",
                             bankAccountNumber = mBinding.etAccountNoConfirm.text.toString(),
-                            collectionType = collectionTypeSelectedItem?.value.toString()
+                            collectionType = collectionTypeSelectedItem?.value?.toString() ?: ""
                         )
+                        bankAccountTypeSelectedItem = null
+                        bankSelectedItem = null
                     }
 
                     else -> {}

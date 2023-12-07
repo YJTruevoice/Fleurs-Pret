@@ -72,7 +72,7 @@
                 android:textColor="@color/color_242237"
                 android:textSize="48sp"
                 android:textStyle="bold"
-                tools:text="100000" />
+                tools:text="--" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

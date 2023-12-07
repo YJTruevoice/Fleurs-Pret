@@ -3,6 +3,8 @@ package com.facile.immediate.electronique.fleurs.pret.input.view
 import android.Manifest
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.provider.Settings
+import android.text.SpannableStringBuilder
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -12,11 +14,15 @@ import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Loading
 import com.arthur.commonlib.ability.Toaster
 import com.arthur.commonlib.utils.DensityUtils.Companion.dp2px
+import com.arthur.commonlib.utils.SystemUtils
 import com.arthur.commonlib.utils.image.DisplayUtils
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
+import com.facile.immediate.electronique.fleurs.pret.common.event.NetErrorRefresh
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputIdentityInformationBinding
+import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseCountDownDialog
 import com.facile.immediate.electronique.fleurs.pret.input.InputConstant
 import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
 import com.facile.immediate.electronique.fleurs.pret.input.vm.IdentityInputVM
@@ -24,9 +30,14 @@ import com.gyf.immersionbar.ImmersionBar
 import com.permissionx.guolindev.PermissionX
 import com.wld.mycamerax.util.CameraConstant
 import com.wld.mycamerax.util.CameraParam
+import org.greenrobot.eventbus.EventBus
 
 class InputIdentityInformationActivity :
     BaseMVVMActivity<ActivityInputIdentityInformationBinding, IdentityInputVM>() {
+
+    private var isCardFrontPicUp = false
+    private var isCardBackPicUp = false
+    private var isFacePicUp = false
     override fun setStatusBar() {
         ImmersionBar.with(this)
             .transparentStatusBar()
@@ -62,16 +73,24 @@ class InputIdentityInformationActivity :
         }
 
         mBinding.etIdentityCard.addTextChangedListener(mViewModel.textWatcher)
-        mBinding.etPhone.addTextChangedListener(mViewModel.textWatcher)
+        mBinding.etNin.addTextChangedListener(mViewModel.textWatcher)
 
         mBinding.tvNext.setOnClickListener {
+            if (!isCardFrontPicUp || !isCardBackPicUp) {
+                Toaster.showToast(getString(R.string.text_veuillez_t_l_charger_une_photo_d_identit))
+                return@setOnClickListener
+            }
+            if (!isFacePicUp) {
+                Toaster.showToast(getString(R.string.text_veuillez_t_l_charger_une_photo_de_votre_visage))
+                return@setOnClickListener
+            }
             if (!isNextBtnEnable()) {
-                Toaster.showToast(AppKit.context.getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
+                Toaster.showToast(getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
                 return@setOnClickListener
             }
             mViewModel.idNo = mBinding.etIdentityCard.text.toString()
-            mViewModel.phoneNo = mBinding.etPhone.text.toString()
-            mViewModel.identityPic()
+            mViewModel.ninNo = mBinding.etNin.text.toString()
+            mViewModel.saveIdentityInfo()
         }
 
     }
@@ -82,6 +101,52 @@ class InputIdentityInformationActivity :
 
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
+        mViewModel.userBasicLiveData.observe(this) {
+            it?.let {
+                mBinding.etIdentityCard.text = SpannableStringBuilder(it.gratefulTourismFool)
+                mBinding.etNin.text = SpannableStringBuilder(UserManager.phoneNumber())
+                isNextBtnEnable()
+            }
+        }
+
+        mViewModel.cardFaceInfoLiveData.observe(this) {
+            it?.let {
+                if (it.liveExcellentTaxEquality == "1"
+                    && it.broadImportantBelief?.isNotEmpty() == true
+                ) {
+                    DisplayUtils.displayImageAsRound(
+                        it.broadImportantBelief,
+                        mBinding.ivCardFront,
+                        radius = 6f.dp2px(this)
+                    )
+                    isCardFrontPicUp = true
+                }
+
+                if (it.festivalUndividedDoctor == "1"
+                    && it.beautifulTelephoneFamiliarPicturePorridge?.isNotEmpty() == true
+                ) {
+                    DisplayUtils.displayImageAsRound(
+                        it.beautifulTelephoneFamiliarPicturePorridge,
+                        mBinding.ivCardBack,
+                        radius = 6f.dp2px(this)
+                    )
+                    isCardBackPicUp = true
+                }
+
+                if (it.scottishQuiltStillSunday == "1"
+                    && it.everydayRainfallCookieGuidance?.isNotEmpty() == true
+                ) {
+                    DisplayUtils.displayImageAsRound(
+                        it.everydayRainfallCookieGuidance,
+                        mBinding.ivFaceAfr,
+                        radius = 6f.dp2px(this)
+                    )
+                    isFacePicUp = true
+                }
+                isNextBtnEnable()
+            }
+        }
+
         mViewModel.textWatcherLiveData.observe(this) {
             isNextBtnEnable()
         }
@@ -102,11 +167,7 @@ class InputIdentityInformationActivity :
                             tvFront.text = getString(R.string.text_recto)
                             displayUpdateSuc(tvCardFrontUploadState)
                         }
-                        DisplayUtils.displayImageAsRound(
-                            mViewModel.cardFrontPicPath,
-                            mBinding.ivCardFront,
-                            radius = 6f.dp2px(this)
-                        )
+                        isCardFrontPicUp = true
                     }
 
                     "cardBackPicPath" -> {
@@ -115,11 +176,7 @@ class InputIdentityInformationActivity :
                             tvBack.text = getString(R.string.text_recto)
                             displayUpdateSuc(tvCardBackUploadState)
                         }
-                        DisplayUtils.displayImageAsRound(
-                            mViewModel.cardBackPicPath,
-                            mBinding.ivCardBack,
-                            radius = 6f.dp2px(this)
-                        )
+                        isCardBackPicUp = true
                     }
 
                     "facePicPath" -> {
@@ -128,11 +185,7 @@ class InputIdentityInformationActivity :
                             tvAfr.text = getString(R.string.text_recto)
                             displayUpdateSuc(tvFaceAfrUploadState)
                         }
-                        DisplayUtils.displayImageAsRound(
-                            mViewModel.facePicPath,
-                            mBinding.ivFaceAfr,
-                            radius = 6f.dp2px(this)
-                        )
+                        isFacePicUp = true
                     }
                 }
                 isNextBtnEnable()
@@ -140,6 +193,16 @@ class InputIdentityInformationActivity :
         }
 
         mViewModel.uploadPicFailedLiveData.observe(this) {
+            if (!SystemUtils.isNetworkAvailable(AppKit.context)) {
+                BaseCountDownDialog.with(this)
+                    .img(R.mipmap.pic_net_404)
+                    .countDown(5)
+                    .content(getString(R.string.text_erreur_de_connexion))
+                    .confirm(getString(R.string.text_actualiser)) {
+                        val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+                        startActivity(intent)
+                    }.build().show()
+            }
             it?.let {
                 when (it) {
                     "cardFrontPicPath" -> {
@@ -209,18 +272,33 @@ class InputIdentityInformationActivity :
                         mViewModel.cardFrontPicPath =
                             intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
                         setUploadStateInVisible(mBinding.tvCardFrontUploadState)
+                        DisplayUtils.displayImageAsRound(
+                            mViewModel.cardFrontPicPath,
+                            mBinding.ivCardFront,
+                            radius = 6f.dp2px(this)
+                        )
                     }
 
                     InputConstant.ReqCode.CARD_BACK_CODE -> {
                         mViewModel.cardBackPicPath =
                             intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
                         setUploadStateInVisible(mBinding.tvCardBackUploadState)
+                        DisplayUtils.displayImageAsRound(
+                            mViewModel.cardBackPicPath,
+                            mBinding.ivCardBack,
+                            radius = 6f.dp2px(this)
+                        )
                     }
 
                     InputConstant.ReqCode.FACE_PIC_CODE -> {
                         mViewModel.facePicPath =
                             intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
                         setUploadStateInVisible(mBinding.tvFaceAfrUploadState)
+                        DisplayUtils.displayImageAsRound(
+                            mViewModel.facePicPath,
+                            mBinding.ivFaceAfr,
+                            radius = 6f.dp2px(this)
+                        )
                     }
                 }
             }
@@ -263,7 +341,7 @@ class InputIdentityInformationActivity :
 
     private fun isNextBtnEnable(): Boolean {
         mBinding.tvNext.isSelected =
-            isPicUpdateAll() && InputUtil.nextBtnEnable(mBinding.etIdentityCard, mBinding.etPhone)
+            InputUtil.nextBtnEnable(mBinding.etIdentityCard, mBinding.etNin)
         return mBinding.tvNext.isSelected
     }
 

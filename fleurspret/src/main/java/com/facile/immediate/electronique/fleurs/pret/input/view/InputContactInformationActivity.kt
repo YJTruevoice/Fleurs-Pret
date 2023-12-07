@@ -5,16 +5,20 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.text.SpannableStringBuilder
 import android.view.MotionEvent
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
 import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Toaster
+import com.arthur.commonlib.utils.PhoneUtils
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.BottomSheet
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.bean.CommonChooseListItem
+import com.facile.immediate.electronique.fleurs.pret.common.EditTextFilter
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.config.ConfigType
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
+import com.facile.immediate.electronique.fleurs.pret.common.ext.onClick
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputContactInformationBinding
 import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseConfirmCancelDialog
 import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
@@ -46,6 +50,13 @@ class InputContactInformationActivity :
         initTitleBar()
 
         PrivacyPolicyDisplayUtil.displayPrivacyPolicyGuide(this, mBinding.tvReadPrivacyPolicyGuide)
+
+        mBinding.apply {
+            inContact1st.etPhone.filters =
+                arrayOf(EditTextFilter.getPhoneEditFilter(), EditTextFilter.getEditLengthFilter(20))
+            inContact2st.etPhone.filters =
+                arrayOf(EditTextFilter.getPhoneEditFilter(), EditTextFilter.getEditLengthFilter(20))
+        }
     }
 
     override fun setListener() {
@@ -56,10 +67,10 @@ class InputContactInformationActivity :
         mBinding.inTitleBar.ivCustomer.setOnClickListener {
             ConsumerActivity.go(this)
         }
-        mBinding.inContact1st.tvRelation.setOnClickListener {
+        mBinding.inContact1st.tvRelation.onClick {
             mViewModel.config(ConfigType.relationship)
         }
-        mBinding.inContact2st.tvRelation.setOnClickListener {
+        mBinding.inContact2st.tvRelation.onClick {
             mViewModel.config(ConfigType.secRelationship)
         }
 
@@ -70,7 +81,13 @@ class InputContactInformationActivity :
 
         mBinding.tvNext.setOnClickListener {
             if (!isNextBtnEnable()) {
-                Toaster.showToast(AppKit.context.getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
+                Toaster.showToast(getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
+                return@setOnClickListener
+            }
+            val fistNumber = mBinding.inContact1st.etPhone.text.toString()
+            val secNumber = mBinding.inContact2st.etPhone.text.toString()
+            if (fistNumber.length < 9 || secNumber.length < 9) {
+                Toaster.showToast(getString(R.string.text_veuillez_d_abord_remplir_le_bon_num_ro_de_t_l_phone_portable))
                 return@setOnClickListener
             }
             mViewModel.saveContactInfo(
@@ -90,6 +107,36 @@ class InputContactInformationActivity :
 
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
+        mViewModel.userBasicLiveData.observe(this) {
+            it?.let {
+                mBinding.apply {
+                    inContact1st.apply {
+                        tvRelation.text = it.secondViolentTightPilot
+                        etPhone.text =
+                            SpannableStringBuilder(it.usualExtraordinaryScholarshipQuickHardship)
+                        etNom.text =
+                            SpannableStringBuilder(it.irishGradeUndergroundAmericanPostcard)
+                    }
+                    if (it.secondViolentTightPilot?.isNotEmpty() == true && it.constantNovelistMessSureLibrary?.isNotEmpty() == true) {
+                        firstShipSelectedItem = CommonChooseListItem(
+                            name = it.secondViolentTightPilot,
+                            value = it.constantNovelistMessSureLibrary
+                        )
+                    }
+                    inContact2st.apply {
+                        tvRelation.text = it.expensiveSeriousPatientVoice
+                        etPhone.text = SpannableStringBuilder(it.europeanBeardUniform)
+                        etNom.text = SpannableStringBuilder(it.theseMedicalRadioactiveDoll)
+                    }
+                    if (it.expensiveSeriousPatientVoice?.isNotEmpty() == true && it.mostSpaceshipVideophoneBirdcage?.isNotEmpty() == true) {
+                        secShipSelectedItem = CommonChooseListItem(
+                            name = it.expensiveSeriousPatientVoice,
+                            value = it.mostSpaceshipVideophoneBirdcage
+                        )
+                    }
+                }
+            }
+        }
         mViewModel.configLiveData.observe(this) { pair ->
             val list = mutableListOf<CommonChooseListItem>()
             pair?.second?.forEach {

@@ -78,7 +78,7 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <androidx.appcompat.widget.AppCompatSeekBar
+                    <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/rb_xof_progress"
                         style="?android:progressBarStyleHorizontal"
                         android:layout_width="match_parent"

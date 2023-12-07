@@ -25,6 +25,7 @@ class PreOrdDialog(
 
     override fun setDialogData(config: BaseDialogConfigEntity?) {
         (config as? CommonDialogConfigEntity)?.let {
+            config.touchOutsideCancelAble = false
             // 公共初始化
             super.setDialogData(config)
             mBinding.tvTitle.apply {

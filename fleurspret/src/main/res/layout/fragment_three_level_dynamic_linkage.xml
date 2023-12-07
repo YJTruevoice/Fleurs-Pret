@@ -73,7 +73,9 @@
             android:id="@+id/v_line_2st"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/color_E7E7E7" />
+            android:background="@color/color_E7E7E7"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_level_2st"
@@ -87,7 +89,9 @@
             android:id="@+id/v_line_3st"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/color_E7E7E7" />
+            android:background="@color/color_E7E7E7"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_level_3st"

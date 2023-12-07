@@ -6,7 +6,7 @@ import com.arthur.baselib.structure.mvvm.SingleLiveEvent
 import com.facile.immediate.electronique.fleurs.pret.common.config.ConfigViewModel
 import com.facile.immediate.electronique.fleurs.pret.common.json.model.JSONNeed
 import com.facile.immediate.electronique.fleurs.pret.input.model.InputModel
-import com.facile.immediate.electronique.fleurs.pret.mine.model.UserBasicEntity
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserBasicEntity
 
 open class BaseInputViewModel(app: Application) : ConfigViewModel<InputModel>(app) {
 

@@ -50,7 +50,8 @@ class NetOptions {
     /**
      * 自定义请求过程事件监听器工厂（后期可能会用到）
      */
-    private var eventListenerFactory: OkHttpEventListener.EventFactory? = OkHttpEventListener.EventFactory()
+    private var eventListenerFactory: OkHttpEventListener.EventFactory? =
+        OkHttpEventListener.EventFactory()
 
     /**
      * 首选 BaseUrl
@@ -148,6 +149,88 @@ class NetOptions {
      */
     var cacheKeyDefault: (String) -> String = { it }
         private set
+
+    /**
+     * 网络超时提示
+     */
+    var tipServiceTimeout: String? = null
+        private set
+
+    /**
+     * 网络连接错误
+     */
+    var tipConnectError: String? = null
+        private set
+
+    /**
+     * 网络连接错误
+     */
+    var tipConnectErrorOther: String? = null
+        private set
+
+    /**
+     * 数据解析错误
+     */
+    var tipDataParseError: String? = null
+        private set
+
+    /**
+     * 数据不合规、空数据
+     */
+    var tipDataEmptyError: String? = null
+        private set
+
+    /**
+     * 数据不合规
+     */
+    var tipDataIllegalError: String? = null
+        private set
+
+    /**
+     * 未知异常
+     */
+    var tipUnknownError: String? = null
+        private set
+
+    /**
+     * 默认业务层错误
+     */
+    var tipDefaultBusinessError: String? = null
+        private set
+
+    /**
+     * 网络错误定制处理
+     */
+    var errorHandler: ((Int) -> Boolean)? = null
+        private set
+
+    fun setTipServiceTimeout(tipServiceTimeout:String){
+        this.tipServiceTimeout = tipServiceTimeout
+    }
+    fun setTipConnectError(tipConnectError:String){
+        this.tipConnectError = tipConnectError
+    }
+    fun setTipConnectErrorOther(tipConnectErrorOther:String){
+        this.tipConnectErrorOther = tipConnectErrorOther
+    }
+    fun setTipDataParseError(tipDataParseError:String){
+        this.tipDataParseError = tipDataParseError
+    }
+    fun setTipDataEmptyError(tipDataEmptyError:String){
+        this.tipDataEmptyError = tipDataEmptyError
+    }
+    fun setTipDataIllegalError(tipDataIllegalError:String){
+        this.tipDataIllegalError = tipDataIllegalError
+    }
+    fun setTipUnknownError(tipUnknownError:String){
+        this.tipUnknownError = tipUnknownError
+    }
+    fun setTipDefaultBusinessError(tipDefaultBusinessError:String){
+        this.tipDefaultBusinessError = tipDefaultBusinessError
+    }
+    fun setErrorHandler(errorHandler: ((Int) -> Boolean)){
+        this.errorHandler = errorHandler
+    }
 
     /**
      * 设置默认cacheKey

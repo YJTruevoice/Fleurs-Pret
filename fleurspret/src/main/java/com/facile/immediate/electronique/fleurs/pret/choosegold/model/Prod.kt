@@ -24,13 +24,13 @@ data class ProdInfo(
     @SerializedName("neatPhysicsPeasantCommonSport")
     val neatPhysicsPeasantCommonSport: String = "",
     @SerializedName("plainLungAppleGale")
-    val plainLungAppleGale: Int = 0,
+    val plainLungAppleGale: Long = 0,
     @SerializedName("passiveChairwomanSurroundingArm")
     val passiveChairwomanSurroundingArm: Float = 0.0f,
     @SerializedName("afraidDecemberSlimClassicalTechnology")
     val afraidDecemberSlimClassicalTechnology: Int = 0,
     @SerializedName("backBenchRegularHomeland")
-    val backBenchRegularHomeland: Int = 0,
+    val backBenchRegularHomeland: Float = 1000f,
     @SerializedName("hugeFogPepper")
     val hugeFogPepper: Int = 0
 ) : Parcelable, RepayDate() {
@@ -39,9 +39,9 @@ data class ProdInfo(
 
     val dateStr: String
         get() {
+            val durMillis: Long = plainLungAppleGale * 1000 * 60 * 60 * 24
             return DateUtil.getDateWithFormat(
-                DateUtil.targetTimeMillis(dampCabbageMaximumSorryCabbage)
-                        + plainLungAppleGale * 1000 * 60 * 60 * 24,
+                DateUtil.targetTimeMillis(dampCabbageMaximumSorryCabbage) + durMillis,
                 "dd-MM-yyyy"
             )
         }

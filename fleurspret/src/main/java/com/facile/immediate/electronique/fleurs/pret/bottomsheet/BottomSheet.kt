@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.setPadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arthur.commonlib.utils.DensityUtils.Companion.dp2px
@@ -37,6 +38,7 @@ object BottomSheet {
         val mBinding = DialogNcBottomsheetListViewBinding.bind(view)
         val bottomSheetDialog = BottomSheetDialog(ac, R.style.BottomSheetDialog)
         bottomSheetDialog.setContentView(view)
+        bottomSheetDialog.setCanceledOnTouchOutside(false)
         val bottomSheetBehavior = BottomSheetBehavior.from(view.parent as ViewGroup)
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
@@ -75,8 +77,8 @@ object BottomSheet {
         mBinding.tvDialogBottomSheetConfirm.setOnClickListener {
             selectedItem?.let { it1 ->
                 callback.invoke(it1)
-                bottomSheetDialog.dismiss()
             }
+            bottomSheetDialog.dismiss()
         }
         bottomSheetDialog.setOnCancelListener {
             cancelCallback?.invoke()
@@ -149,8 +151,9 @@ object BottomSheet {
             val tv = TextView(context).apply {
                 textSize = 18f
                 paint.isFakeBoldText = (textBold || item.fakeBold)
-                maxLines = 1
+                maxLines = 2
                 ellipsize = item.nameEllipsize
+                setPadding(8f.dp2px(context))
             }
             holder.view.addView(tv)
             tv.layoutParams = FrameLayout.LayoutParams(

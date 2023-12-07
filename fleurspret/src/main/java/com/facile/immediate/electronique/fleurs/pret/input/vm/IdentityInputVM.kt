@@ -10,11 +10,13 @@ import com.arthur.network.download.UploadListener
 import com.arthur.network.download.Uploader
 import com.facile.immediate.electronique.fleurs.pret.BuildConfig
 import com.facile.immediate.electronique.fleurs.pret.R
+import com.facile.immediate.electronique.fleurs.pret.input.model.IdentityPic
 import com.facile.immediate.electronique.fleurs.pret.input.view.InputGatheringInformationActivity
 import java.io.File
 
 class IdentityInputVM(app: Application) : BaseInputViewModel(app) {
 
+    val cardFaceInfoLiveData: SingleLiveEvent<IdentityPic?> = SingleLiveEvent()
     val updateStartLiveData: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val UpdateFinishLiveData: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val uploadPicSuccessLiveData: SingleLiveEvent<String> = SingleLiveEvent()
@@ -37,11 +39,12 @@ class IdentityInputVM(app: Application) : BaseInputViewModel(app) {
         }
 
     var idNo = ""
-    var phoneNo = ""
+    var ninNo = ""
 
     override fun processLogic() {
         super.processLogic()
         preInputInfo(4)
+        identityPic()
     }
 
     private fun uploadImg(imgPath: String, type: String, tag: String) {
@@ -86,24 +89,17 @@ class IdentityInputVM(app: Application) : BaseInputViewModel(app) {
         )
     }
 
-    fun identityPic() {
+    private fun identityPic() {
         launchNet {
             mModel.identityAfrPic(pageType = 4)
         }.success { res ->
-            res.aggressiveParentMethod?.let { data ->
-                if (data.liveExcellentTaxEquality == "1"
-                    && data.festivalUndividedDoctor == "1"
-                    && data.scottishQuiltStillSunday == "1"
-                ) {
-                    saveIdentityInfo()
-                }
-            }
+            cardFaceInfoLiveData.value = res.aggressiveParentMethod
         }.showLoading(true).launch()
     }
 
-    private fun saveIdentityInfo() {
+    fun saveIdentityInfo() {
         launchNet {
-            mModel.saveIdentityInfo(pageType = 4, idCardNo = idNo, phoneNo = phoneNo)
+            mModel.saveIdentityInfo(pageType = 4, idCardNo = idNo, phoneNo = ninNo)
         }.success {
             startActivity(InputGatheringInformationActivity::class.java)
         }.showLoading(true).launch()

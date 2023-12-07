@@ -4,10 +4,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.SystemClock
 import android.text.Editable
+import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
+import androidx.core.text.isDigitsOnly
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
+import com.arthur.commonlib.ability.Toaster
+import com.arthur.commonlib.utils.PhoneUtils
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.common.EditTextFilter
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
@@ -23,9 +27,11 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
     override fun buildView() {
         super.buildView()
         PrivacyPolicyDisplayUtil.displayPrivacyPolicyGuide(this, mBinding.tvReadPrivacyPolicyGuide)
+        mBinding.btnLogUp.isSelected = false
+        mBinding.btnSendVerifyCode.isSelected = false
         mBinding.btnSendVerifyCode.text = getString(R.string.text_obtenir_otp)
         mBinding.etPhone.filters =
-            arrayOf(EditTextFilter.getPhoneEditFilter(), EditTextFilter.getEditLengthFilter(10))
+            arrayOf(EditTextFilter.getPhoneEditFilter(), EditTextFilter.getEditLengthFilter(20))
         mBinding.etVerifyCode.filters =
             arrayOf(EditTextFilter.getPhoneEditFilter(), EditTextFilter.getEditLengthFilter(4))
     }
@@ -33,6 +39,7 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
     override fun getViewBelowStatusBar(): View {
         return mBinding.clLogUpHead
     }
+
     override fun setListener() {
         super.setListener()
         mBinding.ivBack.setOnClickListener {
@@ -41,22 +48,45 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
         }
 
         mBinding.btnSendVerifyCode.setOnClickListener {
+            val inputNumber = mBinding.etPhone.text.toString()
+            if (this.isCountDown) {
+                return@setOnClickListener
+            }
+            if (!PhoneUtils.isOverSeaPhone("+221${inputNumber}") || inputNumber.length < 9) {
+                Toaster.showToast(getString(R.string.text_veuillez_d_abord_remplir_le_bon_num_ro_de_t_l_phone_portable))
+                return@setOnClickListener
+            }
             mViewModel.getVerifyCode()
         }
         mBinding.btnLogUp.setOnClickListener {
+            val inputPhone = mBinding.etPhone.text.toString()
+            if (!PhoneUtils.isOverSeaPhone("+221${inputPhone}") || inputPhone.length < 9) {
+                Toaster.showToast(getString(R.string.text_veuillez_d_abord_remplir_le_bon_num_ro_de_t_l_phone_portable))
+                return@setOnClickListener
+            }
+
+            val inputCode = mBinding.etVerifyCode.text.toString()
+            if (inputCode.isEmpty()) {
+                Toaster.showToast(getString(R.string.text_le_code_de_v_rification_ne_peut_pas_tre_vide))
+                return@setOnClickListener
+            }
+            if (!inputCode.isDigitsOnly() || inputCode.length != 4) {
+                Toaster.showToast(getString(R.string.text_erreur_de_format_du_code_de_v_rification))
+                return@setOnClickListener
+            }
             mViewModel.logUp()
         }
 
         mBinding.ivClearPhone.setOnClickListener {
             mBinding.etPhone.text.clear()
-            mBinding.btnLogUp.isEnabled = false
-            mBinding.btnSendVerifyCode.isEnabled = false
+            mBinding.btnLogUp.isSelected = false
+            mBinding.btnSendVerifyCode.isSelected = false
         }
         mBinding.ivClearVerify.setOnClickListener {
             mBinding.etVerifyCode.text.clear()
-            mBinding.btnLogUp.isEnabled = false
+            mBinding.btnLogUp.isSelected = false
             if (mBinding.etPhone.text.isEmpty()) {
-                mBinding.btnSendVerifyCode.isEnabled = false
+                mBinding.btnSendVerifyCode.isSelected = false
             }
         }
 
@@ -70,14 +100,10 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    mBinding.btnSendVerifyCode.isEnabled =
-                        s?.isNotEmpty() == true && !mBinding.btnSendVerifyCode.isCountDown
-                } else {
-                    mBinding.btnSendVerifyCode.isEnabled =
-                        s?.toString()?.isNotEmpty() == true && !isCountDown
-                }
-                mBinding.btnLogUp.isEnabled =
+                mBinding.btnSendVerifyCode.isSelected =
+                    s?.toString()?.isNotEmpty() == true && !isCountDown
+
+                mBinding.btnLogUp.isSelected =
                     s?.isNotEmpty() == true && mBinding.etVerifyCode.text.toString().isNotEmpty()
                 mViewModel.phone = s.toString()
                 mBinding.ivClearPhone.visibility =
@@ -95,7 +121,7 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                mBinding.btnLogUp.isEnabled =
+                mBinding.btnLogUp.isSelected =
                     s?.isNotEmpty() == true && mBinding.etPhone.text.toString().isNotEmpty()
                 mViewModel.code = s.toString()
                 mBinding.ivClearVerify.visibility =
@@ -108,15 +134,11 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
         super.initLiveDataObserver()
         mViewModel.verifyCodeLiveData.observe(this) {
             mBinding.btnSendVerifyCode.apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    isCountDown = true
-                } else {
-                    this@LogUpActivity.isCountDown = true
-                }
+                this@LogUpActivity.isCountDown = true
                 base = SystemClock.elapsedRealtime() + 60L * 1000
                 setOnChronometerTickListener {
                     val curElapsedRealtime = SystemClock.elapsedRealtime()
-                    if (base >= curElapsedRealtime) {
+                    if (base > curElapsedRealtime) {
                         it.text =
                             String.format(
                                 "%s %ss",
@@ -126,13 +148,14 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
                     } else {
                         it.text = getString(R.string.text_obtenir_otp)
                         stop()
-                        mBinding.btnSendVerifyCode.isEnabled =
+                        mBinding.btnSendVerifyCode.isSelected =
                             mBinding.etPhone.text.isNotEmpty()
                         this@LogUpActivity.isCountDown = false
                     }
                 }
-                isEnabled = false
+                isSelected = false
             }.start()
+            mBinding.etVerifyCode.text = SpannableStringBuilder(mViewModel.code)
         }
 
         mViewModel.logUpSuccessLiveData.observe(this) {
@@ -154,5 +177,4 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
             putExtra("selectedItemId", R.id.navigation_one)
         })
     }
-
 }

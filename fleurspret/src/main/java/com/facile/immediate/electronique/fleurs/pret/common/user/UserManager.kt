@@ -1,4 +1,4 @@
-package com.facile.immediate.electronique.fleurs.pret.common
+package com.facile.immediate.electronique.fleurs.pret.common.user
 
 import com.arthur.commonlib.utils.SPUtils
 import com.arthur.commonlib.utils.json.JsonUtils
@@ -13,6 +13,14 @@ object UserManager {
             user.radioactiveTeacherBasicBankLaserSuspect ?: ""
         )
         SPUtils.putData(AppConstants.KEY_TOKEN, user.dirtyCompositionUpsetRealBelief ?: "")
+    }
+
+    fun savePhone(phone: String) {
+        SPUtils.putData(AppConstants.KEY_USER_PHONE, phone)
+    }
+
+    fun phoneNumber(): String {
+        return SPUtils.getString(AppConstants.KEY_USER_PHONE, "")
     }
 
     fun user(): UserInfoEntity? {

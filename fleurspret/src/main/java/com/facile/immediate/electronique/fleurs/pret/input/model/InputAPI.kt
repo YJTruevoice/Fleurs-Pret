@@ -1,6 +1,6 @@
 package com.facile.immediate.electronique.fleurs.pret.input.model
 
-import com.facile.immediate.electronique.fleurs.pret.mine.model.UserBasicEntity
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserBasicEntity
 import com.facile.immediate.electronique.fleurs.pret.net.BaseResponse
 import retrofit2.http.Field
 import retrofit2.http.FieldMap
@@ -22,6 +22,9 @@ interface InputAPI {
         @Field("messyChapterLemonDozen") birthDay: String,
         @Field("sureChemistryBigFairness") sex: String,
         @Field("moralPressure") email: String,
+        @Field("mercifulVanillaMatchBitterFirewood") mercifulVanillaMatchBitterFirewood: String,
+        @Field("neitherSeniorStocking") neitherSeniorStocking: String,
+        @Field("australianHandsomeSummer") australianHandsomeSummer: String,
         @Field("dangerousGoatContraryDueSemicircle") fullAddress: String
     ): BaseResponse<Any?>
 

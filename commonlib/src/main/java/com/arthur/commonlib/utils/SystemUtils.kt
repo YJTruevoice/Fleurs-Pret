@@ -13,9 +13,11 @@ import android.os.Process
 import android.os.Vibrator
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import com.arthur.commonlib.ability.AppKit
 import java.io.File
 import java.lang.reflect.Method
 import kotlin.system.exitProcess
+
 
 /**
  * 与系统相关的一些方法
@@ -73,7 +75,7 @@ class SystemUtils {
         fun killAppProcess() {
             //注意：不能先杀掉主进程，否则逻辑代码无法继续执行，需先杀掉相关进程最后杀掉主进程
             val mActivityManager =
-                com.arthur.commonlib.ability.AppKit.context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+                AppKit.context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             val mList = mActivityManager.runningAppProcesses
             for (runningAppProcessInfo in mList) {
                 if (runningAppProcessInfo.pid != Process.myPid()) {
@@ -195,7 +197,7 @@ class SystemUtils {
          * 震动
          */
         fun doVibrator(time: Long = 50) {
-            val vibrator = com.arthur.commonlib.ability.AppKit.context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+            val vibrator = AppKit.context.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
             vibrator.vibrate(time)
         }
 
@@ -203,6 +205,15 @@ class SystemUtils {
             val connectivityManager = context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val wifiNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
             return wifiNetworkInfo?.isConnected?: false
+        }
+        fun isNetworkAvailable(context: Context): Boolean {
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+            if (connectivityManager != null) {
+                val activeNetworkInfo = connectivityManager.activeNetworkInfo
+                return activeNetworkInfo != null && activeNetworkInfo.isConnected
+            }
+            return false
         }
 
     }

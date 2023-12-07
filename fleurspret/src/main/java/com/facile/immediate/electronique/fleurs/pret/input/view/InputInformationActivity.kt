@@ -7,9 +7,12 @@ import com.arthur.commonlib.ability.Toaster
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.BottomSheet
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.bean.CommonChooseListItem
+import com.facile.immediate.electronique.fleurs.pret.common.EditTextFilter
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
+import com.facile.immediate.electronique.fleurs.pret.common.config.CommonConfigItem
 import com.facile.immediate.electronique.fleurs.pret.common.config.ConfigType
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
+import com.facile.immediate.electronique.fleurs.pret.common.ext.onClick
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputInformationBinding
 import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
 import com.facile.immediate.electronique.fleurs.pret.input.view.fragment.RegionDynamicLinkageFragment
@@ -22,7 +25,6 @@ class InputInformationActivity :
     BaseMVVMActivity<ActivityInputInformationBinding, BasicInputVM>() {
 
     private var sexSelectedItem: CommonChooseListItem? = null
-    private var regionCode: String = ""
 
     override fun setStatusBar() {
         ImmersionBar.with(this)
@@ -60,6 +62,7 @@ class InputInformationActivity :
         mBinding.etName.addTextChangedListener(mViewModel.textWatcher)
         mBinding.etNom.addTextChangedListener(mViewModel.textWatcher)
         mBinding.etEmail.addTextChangedListener(mViewModel.textWatcher)
+        mBinding.etEmail.filters = arrayOf(EditTextFilter.getEmailEditFilter())
         mBinding.etAddress.addTextChangedListener(mViewModel.textWatcher)
 
         mBinding.tvDate.setOnClickListener {
@@ -80,21 +83,34 @@ class InputInformationActivity :
             }
         }
 
-        mBinding.tvSex.setOnClickListener {
+        mBinding.tvSex.onClick {
             mViewModel.config(ConfigType.sex)//sex list
         }
 
-        mBinding.tvRegion.setOnClickListener {
+        mBinding.tvRegion.onClick {
             RegionDynamicLinkageFragment.show(this) { province, city, district ->
+                if (province == null || city == null) return@show
                 val builder = StringBuilder()
-                if (province != null && province.normalAppointmentHeadmistressMachine.isNotEmpty()) {
+                if (province.normalAppointmentHeadmistressMachine.isNotEmpty()) {
                     builder.append(province.normalAppointmentHeadmistressMachine)
+                    mViewModel.region = CommonConfigItem(
+                        code = province.eastBasicFavouriteSupermarket,
+                        value = province.normalAppointmentHeadmistressMachine
+                    )
                 }
-                if (city != null && city.normalAppointmentHeadmistressMachine.isNotEmpty()) {
-                    builder.append("-").append(city.normalAppointmentHeadmistressMachine)
+                if (city.normalAppointmentHeadmistressMachine.isNotEmpty()) {
+                    builder.append(" ").append(city.normalAppointmentHeadmistressMachine)
+                    mViewModel.region?.next = CommonConfigItem(
+                        code = city.eastBasicFavouriteSupermarket,
+                        value = city.normalAppointmentHeadmistressMachine
+                    )
                 }
                 if (district != null && district.normalAppointmentHeadmistressMachine.isNotEmpty()) {
-                    builder.append("-").append(district.normalAppointmentHeadmistressMachine)
+                    builder.append(" ").append(district.normalAppointmentHeadmistressMachine)
+                    mViewModel.region?.next?.next = CommonConfigItem(
+                        code = district.eastBasicFavouriteSupermarket,
+                        value = district.normalAppointmentHeadmistressMachine
+                    )
                 }
                 mBinding.tvRegion.text = builder.toString()
                 isNextBtnEnable()
@@ -103,16 +119,16 @@ class InputInformationActivity :
 
         mBinding.tvNext.setOnClickListener {
             if (!isNextBtnEnable()) {
-                Toaster.showToast(AppKit.context.getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
+                Toaster.showToast(getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
                 return@setOnClickListener
             }
             mViewModel.savePersonalInfo(
                 mBinding.etName.text.toString(),
                 mBinding.etNom.text.toString(),
                 mBinding.tvDate.text.toString(),
-                sexSelectedItem?.value as String,
+                sexSelectedItem?.value as? String ?: "",
                 mBinding.etEmail.text.toString(),
-                "${mBinding.tvRegion.text} ${mBinding.etAddress.text}"
+                "${mBinding.etAddress.text}"
             )
         }
     }
@@ -128,16 +144,47 @@ class InputInformationActivity :
                 mBinding.etName.setText(it.dirtyCrowdedEarthquakePrivateLevel)
                 mBinding.etNom.setText(it.dustyChocolateEaster)
                 mBinding.etEmail.setText(it.moralPressure)
-//                mBinding.etAddress.setText(it.dangerousGoatContraryDueSemicircle)
+                mBinding.etAddress.setText(it.dangerousGoatContraryDueSemicircle)
                 mBinding.tvDate.text = it.messyChapterLemonDozen
-                mBinding.tvSex.text =
-                    InputUtil.sexMap(it.sureChemistryBigFairness ?: "")?.let { item ->
-                        sexSelectedItem = item
-                        item.name
-                    }
-                mBinding.tvRegion.text = ""
+                mBinding.tvSex.text = it.properExperienceFlatSimilarBat
+                if (!it.properExperienceFlatSimilarBat.isNullOrEmpty() && !it.sureChemistryBigFairness.isNullOrEmpty()) {
+                    sexSelectedItem = CommonChooseListItem(
+                        it.properExperienceFlatSimilarBat,
+                        it.sureChemistryBigFairness
+                    )
+                }
+
+//                mViewModel.region = CommonConfigItem(
+//                    code = it.mercifulVanillaMatchBitterFirewood,
+//                    value = it.flamingLawyerDarkPalaceNoisyReceipt
+//                ).apply {
+//                    this.next = CommonConfigItem(
+//                        code = it.neitherSeniorStocking,
+//                        value = it.tinyExampleCertainMicrowave
+//                    ).apply {
+//                        this.next = CommonConfigItem(
+//                            code = it.australianHandsomeSummer,
+//                            value = it.guiltySteamDelightedDrierGarbage
+//                        )
+//                    }
+//                }
+//                val region = mViewModel.region
+//                mBinding.tvRegion.text =
+//                    "${region?.value} ${region?.next?.value} ${region?.next?.next?.value}".trim()
+                mViewModel.matchRegion(
+                    it.mercifulVanillaMatchBitterFirewood,
+                    it.neitherSeniorStocking,
+                    it.australianHandsomeSummer
+                )
                 isNextBtnEnable()
             }
+        }
+
+        mViewModel.regionGetMatchLiveData.observe(this) {
+            val region = mViewModel.region
+            mBinding.tvRegion.text =
+                "${region?.value ?: ""} ${region?.next?.value ?: ""} ${region?.next?.next?.value ?: ""}".trim()
+            isNextBtnEnable()
         }
 
         mViewModel.textWatcherLiveData.observe(this) {
@@ -159,23 +206,6 @@ class InputInformationActivity :
 
                     else -> {}
                 }
-            }
-        }
-
-        mViewModel.provinceLiveData.observe(this) { regions ->
-            val list = mutableListOf<CommonChooseListItem>()
-            regions?.forEach {
-                list.add(
-                    CommonChooseListItem(
-                        it.normalAppointmentHeadmistressMachine,
-                        it.eastBasicFavouriteSupermarket
-                    )
-                )
-            }
-            BottomSheet.showListBottomSheet(this, list) {
-                mBinding.tvRegion.text = it.name
-                isNextBtnEnable()
-                regionCode = it.value as String
             }
         }
     }

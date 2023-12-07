@@ -53,6 +53,7 @@ open class BaseCountDownDialog @JvmOverloads constructor(
                     context.resources.getString(R.string.text_ok)
                 }
                 setOnClickListener {
+                    config.confirmCallback?.invoke(this@BaseCountDownDialog)
                     dismiss()
                 }
             }
@@ -67,6 +68,7 @@ open class BaseCountDownDialog @JvmOverloads constructor(
                     val curElapsedRealtime = SystemClock.elapsedRealtime()
                     if (base <= curElapsedRealtime) {
                         stop()
+                        config.onCountDownFinish?.invoke(this@BaseCountDownDialog)
                         dismiss()
                     } else {
                         it.text = String.format("%sS", (base - curElapsedRealtime) / 1000)
@@ -79,7 +81,6 @@ open class BaseCountDownDialog @JvmOverloads constructor(
     override fun dismiss() {
         mBinding.tvCountDown.stop()
         super.dismiss()
-        config?.confirmCallback?.invoke(this@BaseCountDownDialog)
     }
 
     companion object {
@@ -124,11 +125,17 @@ open class BaseCountDownDialog @JvmOverloads constructor(
             }
             return this
         }
+
+        fun onCountDownFinish(onCountDownFinish: ((BaseDialog) -> Unit)? = null): Builder  {
+            (config as? CountDownDialogConfigEntity)?.onCountDownFinish = onCountDownFinish
+            return this
+        }
     }
 
     @Parcelize
     class CountDownDialogConfigEntity(
-        var countDown: Int = 3
+        var countDown: Int = 3,
+        var onCountDownFinish: ((BaseDialog) -> Unit)? = null
     ) : CommonDialogConfigEntity(), Parcelable
 
 }

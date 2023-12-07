@@ -8,7 +8,7 @@ import com.arthur.baselib.structure.mvvm.BaseViewModel
 import com.arthur.baselib.structure.mvvm.SingleLiveEvent
 import com.arthur.commonlib.utils.DateUtil
 import com.arthur.commonlib.utils.SPUtils
-import com.facile.immediate.electronique.fleurs.pret.common.UserManager
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.common.setting.GlobalSetting
 import com.facile.immediate.electronique.fleurs.pret.home.Constant
 import com.facile.immediate.electronique.fleurs.pret.home.model.FirstModel
@@ -23,7 +23,7 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
 
     val ordStateLiveData: MutableLiveData<ProInfo?> = MutableLiveData()
 
-    val refreshCompleteLiveData: SingleLiveEvent<Boolean?> = SingleLiveEvent()
+    val refreshCompleteLiveData: MutableLiveData<Boolean?> = MutableLiveData()
     val globalSettingLiveData: SingleLiveEvent<GlobalSetting?> = SingleLiveEvent()
 
     var globalSetting: GlobalSetting? = null
@@ -42,9 +42,19 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
         }.success { res ->
             globalSetting = res.aggressiveParentMethod
             globalSettingLiveData.value = res.aggressiveParentMethod
+        }.failed {
+            singleProHLiveData.value = ProInfo(afraidDecemberSlimClassicalTechnology = "--")
         }.finished {
             refreshCompleteLiveData.value = true
         }.launch()
+    }
+
+    fun verifyIsNetworkAvailable(availableHandle: () -> Unit) {
+        launchNet {
+            mModel.globalSetting("")
+        }.success { res ->
+            availableHandle.invoke()
+        }.showLoading(true).launch()
     }
 
     fun multiProH() {
@@ -84,6 +94,8 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
                     globalSetting("peacefulPartBrain,toughHydrogenMedicalTriangleSuffering,honestDessertUnableReceiptHotIceland")
                 }
             }
+        }.failed {
+            singleProHLiveData.value = ProInfo(afraidDecemberSlimClassicalTechnology = "--")
         }.finished {
             refreshCompleteLiveData.value = true
         }.launch()

@@ -93,7 +93,7 @@
     <string name="text_montant_recevoir">Montant à recevoir</string>
     <string name="text_int_r_t">Intérêt</string>
     <string name="text_frais_de_service">Frais de service</string>
-    <string name="text_t_v_a">T.V.A.</string>
+    <string name="text_t_v_a">TVA</string>
     <string name="text_montant_du_remboursement">Montant du remboursement</string>
     <string name="text_annuler">Annuler</string>
     <string name="text_payer">Payer</string>
@@ -155,6 +155,26 @@
     <string name="text_date_de_demande">Date de demande</string>
     <string name="text_date_de_remboursement">Date de remboursement</string>
     <string name="text_quitte">Quitte</string>
+    <string name="text_refuse">REFUSE</string>
+    <string name="text_policy_ask"><![CDATA[Hi.there To access your eligibility and facilitate faster disbursal of your loan, we need these permissions\n\nSMS\n\nCollect and monitor only financial transaction Introducir texto messages including the name of the transaction party. The purpose is to conduct a credit risk assessment of the transaction and the description of the transaction amount. This credit risk assessment speeds up loan disbursement without any Perfil Introducir texto messages being deleted, read or collected\n\nContacts\n\nThe NBFC loan process and guidelines mandates us to verify references. This feature enables us to do that & Why type in contact number when you can just choose from your contact book.\n\nCamera and Photos\n]]></string>
+    <string name="text_veuillez_d_abord_remplir_le_bon_num_ro_de_t_l_phone_portable">Veuillez d\'abord remplir le bon numéro de téléphone portable</string>
+    <string name="text_erreur_de_format_du_code_de_v_rification">Erreur de format du code de vérification, veuillez le saisir à nouveau</string>
+    <string name="text_exception_de_non_conformit_des_donn_es_les_donn_es_sont_vides">Exception de non-conformité des données Les données sont vides</string>
+    <string name="text_d_lai_d_expiration_du_r_seau_veuillez_r_essayer_plus_tard">Délai d\'expiration du réseau, veuillez réessayer plus tard</string>
+    <string name="text_le_r_seau_n_est_pas_disponible_veuillez_v_rifier_les_param_tres_r_seau">Le réseau n\'est pas disponible, veuillez vérifier les paramètres réseau</string>
+    <string name="text_anomalie_du_r_seau_veuillez_confirmer_que_le_r_seau_est_normal">Anomalie du réseau, veuillez confirmer que le réseau est normal</string>
+    <string name="text_exception_d_analyse_des_donn_es">Exception d\'analyse des données</string>
+    <string name="text_exception_de_non_conformit_des_donn_es">Exception de non-conformité des données</string>
+    <string name="text_exception_inconnue">Exception inconnue</string>
+    <string name="text_une_erreur_s_est_produite">Une erreur s\'est produite</string>
+    <string name="text_erreur_de_connexion">Erreur de connexion</string>
+    <string name="text_actualiser">Actualiser</string>
+    <string name="text_le_code_de_v_rification_ne_peut_pas_tre_vide">Le code de vérification ne peut pas être vide</string>
+    <string name="text_param_tres_r_seau">Paramètres réseau</string>
+    <string name="text_num_ro_de_nin">Numéro de NIN</string>
+    <string name="text_veuillez_t_l_charger_une_photo_de_votre_visage">Veuillez télécharger une photo de votre visage</string>
+    <string name="text_veuillez_t_l_charger_une_photo_d_identit">Veuillez télécharger une photo d\'identité</string>
+    <string name="text_veuillez_remplir_les_m_mes_informations_de_compte">Veuillez remplir les mêmes informations de compte</string>
 
     <string-array name="string_arr_months">
         <item>Janvier</item>

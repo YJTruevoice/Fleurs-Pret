@@ -1,6 +1,6 @@
 package com.facile.immediate.electronique.fleurs.pret.common.setting
 
-import com.facile.immediate.electronique.fleurs.pret.common.UserManager
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.net.BaseResponse
 import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
 import retrofit2.http.Field

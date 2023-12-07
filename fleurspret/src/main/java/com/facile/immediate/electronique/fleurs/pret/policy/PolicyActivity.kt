@@ -29,7 +29,6 @@ class PolicyActivity : BaseBindingActivity<ActivityPolicyBinding>() {
     override fun setListener() {
         super.setListener()
         mBinding.tvSkip.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
         mBinding.tvAccept.setOnClickListener {

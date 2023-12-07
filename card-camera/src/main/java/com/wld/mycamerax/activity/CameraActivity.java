@@ -94,11 +94,11 @@ public class CameraActivity extends AppCompatActivity {
         if (mCameraParam == null) {
             throw new IllegalArgumentException("CameraParam is null");
         }
-        if (mCameraParam.isFront()) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }
+//        if (mCameraParam.isFront()) {
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        } else {
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }
         setContentView(R.layout.activity_camera);
 //        if (!Tools.checkPermission(this)) {
 //            throw new NoPermissionException("Need to have permission to take pictures and storage");

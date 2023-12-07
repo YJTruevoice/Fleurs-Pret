@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import com.arthur.commonlib.ability.Logger
 import com.arthur.commonlib.ability.Toaster
-import com.facile.immediate.electronique.fleurs.pret.common.UserManager
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
 
 /**
@@ -18,11 +18,11 @@ class ServerStatusReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val action = intent?.action
-        if (action == NetConstant.ServerStatusAction.STATUS_ACTION) {
-            val code = intent.getIntExtra(NetConstant.ServerStatusKey.CODE, 0)
-            val msg = intent.getStringExtra(NetConstant.ServerStatusKey.MSG)
-            val url = intent.getStringExtra(NetConstant.ServerStatusKey.URL) ?: ""
-            if (code == NetConstant.ErrorCode.ERROR_CODE_TOKEN_INVALID) {// 服务器提示需要登录
+        if (action == NetBizConstant.ServerStatusAction.STATUS_ACTION) {
+            val code = intent.getIntExtra(NetBizConstant.ServerStatusKey.CODE, 0)
+            val msg = intent.getStringExtra(NetBizConstant.ServerStatusKey.MSG)
+            val url = intent.getStringExtra(NetBizConstant.ServerStatusKey.URL) ?: ""
+            if (code == NetBizConstant.ErrorCode.ERROR_CODE_TOKEN_INVALID) {// 服务器提示需要登录
                 Logger.logE("$msg")
                 Toaster.showToast("$msg")
                 // 如果token则将token失效的消息通知handler

@@ -6,7 +6,7 @@ package com.facile.immediate.electronique.fleurs.pret.net
  * @Description
  * 网络库使用到的常量
  */
-object NetConstant {
+object NetBizConstant {
 
     // 打签的key
     const val KEY_SIGN = "sign"

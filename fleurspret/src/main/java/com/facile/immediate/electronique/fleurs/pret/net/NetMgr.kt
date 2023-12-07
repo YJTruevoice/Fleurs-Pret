@@ -1,25 +1,35 @@
 package com.facile.immediate.electronique.fleurs.pret.net
 
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
+import android.provider.Settings
 import androidx.fragment.app.FragmentActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.arthur.baselib.utils.AppLanguageUtil
 import com.arthur.commonlib.utils.ActivityManager
 import com.arthur.commonlib.utils.AppUtils
+import com.arthur.commonlib.utils.SPUtils
 import com.arthur.network.BaseNetMgr
+import com.arthur.network.NetConstant
 import com.arthur.network.NetOptions
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.facile.immediate.electronique.fleurs.pret.BuildConfig
+import com.facile.immediate.electronique.fleurs.pret.R
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
+import com.facile.immediate.electronique.fleurs.pret.common.event.NetErrorRefresh
+import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseCountDownDialog
+import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseDialog
 import com.facile.immediate.electronique.fleurs.pret.net.converter.CustomJsonConverter
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.CommonParamsInterceptor
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.ServerStatusInterceptor
-import com.arthur.baselib.utils.AppLanguageUtil
-import com.arthur.commonlib.utils.SPUtils
-import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.facile.immediate.electronique.fleurs.pret.common.UserManager
 import com.facile.immediate.electronique.fleurs.pret.utils.DeviceIdUtil
+import org.greenrobot.eventbus.EventBus
+import java.lang.ref.WeakReference
 import java.util.UUID
 import java.util.concurrent.TimeUnit
+
 
 /**
  * @Author arthur
@@ -39,6 +49,9 @@ class NetMgr : BaseNetMgr() {
     }
 
     private var context: Context? = null
+
+    private var netErrorDialog: BaseDialog? = null
+    private var curActivityRef: WeakReference<FragmentActivity>? = null
 
     fun init(context: Context) {
         this.context = context
@@ -122,8 +135,62 @@ class NetMgr : BaseNetMgr() {
 
             this@NetMgr.context?.let {
                 registerServerStatusReceiver(it)
+
+                setTipServiceTimeout(it.getString(R.string.text_d_lai_d_expiration_du_r_seau_veuillez_r_essayer_plus_tard))
+                setTipConnectError(it.getString(R.string.text_le_r_seau_n_est_pas_disponible_veuillez_v_rifier_les_param_tres_r_seau))
+                setTipConnectErrorOther(it.getString(R.string.text_anomalie_du_r_seau_veuillez_confirmer_que_le_r_seau_est_normal))
+                setTipDataParseError(it.getString(R.string.text_exception_d_analyse_des_donn_es))
+                setTipDataEmptyError(it.getString(R.string.text_exception_de_non_conformit_des_donn_es_les_donn_es_sont_vides))
+                setTipDataIllegalError(it.getString(R.string.text_exception_de_non_conformit_des_donn_es))
+                setTipUnknownError(it.getString(R.string.text_exception_inconnue))
+                setTipDefaultBusinessError(it.getString(R.string.text_une_erreur_s_est_produite))
+            }
+
+            setErrorHandler { errorCode ->
+                return@setErrorHandler if (
+                    errorCode == NetConstant.ErrorCode.ERROR_SSL
+                    || errorCode == NetConstant.ErrorCode.ERROR_NETWORK_UNKNOWN_HOST
+                    || errorCode == NetConstant.ErrorCode.ERROR_NETWORK_CONNECT
+                    || errorCode == NetConstant.ErrorCode.ERROR_SOCKET
+                ) {
+                    (ActivityManager.getCurrentActivity() as? FragmentActivity)?.let { curActivity ->
+                        if (netErrorDialog?.isShowing == true) netErrorDialog?.dismiss()
+                        if (curActivity.isFinishing) return@setErrorHandler true
+                        getNetErrorDialog(curActivity)?.show()
+                        true
+                    } ?: false
+                } else {
+                    false
+                }
             }
         }
+
+    private fun getNetErrorDialog(curActivity: FragmentActivity): BaseDialog? {
+        if (curActivityRef?.get() != curActivity) {
+            curActivityRef = WeakReference(curActivity)
+            netErrorDialog = createNetErrorDialog()
+            return netErrorDialog!!
+        }
+        return netErrorDialog ?: let {
+            netErrorDialog = createNetErrorDialog()
+            netErrorDialog!!
+        }
+    }
+
+    private fun createNetErrorDialog(): BaseDialog? {
+        return curActivityRef?.get()?.let {
+            BaseCountDownDialog.with(it)
+                .img(R.mipmap.pic_net_404)
+                .countDown(5)
+                .content(it.getString(R.string.text_erreur_de_connexion))
+                .confirm(it.getString(R.string.text_actualiser)) { dialog ->
+                    val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+                    it.startActivity(intent)
+                    EventBus.getDefault().post(NetErrorRefresh())
+                }
+                .build()
+        }
+    }
 
 
     /**
@@ -131,7 +198,7 @@ class NetMgr : BaseNetMgr() {
      */
     private fun registerServerStatusReceiver(context: Context) {
         val localBroadcastManager = LocalBroadcastManager.getInstance(context)
-        val intentFilter = IntentFilter(NetConstant.ServerStatusAction.STATUS_ACTION)
+        val intentFilter = IntentFilter(NetBizConstant.ServerStatusAction.STATUS_ACTION)
         val serverStatusReceiver = ServerStatusReceiver()
         //注册本地广播接收器
         localBroadcastManager.registerReceiver(serverStatusReceiver, intentFilter)

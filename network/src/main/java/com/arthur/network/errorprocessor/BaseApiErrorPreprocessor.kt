@@ -1,6 +1,7 @@
 package com.arthur.network.errorprocessor
 
 import androidx.annotation.CallSuper
+import com.arthur.network.Net
 import com.google.gson.JsonParseException
 import com.arthur.network.NetConstant
 import com.arthur.network.exception.IllegalDataException
@@ -32,41 +33,54 @@ open class BaseApiErrorPreprocessor : IApiErrorPreprocessor {
                     errorMsg = error.message()
                     result = error.response().toString()
                 }
+
                 is SSLException -> {
                     errorType = ErrorType.HTTP_ERROR
                     errorCode = NetConstant.ErrorCode.ERROR_SSL
-                    errorMsg = NetConstant.ErrorPromptMsg.CONNECT_ERROR_OTHER
+                    errorMsg = Net.client.netOptions.tipConnectErrorOther
+                        ?: NetConstant.ErrorPromptMsg.CONNECT_ERROR_OTHER
                 }
+
                 is UnknownHostException -> {
                     errorType = ErrorType.HTTP_ERROR
                     errorCode = NetConstant.ErrorCode.ERROR_NETWORK_UNKNOWN_HOST
-                    errorMsg = NetConstant.ErrorPromptMsg.CONNECT_ERROR_OTHER
+                    errorMsg = Net.client.netOptions.tipConnectErrorOther
+                        ?: NetConstant.ErrorPromptMsg.CONNECT_ERROR_OTHER
                 }
+
                 is IllegalArgumentException -> {
                     errorType = ErrorType.HTTP_ERROR
                     errorCode = NetConstant.ErrorCode.ERROR_HTTP
-                    errorMsg = NetConstant.ErrorPromptMsg.CONNECT_ERROR_OTHER
+                    errorMsg = Net.client.netOptions.tipConnectErrorOther
+                        ?: NetConstant.ErrorPromptMsg.CONNECT_ERROR_OTHER
                 }
+
                 is ConnectException -> {
                     errorType = ErrorType.CONNECT_ERROR
                     errorCode = NetConstant.ErrorCode.ERROR_NETWORK_CONNECT
-                    errorMsg = NetConstant.ErrorPromptMsg.CONNECT_ERROR
+                    errorMsg = Net.client.netOptions.tipConnectError
+                        ?: NetConstant.ErrorPromptMsg.CONNECT_ERROR
                 }
+
                 is SocketException -> {
                     errorType = ErrorType.CONNECT_ERROR
                     errorCode = NetConstant.ErrorCode.ERROR_SOCKET
-                    errorMsg = NetConstant.ErrorPromptMsg.CONNECT_ERROR
+                    errorMsg = Net.client.netOptions.tipConnectError
+                        ?: NetConstant.ErrorPromptMsg.CONNECT_ERROR
                 }
+
                 is SocketTimeoutException -> {
                     errorType = ErrorType.CONNECT_ERROR
                     errorCode = NetConstant.ErrorCode.ERROR_NETWORK_TIMEOUT
-                    errorMsg = NetConstant.ErrorPromptMsg.SERVICE_TIMEOUT
+                    errorMsg = Net.client.netOptions.tipServiceTimeout
+                        ?: NetConstant.ErrorPromptMsg.SERVICE_TIMEOUT
                 }
 
                 is JsonParseException -> {
                     errorType = ErrorType.PARSE_ERROR
                     errorCode = NetConstant.ErrorCode.ERROR_PARSE
-                    errorMsg = NetConstant.ErrorPromptMsg.DATA_PARSE_ERROR
+                    errorMsg = Net.client.netOptions.tipDataParseError
+                        ?: NetConstant.ErrorPromptMsg.DATA_PARSE_ERROR
                 }
 
                 is IllegalDataException -> {
@@ -78,14 +92,16 @@ open class BaseApiErrorPreprocessor : IApiErrorPreprocessor {
                 is NetBaseException -> {
                     errorType = ErrorType.CUSTOM_ERROR
                     errorCode = error.errorCode
-                    errorMsg = error.message ?: "发生错误$errorType"
+                    errorMsg = error.message
+                        ?: "${Net.client.netOptions.tipDefaultBusinessError ?: NetConstant.ErrorPromptMsg.DEFAULT_BUSINESS_ERROR}$errorType"
                     result = error.responseData ?: ""
                 }
 
                 else -> {
                     errorType = ErrorType.CUSTOM_ERROR
                     errorCode = NetConstant.ErrorCode.ERROR_UNKNOWN
-                    errorMsg = "未知异常"
+                    errorMsg = Net.client.netOptions.tipUnknownError
+                        ?: NetConstant.ErrorPromptMsg.UNKNOWN_ERROR
                 }
             }
         }

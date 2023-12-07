@@ -5,7 +5,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.utils.json.JsonUtils
 import com.facile.immediate.electronique.fleurs.pret.net.BaseResponse
-import com.facile.immediate.electronique.fleurs.pret.net.NetConstant
+import com.facile.immediate.electronique.fleurs.pret.net.NetBizConstant
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.nio.charset.Charset
@@ -39,15 +39,15 @@ class ServerStatusInterceptor : Interceptor {
                 val baseResponse: BaseResponse<*>? =
                     JsonUtils.fromJson(resultString, BaseResponse::class.java)
                 if (baseResponse != null) {
-                    if (baseResponse.greekCompetitorSquareBirdcage != NetConstant.SuccessCode.CODE_SUCCESS) { // 其余非0的code码都播出去
+                    if (baseResponse.greekCompetitorSquareBirdcage != NetBizConstant.SuccessCode.CODE_SUCCESS) { // 其余非0的code码都播出去
                         val intent = Intent()
-                        intent.putExtra(NetConstant.ServerStatusKey.CODE, baseResponse.greekCompetitorSquareBirdcage)
-                        intent.putExtra(NetConstant.ServerStatusKey.MSG, baseResponse.civilGoatNearEveryMoustache)
+                        intent.putExtra(NetBizConstant.ServerStatusKey.CODE, baseResponse.greekCompetitorSquareBirdcage)
+                        intent.putExtra(NetBizConstant.ServerStatusKey.MSG, baseResponse.civilGoatNearEveryMoustache)
                         intent.putExtra(
-                            NetConstant.ServerStatusKey.URL,
+                            NetBizConstant.ServerStatusKey.URL,
                             response.request.url.toUrl().toString()
                         )
-                        intent.action = NetConstant.ServerStatusAction.STATUS_ACTION
+                        intent.action = NetBizConstant.ServerStatusAction.STATUS_ACTION
                         LocalBroadcastManager.getInstance(AppKit.context).sendBroadcast(intent)
                     }
                 }

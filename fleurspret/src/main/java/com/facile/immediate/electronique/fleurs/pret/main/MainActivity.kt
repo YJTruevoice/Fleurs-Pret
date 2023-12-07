@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
 import com.facile.immediate.electronique.fleurs.pret.R
-import com.facile.immediate.electronique.fleurs.pret.common.UserManager
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.common.event.HomeOrdState
 import com.facile.immediate.electronique.fleurs.pret.common.loadFragments
 import com.facile.immediate.electronique.fleurs.pret.common.showFragmentAndHideOthers

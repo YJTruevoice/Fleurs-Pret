@@ -7,6 +7,7 @@ import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.provider.Settings
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebChromeClient
@@ -15,9 +16,11 @@ import android.webkit.WebViewClient
 import androidx.core.content.ContextCompat
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
 import com.arthur.commonlib.ability.Logger
+import com.arthur.commonlib.utils.SystemUtils
 import com.facile.immediate.electronique.fleurs.pret.AppConstants
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityWebBinding
+
 
 class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
     private var mUrl: String = ""
@@ -108,6 +111,10 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
         mBinding.inTitleBar.ivBack.setOnClickListener {
             goBack()
         }
+        mBinding.clNet404.setOnClickListener {
+            val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+            startActivityForResult(intent, 0x10001)
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -148,7 +155,30 @@ class WebActivity : BaseBindingActivity<ActivityWebBinding>() {
         super.processLogic()
         mUrl = intent.getStringExtra(AppConstants.KEY_WEB_VIEW_URL) ?: ""
         mBundle = intent.getBundleExtra(AppConstants.KEY_WEB_VIEW_BUNDLE)
-        mBinding.webView.loadUrl(mUrl)
+        if (SystemUtils.isNetworkAvailable(this)) {
+            mBinding.pbProgress.visibility = View.VISIBLE
+            mBinding.webView.visibility = View.VISIBLE
+            mBinding.clNet404.visibility = View.GONE
+            mBinding.webView.loadUrl(mUrl)
+        } else {
+            mBinding.pbProgress.visibility = View.GONE
+            mBinding.webView.visibility = View.GONE
+            mBinding.clNet404.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0x10001) {
+            if (SystemUtils.isNetworkAvailable(this)) {
+                mUrl = intent.getStringExtra(AppConstants.KEY_WEB_VIEW_URL) ?: ""
+                mBundle = intent.getBundleExtra(AppConstants.KEY_WEB_VIEW_BUNDLE)
+                mBinding.webView.loadUrl(mUrl)
+                mBinding.pbProgress.visibility = View.VISIBLE
+                mBinding.webView.visibility = View.VISIBLE
+                mBinding.clNet404.visibility = View.GONE
+            }
+        }
     }
 
     companion object {

@@ -10,6 +10,7 @@ import com.arthur.baselib.structure.mvvm.SingleLiveEvent
 import com.facile.immediate.electronique.fleurs.pret.BuildConfig
 import com.facile.immediate.electronique.fleurs.pret.input.model.Region
 import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
+import java.util.concurrent.atomic.AtomicBoolean
 
 open class ConfigViewModel<M : IBaseModel>(app: Application) : BaseViewModel<M>(app) {
 
@@ -39,46 +40,45 @@ open class ConfigViewModel<M : IBaseModel>(app: Application) : BaseViewModel<M>(
         }
     }
 
+    private var configing = AtomicBoolean(false)
+
     fun config(target: ConfigType) {
+        if (configing.get()) return
+        configing.set(true)
         launchNet {
             configService.config(target.name)
         }.success {
             configLiveData.value = Pair(target, it.aggressiveParentMethod)
-        }.failed {
-            if (BuildConfig.DEBUG) {
-                configLiveData.value = Pair(
-                    target, listOf(
-                        CommonConfigItem(code = Sex.man.code, value = Sex.man.value),
-                        CommonConfigItem(code = Sex.womon.code, value = Sex.womon.value),
-                        CommonConfigItem(code = Sex.other.code, value = Sex.other.value)
-                    )
-                )
-            }
+        }.finished {
+            configing.set(false)
         }.showLoading(true).launch()
     }
 
 
-    fun province() {
+    fun province(result: ((List<Region>?) -> Unit)? = null) {
         launchNet {
             configService.region("-1", "1")
         }.success {
             provinceLiveData.value = it.aggressiveParentMethod
+            result?.invoke(it.aggressiveParentMethod)
         }.showLoading(true).launch()
     }
 
-    fun cities(provinceId: String) {
+    fun cities(provinceId: String, result: ((List<Region>?) -> Unit)? = null) {
         launchNet {
             configService.region(provinceId, "2")
         }.success {
             cityLiveData.value = it.aggressiveParentMethod
+            result?.invoke(it.aggressiveParentMethod)
         }.showLoading(true).launch()
     }
 
-    fun district(cityId: String) {
+    fun district(cityId: String, result: ((List<Region>?) -> Unit)? = null) {
         launchNet {
             configService.region(cityId, "3")
         }.success {
             distinctLiveData.value = it.aggressiveParentMethod
+            result?.invoke(it.aggressiveParentMethod)
         }.showLoading(true).launch()
     }
 }

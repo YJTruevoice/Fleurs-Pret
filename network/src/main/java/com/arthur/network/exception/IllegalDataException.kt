@@ -1,5 +1,6 @@
 package com.arthur.network.exception
 
+import com.arthur.network.Net
 import com.arthur.network.NetConstant
 
 /**
@@ -10,5 +11,6 @@ import com.arthur.network.NetConstant
  */
 class IllegalDataException(
     override var errorCode: Int = NetConstant.ErrorCode.ERROR_ILLEGAL_DATA,
-    val msg: String = "数据不合规异常"
+    val msg: String = Net.client.netOptions.tipDataIllegalError
+        ?: NetConstant.ErrorPromptMsg.DATA_ILLEGAL_ERROR
 ) : NetBaseException(msg)

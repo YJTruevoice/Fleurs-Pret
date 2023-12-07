@@ -156,6 +156,26 @@
     <string name="text_date_de_demande">借款日期</string>
     <string name="text_date_de_remboursement">还款日期</string>
     <string name="text_quitte">结束</string>
+    <string name="text_refuse">拒绝</string>
+    <string name="text_policy_ask"><![CDATA[您好。为了了解您的资格并促进更快地支付您的贷款，我们需要这些权限\n\n短信\n\n仅收集和监控金融交易 输入包含交易方姓名的短信。 目的是对交易进行信用风险评估以及交易金额的描述。 此信用风险评估可加快贷款支付速度，而不会删除、阅读或收集任何 Perfil Introducir 文本消息\n\n联系方式\n\nNBFC 贷款流程和指南要求我们验证参考资料。 此功能使我们能够做到这一点，并且当您只需从通讯录中进行选择时，为什么要输入联系电话号码。\n\n相机和照片\n]]></string>
+    <string name="text_veuillez_d_abord_remplir_le_bon_num_ro_de_t_l_phone_portable">请先填写正确的手机号</string>
+    <string name="text_erreur_de_format_du_code_de_v_rification">验证码格式错误，请重新输入</string>
+    <string name="text_exception_de_non_conformit_des_donn_es_les_donn_es_sont_vides">数据不合规异常 数据为空</string>
+    <string name="text_d_lai_d_expiration_du_r_seau_veuillez_r_essayer_plus_tard">网络超时，请稍后重试</string>
+    <string name="text_le_r_seau_n_est_pas_disponible_veuillez_v_rifier_les_param_tres_r_seau">网络不可用，请检查网络设置</string>
+    <string name="text_anomalie_du_r_seau_veuillez_confirmer_que_le_r_seau_est_normal">网络异常，请确认网络正常</string>
+    <string name="text_exception_d_analyse_des_donn_es">数据解析异常</string>
+    <string name="text_exception_de_non_conformit_des_donn_es">数据不合规异常</string>
+    <string name="text_exception_inconnue">未知异常</string>
+    <string name="text_une_erreur_s_est_produite">发生错误</string>
+    <string name="text_erreur_de_connexion">连接错误</string>
+    <string name="text_actualiser">刷新</string>
+    <string name="text_le_code_de_v_rification_ne_peut_pas_tre_vide">验证码不可为空</string>
+    <string name="text_param_tres_r_seau">网络设置</string>
+    <string name="text_num_ro_de_nin">国家识别号码</string>
+    <string name="text_veuillez_t_l_charger_une_photo_de_votre_visage">请上传人脸照片</string>
+    <string name="text_veuillez_t_l_charger_une_photo_d_identit">请上传身份证照片</string>
+    <string name="text_veuillez_remplir_les_m_mes_informations_de_compte">请填写相同的账户信息</string>
 
     <string-array name="string_arr_months">
         <item>1月</item>

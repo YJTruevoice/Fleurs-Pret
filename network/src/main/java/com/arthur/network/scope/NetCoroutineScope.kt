@@ -7,6 +7,7 @@ import com.arthur.commonlib.ability.Logger
 import com.arthur.commonlib.ability.Toaster
 import com.arthur.commonlib.utils.json.JsonUtils
 import com.arthur.network.Net
+import com.arthur.network.NetConstant
 import com.arthur.network.cache.NetCacheHandler
 import com.arthur.network.errorprocessor.BaseApiErrorPreprocessor
 import com.arthur.network.errorprocessor.IApiErrorPreprocessor
@@ -16,7 +17,12 @@ import com.arthur.network.runMain
 import com.arthur.network.scope.builder.NetScopeConfig
 import com.arthur.network.scope.manager.RequestScopeManager
 import com.arthur.network.withMain
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import okhttp3.Headers
 import okhttp3.RequestBody
 import java.lang.reflect.Type
@@ -62,7 +68,8 @@ open class NetCoroutineScope<T>(
         }
     }
 
-    override val coroutineContext: CoroutineContext = netConfig.dispatcher + exceptionHandler + SupervisorJob()
+    override val coroutineContext: CoroutineContext =
+        netConfig.dispatcher + exceptionHandler + SupervisorJob()
 
     /**
      * 最终使用的cache key
@@ -124,7 +131,12 @@ open class NetCoroutineScope<T>(
     private fun handleSuccess(result: T?) {
         result?.let {
             success(it)
-        } ?: handleError(IllegalDataException(msg = "数据不合规异常 数据为空"))
+        } ?: handleError(
+            IllegalDataException(
+                msg = Net.client.netOptions.tipDataEmptyError
+                    ?: NetConstant.ErrorPromptMsg.DATA_EMPTY_ERROR
+            )
+        )
     }
 
     /**
@@ -158,7 +170,7 @@ open class NetCoroutineScope<T>(
         netConfig.failed?.invoke(errorInfo)
 
         netConfig.callback?.onError(t) ?: let {
-            if (netConfig.showErrorTip) {
+            if (Net.client.netOptions.errorHandler?.invoke(errorInfo.errorCode) == false && netConfig.showErrorTip) {
                 Toaster.showToast(errorInfo.message)
             }
         }
@@ -236,7 +248,7 @@ open class NetCoroutineScope<T>(
         }
     }
 
-    private fun internalCacheKey(path:String):String{
+    private fun internalCacheKey(path: String): String {
         val defaultKey = Net.client.netOptions.cacheKeyDefault.invoke(path)
         if (netConfig.cacheKey.isNotEmpty()) {
             return defaultKey.plus(netConfig.cacheKey)

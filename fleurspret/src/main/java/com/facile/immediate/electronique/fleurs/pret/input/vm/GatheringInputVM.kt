@@ -29,18 +29,6 @@ class GatheringInputVM(app: Application) : BaseInputViewModel(app) {
         }.launch()
     }
 
-    /**
-    @Field("necessaryRapidCustoms") pageType: Int,
-    @Field("safeVirtueClinicNewJewel") collectionType: String,
-    @Field("looseManSauce") bankAccountType: String,
-    @Field("lastBuildingTroublesomeRainbowChapter") bankAccountNumber: String,
-    @Field("unablePolePacificShop") bankCode: String,
-    @Field("nativeShirtGrocerYesterday") bankName: String,
-
-    @Field("beautifulFlashManyEasyKey") orderFaildAddFlag: String,
-    @Field("normalBillClinicMercifulBay") orderId: String,
-    @Field("gratefulTourismFool") curp: String
-     */
     fun saveGatheringInfo(
         collectionType: String,
         bankAccountNumber: String,

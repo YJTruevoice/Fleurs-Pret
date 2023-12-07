@@ -1,6 +1,7 @@
 package com.facile.immediate.electronique.fleurs.pret.mine.model
 
 import com.arthur.baselib.structure.base.IBaseModel
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserBasicEntity
 import com.facile.immediate.electronique.fleurs.pret.net.BaseResponse
 import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
 

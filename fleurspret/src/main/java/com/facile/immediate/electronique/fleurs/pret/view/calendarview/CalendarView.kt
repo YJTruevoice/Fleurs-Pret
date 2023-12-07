@@ -43,7 +43,7 @@ class CalendarView @JvmOverloads constructor(
     init {
         binding = ViewCalendarLayoutBinding.inflate(LayoutInflater.from(context), this)
 
-        dateTarget = DateUtil.getNow()
+        dateTarget = generateDefaultDateTarget()
         generateYearsList()
         generateMonthNumMap()
 
@@ -108,18 +108,18 @@ class CalendarView @JvmOverloads constructor(
     }
 
     private fun generateYearsList() {
-        val targetYear = dateTarget?.get(Calendar.YEAR)
-        curSelectedYear = targetYear ?: 0
-        curSelectedMonth = (dateTarget?.get(Calendar.MONTH) ?: 0) + 1
-        curSelectedDayOfMonth = dateTarget?.get(Calendar.DAY_OF_MONTH) ?: 0
+        val calendarDefault = DateUtil.getTarget("2000-01-01")
+        curSelectedYear = dateTarget?.get(Calendar.YEAR) ?: calendarDefault.get(Calendar.YEAR)
+        curSelectedMonth =
+            (dateTarget?.get(Calendar.MONTH) ?: calendarDefault.get(Calendar.MONTH)) + 1
+        curSelectedDayOfMonth =
+            dateTarget?.get(Calendar.DAY_OF_MONTH) ?: calendarDefault.get(Calendar.DAY_OF_MONTH)
 
-        targetYear?.let {
+        val limitYear = DateUtil.getNow().get(Calendar.YEAR) - 10
+        limitYear.let {
             yearsScope.add(it)
             for (i in 1..it - 1950) {
-                yearsScope.add(0, it - i)
-            }
-            for (i in 1..10) {
-                yearsScope.add(it + i)
+                yearsScope.add(it - i)
             }
         }
     }
@@ -162,12 +162,21 @@ class CalendarView @JvmOverloads constructor(
 
     fun setDateSource(source: String) {
         dateTarget = if (source.isEmpty()) {
-            DateUtil.getNow()
+            generateDefaultDateTarget()
         } else {
             DateUtil.getTarget(source)
         }
         generateYearsList()
         initDisplay()
+    }
+
+    private fun generateDefaultDateTarget(): Calendar {
+        val calendarDefault = DateUtil.getTarget("2000-01-01")
+        return DateUtil.getTarget(
+            "${calendarDefault.get(Calendar.YEAR)}-${calendarDefault.get(Calendar.MONTH) + 1}-${
+                calendarDefault.get(Calendar.DAY_OF_MONTH)
+            }"
+        )
     }
 
     fun getSelectedYear(): Int {

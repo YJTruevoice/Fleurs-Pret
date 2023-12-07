@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">network</string>
     <string name="chargement">chargement…</string>
+    <string name="text_exception_de_non_conformit_des_donn_es_les_donn_es_sont_vides">Exception de non-conformité des données Les données sont vides</string>
 </resources>

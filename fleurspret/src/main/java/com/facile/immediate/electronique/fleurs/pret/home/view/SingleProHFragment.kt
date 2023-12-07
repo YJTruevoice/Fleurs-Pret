@@ -3,14 +3,15 @@ package com.facile.immediate.electronique.fleurs.pret.home.view
 import android.content.Intent
 import android.graphics.Rect
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
 import com.arthur.commonlib.utils.DensityUtils
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
-import com.facile.immediate.electronique.fleurs.pret.common.UserManager
 import com.facile.immediate.electronique.fleurs.pret.common.ext.addThousandSeparator
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentHomeBinding
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
 import com.facile.immediate.electronique.fleurs.pret.input.view.InputInformationActivity
@@ -19,7 +20,7 @@ import com.facile.immediate.electronique.fleurs.pret.main.FeatureAdapter
 import com.facile.immediate.electronique.fleurs.pret.main.UniqueFeatureUtil
 
 class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>() {
-
+    private val homeVM: FirstViewModel by viewModels(ownerProducer = { requireParentFragment() })
     override fun buildView() {
         super.buildView()
         initFeature()
@@ -43,7 +44,9 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
                 startActivity(Intent(requireContext(), LogUpActivity::class.java))
                 return@setOnClickListener
             }
-            startActivity(Intent(requireContext(), InputInformationActivity::class.java))
+            mViewModel.verifyIsNetworkAvailable {
+                startActivity(Intent(requireContext(), InputInformationActivity::class.java))
+            }
         }
     }
 
@@ -59,6 +62,13 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
 
+        homeVM.refreshCompleteLiveData.observe(viewLifecycleOwner){
+            if (UserManager.isLogUp()) {
+                mViewModel.multiProH()
+            } else {
+                mViewModel.globalSetting("afraidDecemberSlimClassicalTechnology,brownTopic")
+            }
+        }
         mViewModel.singleProHLiveData.observe(viewLifecycleOwner) {
             it?.let { singlePro ->
                 mBinding.tvMaxAmount.text =

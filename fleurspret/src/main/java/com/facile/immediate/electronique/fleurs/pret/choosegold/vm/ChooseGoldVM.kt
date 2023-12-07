@@ -39,9 +39,10 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
                     it[i].selected = i == 0
                 }
                 if (it.size == 1) {
+                    val originFist = it.first()
                     it.add(ProdInfo(
                         neatPhysicsPeasantCommonSport = System.currentTimeMillis().toString(),
-                        plainLungAppleGale = it[0].plainLungAppleGale * 2
+                        plainLungAppleGale = originFist.plainLungAppleGale * 2
                     ).apply {
                         this.dampCabbageMaximumSorryCabbage =
                             prodList?.dampCabbageMaximumSorryCabbage ?: ""
@@ -50,7 +51,7 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
                     })
                     it.add(ProdInfo(
                         neatPhysicsPeasantCommonSport = System.currentTimeMillis().toString(),
-                        plainLungAppleGale = it[0].plainLungAppleGale * 3
+                        plainLungAppleGale = originFist.plainLungAppleGale * 3
                     ).apply {
                         this.dampCabbageMaximumSorryCabbage =
                             prodList?.dampCabbageMaximumSorryCabbage ?: ""
@@ -58,9 +59,11 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
                         this.selected = false
                     })
                 } else if (it.size > 1) {
+                    val originFist = it.first()
+                    val originLast = it.last()
                     it.add(ProdInfo(
                         neatPhysicsPeasantCommonSport = System.currentTimeMillis().toString(),
-                        plainLungAppleGale = it[0].plainLungAppleGale + it[it.size - 1].plainLungAppleGale
+                        plainLungAppleGale = originFist.plainLungAppleGale + originLast.plainLungAppleGale
                     ).apply {
                         this.dampCabbageMaximumSorryCabbage =
                             prodList?.dampCabbageMaximumSorryCabbage ?: ""
@@ -69,7 +72,7 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
                     })
                     it.add(ProdInfo(
                         neatPhysicsPeasantCommonSport = System.currentTimeMillis().toString(),
-                        plainLungAppleGale = 2 * it[0].plainLungAppleGale + it[it.size - 1].plainLungAppleGale
+                        plainLungAppleGale = 2 * originFist.plainLungAppleGale + originLast.plainLungAppleGale
                     ).apply {
                         this.dampCabbageMaximumSorryCabbage =
                             prodList?.dampCabbageMaximumSorryCabbage ?: ""
@@ -112,10 +115,6 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
         }.success {
             preOrd = it.aggressiveParentMethod
             preOdrLiveData.value = it.aggressiveParentMethod
-        }.failed {
-            if (BuildConfig.DEBUG) {
-                preOdrLiveData.value = null
-            }
         }.launch()
     }
 
@@ -132,10 +131,6 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
             )
         }.success {
             submitOdrLiveData.value = true
-        }.failed {
-            if (BuildConfig.DEBUG) {
-                submitOdrLiveData.value = false
-            }
         }.launch()
     }
 }

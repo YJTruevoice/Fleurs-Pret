@@ -16,7 +16,7 @@ import com.facile.immediate.electronique.fleurs.pret.common.json.tools.EncryptTo
 import com.facile.immediate.electronique.fleurs.pret.common.json.tools.GeneralDataTool
 import com.facile.immediate.electronique.fleurs.pret.common.json.tools.HWTool
 import com.facile.immediate.electronique.fleurs.pret.common.json.tools.StoreTool
-import com.facile.immediate.electronique.fleurs.pret.mine.model.UserBasicEntity
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserBasicEntity
 import com.facile.immediate.electronique.fleurs.pret.net.BaseResponse
 import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
 import okhttp3.MediaType.Companion.toMediaType
@@ -74,6 +74,9 @@ class InputModel : IBaseModel {
         birthDay: String,
         sex: String,
         email: String,
+        mercifulVanillaMatchBitterFirewood: String,
+        neitherSeniorStocking: String,
+        australianHandsomeSummer: String,
         fullAddress: String
     ): BaseResponse<Any?> {
         return service.savePersonalInfo(
@@ -83,6 +86,9 @@ class InputModel : IBaseModel {
             birthDay,
             sex,
             email,
+            mercifulVanillaMatchBitterFirewood,
+            neitherSeniorStocking,
+            australianHandsomeSummer,
             fullAddress
         )
     }

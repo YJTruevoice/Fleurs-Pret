@@ -8,7 +8,7 @@ import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Toaster
 import com.arthur.commonlib.utils.StringUtil
 import com.facile.immediate.electronique.fleurs.pret.R
-import com.facile.immediate.electronique.fleurs.pret.common.UserManager
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.login.model.LogUpModel
 import com.facile.immediate.electronique.fleurs.pret.login.model.UserInfoEntity
 import com.facile.immediate.electronique.fleurs.pret.login.model.VerifyCodeEntity
@@ -19,7 +19,7 @@ class LogUpViewModel(application: Application) : BaseViewModel<LogUpModel>(appli
     val logUpSuccessLiveData: SingleLiveEvent<UserInfoEntity?> = SingleLiveEvent()
 
     var phone = ""
-    var code = ""
+    var code:CharSequence= ""
 
     fun getVerifyCode() {
         if (StringUtil.isEmpty(phone)) {
@@ -33,9 +33,7 @@ class LogUpViewModel(application: Application) : BaseViewModel<LogUpModel>(appli
                 code = verifyCode.dearProperArgument ?: ""
                 verifyCodeLiveData.value = verifyCode
             }
-        }.failed {
-            Toaster.showToast(it.message)
-        }.launch()
+        }.showErrorTip(true).launch()
     }
 
     fun logUp() {
@@ -44,20 +42,19 @@ class LogUpViewModel(application: Application) : BaseViewModel<LogUpModel>(appli
             return
         }
 
-        if (StringUtil.isEmpty(code)) {
+        if (StringUtil.isEmpty(code.toString())) {
             Toaster.showToast(AppKit.context.getString(R.string.text_le_code_de_v_rification_est_vide))
             return
         }
 
         launchNet {
-            mModel.logUp("+221$phone", code)
+            mModel.logUp("+221$phone", code.toString())
         }.success {
             it.aggressiveParentMethod?.let { user ->
+                user.usualExtraordinaryScholarshipQuickHardship = "+221$phone"
                 UserManager.saveLocal(user)
                 logUpSuccessLiveData.value = user
             }
-        }.failed {
-            Toaster.showToast(it.message)
-        }.launch()
+        }.showErrorTip(true).launch()
     }
 }

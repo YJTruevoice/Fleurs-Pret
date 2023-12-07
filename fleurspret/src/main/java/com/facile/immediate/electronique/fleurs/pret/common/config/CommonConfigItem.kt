@@ -10,5 +10,7 @@ open class CommonConfigItem(
     @SerializedName("greekCompetitorSquareBirdcage")
     val code: String = "",
     @SerializedName("egyptianHeight")
-    val value: String = ""
+    val value: String = "",
+
+    var next: CommonConfigItem? = null
 ) : Parcelable

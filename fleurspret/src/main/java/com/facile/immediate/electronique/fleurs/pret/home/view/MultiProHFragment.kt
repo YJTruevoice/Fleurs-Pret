@@ -2,18 +2,20 @@ package com.facile.immediate.electronique.fleurs.pret.home.view
 
 import android.graphics.Rect
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
 import com.arthur.commonlib.utils.DensityUtils
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentMultiProHomeBinding
 import com.facile.immediate.electronique.fleurs.pret.home.view.adapter.MultiProAdapter
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
 
 class MultiProHFragment : BaseMVVMFragment<FragmentMultiProHomeBinding, FirstViewModel>() {
-
+    private val homeVM: FirstViewModel by viewModels(ownerProducer = { requireParentFragment() })
     override fun buildView() {
         super.buildView()
         mBinding.srlRefresh.setEnableRefresh(false)
@@ -32,6 +34,13 @@ class MultiProHFragment : BaseMVVMFragment<FragmentMultiProHomeBinding, FirstVie
 
     override fun initLiveDataObserver() {
         super.initLiveDataObserver()
+        homeVM.refreshCompleteLiveData.observe(viewLifecycleOwner){
+            if (UserManager.isLogUp()) {
+                mViewModel.multiProH()
+            } else {
+                mViewModel.globalSetting("afraidDecemberSlimClassicalTechnology,brownTopic")
+            }
+        }
         mViewModel.refreshCompleteLiveData.observe(viewLifecycleOwner) {
             if (mBinding.srlRefresh.isRefreshing)
                 mBinding.srlRefresh.finishRefresh()

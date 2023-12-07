@@ -5,6 +5,7 @@ import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
 import com.arthur.commonlib.utils.image.DisplayUtils
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentNotificationsBinding
 import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
@@ -38,7 +39,9 @@ class ThirdFragment : BaseMVVMFragment<FragmentNotificationsBinding, ThirdViewMo
         mViewModel.userNameLiveData.observe(viewLifecycleOwner) {
             it?.let {
                 mBinding.tvUserName.text = it.dirtyCrowdedEarthquakePrivateLevel
-                mBinding.tvUserPhone.text = it.usualExtraordinaryScholarshipQuickHardship
+                val phoneNum = UserManager.phoneNumber()
+                mBinding.tvUserPhone.text =
+                    if (phoneNum.isNotEmpty() && phoneNum.length > 4) phoneNum.substring(4) else ""
             }
         }
         mViewModel.userHeadImgLiveData.observe(viewLifecycleOwner) {
