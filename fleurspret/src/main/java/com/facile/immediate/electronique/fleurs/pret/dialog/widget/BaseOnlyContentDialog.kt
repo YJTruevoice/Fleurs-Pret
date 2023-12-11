@@ -23,10 +23,13 @@ abstract class BaseOnlyContentDialog @JvmOverloads constructor(
 
     override fun setDialogData(config: BaseDialogConfigEntity?) {
         (config as? CommonDialogConfigEntity)?.let {
-            config.touchOutsideCancelAble = true
+            config.touchOutsideCancelAble = false
             // 公共初始化
             super.setDialogData(config)
 
+            mBinding.ivClose.setOnClickListener{
+                dismiss()
+            }
             // 内容
             mBinding.flContent.apply {
                     removeAllViews()

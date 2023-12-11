@@ -7,83 +7,81 @@
     android:background="@color/color_FFFFFF"
     tools:context=".mine.ThirdFragment">
 
+    <View
+        android:id="@+id/v_background_top"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@mipmap/pic_bg_logup_top"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_customer"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="15dp"
-        android:src="@mipmap/icon_customer"
+        android:src="@mipmap/icon_customer_blue_stroke"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_head_portrait"
-        android:layout_width="102dp"
-        android:layout_height="102dp"
-        android:layout_marginTop="64dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_phone_label"
-        android:layout_width="29dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="3dp"
-        android:src="@mipmap/icon_phone_label"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_head_portrait"
-        app:layout_constraintEnd_toEndOf="@+id/iv_head_portrait" />
 
     <TextView
         android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="55dp"
         android:lines="1"
-        android:textColor="@color/color_333333"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:text="@string/app_name"
+        android:textColor="@color/color_FFFFFF"
+        android:textSize="21sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_head_portrait"
-        tools:text="Ronald Lamb" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_user_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="10dp"
         android:lines="1"
-        android:textColor="@color/color_666666"
+        android:textColor="@color/color_C7C2FF"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
         tools:text="+221 954566670" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_head_portrait"
+        android:layout_width="102dp"
+        android:layout_height="102dp"
+        android:layout_marginBottom="-27dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toBottomOf="@+id/v_background_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="55dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/tv_user_phone">
+        app:layout_constraintTop_toBottomOf="@+id/v_background_top">
 
         <TextView
             android:id="@+id/tv_service_center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:background="@drawable/shape_bg_ffffff_stroke_e8e9eb_1_radius_8"
+            android:background="@drawable/shape_bg_ffffff_radius_100"
+            android:backgroundTint="@color/color_F4F5F9"
             android:drawablePadding="10dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="20dp"
             android:text="@string/text_centre_de_service_client"
             android:textColor="@color/color_333333"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:drawableStartCompat="@mipmap/icon_service_phone" />
 
         <TextView
@@ -91,13 +89,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/shape_bg_ffffff_stroke_e8e9eb_1_radius_8"
+            android:background="@drawable/shape_bg_ffffff_radius_100"
+            android:backgroundTint="@color/color_F4F5F9"
             android:drawablePadding="10dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="20dp"
             android:text="@string/text_service_client_en_ligne"
             android:textColor="@color/color_333333"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:drawableStartCompat="@mipmap/icon_service_online" />
 
         <TextView
@@ -105,13 +104,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/shape_bg_ffffff_stroke_e8e9eb_1_radius_8"
+            android:background="@drawable/shape_bg_ffffff_radius_100"
+            android:backgroundTint="@color/color_F4F5F9"
             android:drawablePadding="10dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="20dp"
             android:text="@string/text_politique_de_confidentialit"
             android:textColor="@color/color_333333"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:drawableStartCompat="@mipmap/icon_privacy_policy" />
 
         <TextView
@@ -124,7 +124,7 @@
             android:paddingHorizontal="60dp"
             android:text="@string/text_d_connexion"
             android:textColor="@color/color_FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -35,6 +35,7 @@ class WebLoadTimeoutDialog @JvmOverloads constructor(
 
             mBinding.tvUpdate.apply {
                 setOnClickListener {
+                    config.confirmCallback?.invoke(this@WebLoadTimeoutDialog)
                     dismiss()
                 }
             }
@@ -43,7 +44,6 @@ class WebLoadTimeoutDialog @JvmOverloads constructor(
 
     override fun dismiss() {
         super.dismiss()
-        config?.confirmCallback?.invoke(this@WebLoadTimeoutDialog)
     }
 
     companion object {

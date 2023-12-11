@@ -8,10 +8,13 @@ import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Toaster
 import com.arthur.commonlib.utils.StringUtil
 import com.facile.immediate.electronique.fleurs.pret.R
+import com.facile.immediate.electronique.fleurs.pret.common.consumer.CrispMgr
+import com.facile.immediate.electronique.fleurs.pret.common.event.UserInfoUpdate
 import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.login.model.LogUpModel
 import com.facile.immediate.electronique.fleurs.pret.login.model.UserInfoEntity
 import com.facile.immediate.electronique.fleurs.pret.login.model.VerifyCodeEntity
+import org.greenrobot.eventbus.EventBus
 
 class LogUpViewModel(application: Application) : BaseViewModel<LogUpModel>(application) {
 
@@ -53,6 +56,9 @@ class LogUpViewModel(application: Application) : BaseViewModel<LogUpModel>(appli
             it.aggressiveParentMethod?.let { user ->
                 user.usualExtraordinaryScholarshipQuickHardship = "+221$phone"
                 UserManager.saveLocal(user)
+                UserManager.savePhone(phone)
+                CrispMgr.preSet()
+                EventBus.getDefault().post(UserInfoUpdate())
                 logUpSuccessLiveData.value = user
             }
         }.showErrorTip(true).launch()

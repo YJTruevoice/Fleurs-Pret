@@ -1,5 +1,7 @@
 package com.facile.immediate.electronique.fleurs.pret.login
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Build
 import android.os.SystemClock
@@ -20,7 +22,24 @@ import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityLogUpBi
 import com.facile.immediate.electronique.fleurs.pret.login.vm.LogUpViewModel
 import com.facile.immediate.electronique.fleurs.pret.main.MainActivity
 
+
 class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
+    private var clipboard: ClipboardManager? = null
+    private val onPrimaryClipChangedListener = ClipboardManager.OnPrimaryClipChangedListener {
+        if (clipboard != null
+            && clipboard?.hasPrimaryClip() == true
+            && clipboard?.primaryClip != null
+            && (clipboard?.primaryClip?.itemCount ?: 0) > 0
+        ) {
+            val addedText = clipboard?.primaryClip?.getItemAt(0)?.text ?: ""
+            val addedTextString = addedText.toString().replace(" ", "")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                clipboard?.clearPrimaryClip()
+            }
+
+            clipboard?.setPrimaryClip(ClipData.newPlainText("TEXT", addedTextString))
+        }
+    }
 
     private var isCountDown = false
 
@@ -42,6 +61,8 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
 
     override fun setListener() {
         super.setListener()
+        clipboard = getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager
+        clipboard?.addPrimaryClipChangedListener(onPrimaryClipChangedListener)
         mBinding.ivBack.setOnClickListener {
             gotoMain()
             finish()
@@ -170,6 +191,11 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
             return true
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        clipboard?.removePrimaryClipChangedListener(onPrimaryClipChangedListener)
     }
 
     private fun gotoMain() {

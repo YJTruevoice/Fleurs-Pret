@@ -175,6 +175,10 @@
     <string name="text_veuillez_t_l_charger_une_photo_de_votre_visage">Veuillez télécharger une photo de votre visage</string>
     <string name="text_veuillez_t_l_charger_une_photo_d_identit">Veuillez télécharger une photo d\'identité</string>
     <string name="text_veuillez_remplir_les_m_mes_informations_de_compte">Veuillez remplir les mêmes informations de compte</string>
+    <string name="text_copie_r_ussie">Copie réussie</string>
+    <string name="text_prendre_des_photos">Prendre des photos</string>
+    <string name="text_album_photo">album photo</string>
+    <string name="text_seleccione_el_plazo_del_pr_stamo">Seleccione el plazo del préstamo</string>
 
     <string-array name="string_arr_months">
         <item>Janvier</item>
@@ -189,5 +193,24 @@
         <item>Octobre</item>
         <item>Novembre</item>
         <item>Décembre</item>
+    </string-array>
+    <string-array name="string_arr_common_email_suffixes">
+        <item>gmail.com</item>
+        <item>yahoo.com</item>
+        <item>outlook.com</item>
+        <item>aol.com</item>
+        <item>icloud.com</item>
+        <item>protonmail.com</item>
+        <item>mail.com</item>
+        <item>hotmail.com</item>
+        <item>live.com</item>
+        <item>yandex.com</item>
+        <item>zoho.com</item>
+        <item>gmx.com</item>
+        <item>qq.com</item>
+        <item>163.com</item>
+        <item>126.com</item>
+        <item>sina.com</item>
+        <item>sohu.com</item>
     </string-array>
 </resources>

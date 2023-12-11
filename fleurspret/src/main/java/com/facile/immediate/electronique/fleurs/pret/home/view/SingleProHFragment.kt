@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
 import com.arthur.commonlib.utils.DensityUtils
+import com.facile.immediate.electronique.fleurs.pret.choosegold.view.ChooseGoldActivity
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.ext.addThousandSeparator
 import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
@@ -45,7 +46,8 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
                 return@setOnClickListener
             }
             mViewModel.verifyIsNetworkAvailable {
-                startActivity(Intent(requireContext(), InputInformationActivity::class.java))
+//                startActivity(Intent(requireContext(), InputInformationActivity::class.java))
+                startActivity(Intent(requireContext(), ChooseGoldActivity::class.java))
             }
         }
     }

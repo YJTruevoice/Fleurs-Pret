@@ -40,6 +40,10 @@ object UserManager {
         return SPUtils.getString(AppConstants.KEY_TOKEN, "").isNotEmpty()
     }
 
+    fun isTestAccount(): Boolean {
+        return "1" == user()?.thoroughBriefGreatSomebody
+    }
+
     fun logout() {
         SPUtils.remove(AppConstants.KEY_USER)
         SPUtils.remove(AppConstants.KEY_USER_ID)

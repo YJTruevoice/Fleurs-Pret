@@ -2,9 +2,13 @@ package com.arthur.commonlib.file;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import com.arthur.commonlib.utils.StringUtil;
@@ -1899,5 +1903,33 @@ public class FileUtil {
             return "";
         }
         return cachePath + File.separator + uniqueName;
+    }
+
+    public static String getImagePathFromUri(Context context, Uri uri) {
+        if (context == null || uri == null) {
+            return null;
+        }
+
+        String imagePath = null;
+
+        // 使用ContentResolver查询图片的信息
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = null;
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                imagePath = cursor.getString(columnIndex);
+            }
+        } catch (Exception e) {
+            Log.e("getImagePathFromUri", "Error getting image path from URI", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return imagePath;
     }
 }

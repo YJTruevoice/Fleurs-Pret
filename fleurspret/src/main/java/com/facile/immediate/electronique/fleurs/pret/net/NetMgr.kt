@@ -25,6 +25,7 @@ import com.facile.immediate.electronique.fleurs.pret.net.converter.CustomJsonCon
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.CommonParamsInterceptor
 import com.facile.immediate.electronique.fleurs.pret.net.interceptor.ServerStatusInterceptor
 import com.facile.immediate.electronique.fleurs.pret.utils.DeviceIdUtil
+import com.facile.immediate.electronique.fleurs.pret.web.WebLoadTimeoutDialog
 import org.greenrobot.eventbus.EventBus
 import java.lang.ref.WeakReference
 import java.util.UUID
@@ -179,16 +180,12 @@ class NetMgr : BaseNetMgr() {
 
     private fun createNetErrorDialog(): BaseDialog? {
         return curActivityRef?.get()?.let {
-            BaseCountDownDialog.with(it)
-                .img(R.mipmap.pic_net_404)
-                .countDown(5)
-                .content(it.getString(R.string.text_erreur_de_connexion))
-                .confirm(it.getString(R.string.text_actualiser)) { dialog ->
+            WebLoadTimeoutDialog.with(it)
+                .confirm(it.getString(R.string.text_actualizar)) {dialog ->
                     val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
                     it.startActivity(intent)
                     EventBus.getDefault().post(NetErrorRefresh())
-                }
-                .build()
+                }.build()
         }
     }
 

@@ -3,7 +3,6 @@ package com.facile.immediate.electronique.fleurs.pret.input.view
 import android.text.SpannableStringBuilder
 import android.view.View
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
-import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Toaster
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.BottomSheet
@@ -11,6 +10,7 @@ import com.facile.immediate.electronique.fleurs.pret.bottomsheet.bean.CommonChoo
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.config.ConfigType
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
+import com.facile.immediate.electronique.fleurs.pret.common.ext.onClick
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputGatheringInformationBinding
 import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
 import com.facile.immediate.electronique.fleurs.pret.input.vm.GatheringInputVM
@@ -49,25 +49,25 @@ class InputGatheringInformationActivity :
         mBinding.inTitleBar.ivBack.setOnClickListener {
             finish()
         }
-        mBinding.inTitleBar.ivCustomer.setOnClickListener {
-            ConsumerActivity.go(this)
+        mBinding.inTitleBar.ivCustomer.onClick {
+            ConsumerActivity.goBranch(this)
         }
 
         mBinding.etAccountNo.addTextChangedListener(mViewModel.textWatcher)
         mBinding.etAccountNoConfirm.addTextChangedListener(mViewModel.textWatcher)
 
-        mBinding.tvGatheringWay.setOnClickListener {
+        mBinding.tvGatheringWay.onClick {
             mViewModel.config(ConfigType.collectionType)
         }
 
-        mBinding.tvNext.setOnClickListener {
+        mBinding.tvNext.onClick {
             if (!isNextBtnEnable()) {
                 Toaster.showToast(getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
-                return@setOnClickListener
+                return@onClick
             }
             if (!differAccountNo()) {
                 Toaster.showToast(getString(R.string.text_veuillez_remplir_les_m_mes_informations_de_compte))
-                return@setOnClickListener
+                return@onClick
             }
             if (collectionTypeSelectedItem?.value == "1") {
                 mViewModel.config(ConfigType.bankAccountType)

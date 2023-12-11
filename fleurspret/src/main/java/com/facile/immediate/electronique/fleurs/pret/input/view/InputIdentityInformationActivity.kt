@@ -3,6 +3,8 @@ package com.facile.immediate.electronique.fleurs.pret.input.view
 import android.Manifest
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
+import android.provider.MediaStore
 import android.provider.Settings
 import android.text.SpannableStringBuilder
 import android.view.View
@@ -13,6 +15,7 @@ import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
 import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Loading
 import com.arthur.commonlib.ability.Toaster
+import com.arthur.commonlib.file.FileUtil
 import com.arthur.commonlib.utils.DensityUtils.Companion.dp2px
 import com.arthur.commonlib.utils.SystemUtils
 import com.arthur.commonlib.utils.image.DisplayUtils
@@ -20,17 +23,20 @@ import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.common.event.NetErrorRefresh
-import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputIdentityInformationBinding
 import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseCountDownDialog
 import com.facile.immediate.electronique.fleurs.pret.input.InputConstant
 import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
+import com.facile.immediate.electronique.fleurs.pret.input.view.fragment.PicResGuideFragment
 import com.facile.immediate.electronique.fleurs.pret.input.vm.IdentityInputVM
+import com.facile.immediate.electronique.fleurs.pret.utils.cacheFileFromUri
+import com.facile.immediate.electronique.fleurs.pret.web.WebLoadTimeoutDialog
 import com.gyf.immersionbar.ImmersionBar
 import com.permissionx.guolindev.PermissionX
 import com.wld.mycamerax.util.CameraConstant
 import com.wld.mycamerax.util.CameraParam
 import org.greenrobot.eventbus.EventBus
+
 
 class InputIdentityInformationActivity :
     BaseMVVMActivity<ActivityInputIdentityInformationBinding, IdentityInputVM>() {
@@ -38,6 +44,8 @@ class InputIdentityInformationActivity :
     private var isCardFrontPicUp = false
     private var isCardBackPicUp = false
     private var isFacePicUp = false
+
+    private var picGuideType = 0
     override fun setStatusBar() {
         ImmersionBar.with(this)
             .transparentStatusBar()
@@ -59,17 +67,17 @@ class InputIdentityInformationActivity :
             finish()
         }
         mBinding.inTitleBar.ivCustomer.setOnClickListener {
-            ConsumerActivity.go(this)
+            ConsumerActivity.goBranch(this)
         }
 
         mBinding.ivCardFront.setOnClickListener {
-            requestPermission(InputConstant.ReqCode.CARD_FRONT_CODE)
+            showPicGuidePanel(InputConstant.ReqCode.CARD_FRONT_CODE)
         }
         mBinding.ivCardBack.setOnClickListener {
-            requestPermission(InputConstant.ReqCode.CARD_BACK_CODE)
+            showPicGuidePanel(InputConstant.ReqCode.CARD_BACK_CODE)
         }
         mBinding.ivFaceAfr.setOnClickListener {
-            requestPermission(InputConstant.ReqCode.FACE_PIC_CODE)
+            showPicGuidePanel(InputConstant.ReqCode.FACE_PIC_CODE)
         }
 
         mBinding.etIdentityCard.addTextChangedListener(mViewModel.textWatcher)
@@ -104,7 +112,7 @@ class InputIdentityInformationActivity :
         mViewModel.userBasicLiveData.observe(this) {
             it?.let {
                 mBinding.etIdentityCard.text = SpannableStringBuilder(it.gratefulTourismFool)
-                mBinding.etNin.text = SpannableStringBuilder(UserManager.phoneNumber())
+                mBinding.etNin.text = SpannableStringBuilder(it.energeticRudePollutionVisitor)
                 isNextBtnEnable()
             }
         }
@@ -194,11 +202,8 @@ class InputIdentityInformationActivity :
 
         mViewModel.uploadPicFailedLiveData.observe(this) {
             if (!SystemUtils.isNetworkAvailable(AppKit.context)) {
-                BaseCountDownDialog.with(this)
-                    .img(R.mipmap.pic_net_404)
-                    .countDown(5)
-                    .content(getString(R.string.text_erreur_de_connexion))
-                    .confirm(getString(R.string.text_actualiser)) {
+                WebLoadTimeoutDialog.with(this)
+                    .confirm(getString(R.string.text_actualizar)) {
                         val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
                         startActivity(intent)
                     }.build().show()
@@ -242,6 +247,7 @@ class InputIdentityInformationActivity :
                     R.color.color_B316CF36
                 )
             )
+            setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_pic_upload_suc, 0, 0, 0)
             visibility = View.VISIBLE
         }
     }
@@ -255,6 +261,7 @@ class InputIdentityInformationActivity :
                     R.color.color_B3CF1616
                 )
             )
+            setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_pic_upload_fail, 0, 0, 0)
             visibility = View.VISIBLE
         }
     }
@@ -269,43 +276,119 @@ class InputIdentityInformationActivity :
             if (resultCode == RESULT_OK) {
                 when (requestCode) {
                     InputConstant.ReqCode.CARD_FRONT_CODE -> {
-                        mViewModel.cardFrontPicPath =
-                            intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
+                        if (picGuideType == 1) {
+                            mViewModel.cardFrontPicPath =
+                                intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
+                            DisplayUtils.displayImageAsRound(
+                                mViewModel.cardFrontPicPath,
+                                mBinding.ivCardFront,
+                                radius = 6f.dp2px(this)
+                            )
+                        } else if (picGuideType == 2) {
+                            cacheFileFromUri(this, intent.data) {
+                                it?.let {
+                                    mViewModel.cardFrontPicPath = it.path
+                                    DisplayUtils.displayImageAsRound(
+                                        mViewModel.cardFrontPicPath,
+                                        mBinding.ivCardFront,
+                                        radius = 6f.dp2px(this)
+                                    )
+                                }
+                            }
+                        }
                         setUploadStateInVisible(mBinding.tvCardFrontUploadState)
-                        DisplayUtils.displayImageAsRound(
-                            mViewModel.cardFrontPicPath,
-                            mBinding.ivCardFront,
-                            radius = 6f.dp2px(this)
-                        )
                     }
 
                     InputConstant.ReqCode.CARD_BACK_CODE -> {
-                        mViewModel.cardBackPicPath =
-                            intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
+                        if (picGuideType == 1) {
+                            mViewModel.cardBackPicPath =
+                                intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
+                            DisplayUtils.displayImageAsRound(
+                                mViewModel.cardBackPicPath,
+                                mBinding.ivCardBack,
+                                radius = 6f.dp2px(this)
+                            )
+                        } else if (picGuideType == 2) {
+                            cacheFileFromUri(this, intent.data) {
+                                it?.let {
+                                    mViewModel.cardBackPicPath = it.path
+                                    DisplayUtils.displayImageAsRound(
+                                        mViewModel.cardBackPicPath,
+                                        mBinding.ivCardBack,
+                                        radius = 6f.dp2px(this)
+                                    )
+                                }
+                            }
+                        }
+
                         setUploadStateInVisible(mBinding.tvCardBackUploadState)
-                        DisplayUtils.displayImageAsRound(
-                            mViewModel.cardBackPicPath,
-                            mBinding.ivCardBack,
-                            radius = 6f.dp2px(this)
-                        )
                     }
 
                     InputConstant.ReqCode.FACE_PIC_CODE -> {
-                        mViewModel.facePicPath =
-                            intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
+                        if (picGuideType == 1) {
+                            mViewModel.facePicPath =
+                                intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
+                            DisplayUtils.displayImageAsRound(
+                                mViewModel.facePicPath,
+                                mBinding.ivFaceAfr,
+                                radius = 6f.dp2px(this)
+                            )
+                        } else if (picGuideType == 2) {
+                            cacheFileFromUri(this, intent.data) {
+                                it?.let {
+                                    mViewModel.facePicPath = it.path
+                                    DisplayUtils.displayImageAsRound(
+                                        mViewModel.facePicPath,
+                                        mBinding.ivFaceAfr,
+                                        radius = 6f.dp2px(this)
+                                    )
+                                }
+                            }
+                        }
+
                         setUploadStateInVisible(mBinding.tvFaceAfrUploadState)
-                        DisplayUtils.displayImageAsRound(
-                            mViewModel.facePicPath,
-                            mBinding.ivFaceAfr,
-                            radius = 6f.dp2px(this)
-                        )
                     }
                 }
             }
         }
     }
 
-    private fun requestPermission(requestCode: Int) {
+    private fun showPicGuidePanel(requestCode: Int) {
+        PicResGuideFragment.show(this) {
+            picGuideType = it
+            when (picGuideType) {
+                1 -> {
+                    requestTakePhotoPermission {
+                        if (requestCode == InputConstant.ReqCode.FACE_PIC_CODE) {
+                            CameraParam.Builder()
+                                .setShowFocusTips(false)
+                                .setShowMask(false)
+                                .setFront(true)
+                                .setActivity(this@InputIdentityInformationActivity)
+                                .setRequestCode(requestCode)
+                                .build()
+                        } else {
+                            CameraParam.Builder()
+                                .setShowFocusTips(false)
+                                .setActivity(this@InputIdentityInformationActivity)
+                                .setRequestCode(requestCode)
+                                .build()
+                        }
+                    }
+                }
+
+                2 -> {
+                    requestSelectPhotoPermission {
+                        val galleryIntent =
+                            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        startActivityForResult(galleryIntent, requestCode)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun requestTakePhotoPermission(allPermissionGranted: () -> Unit) {
         PermissionX.init(this)
             .permissions(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -314,27 +397,19 @@ class InputIdentityInformationActivity :
             )
             .request { allGranted: Boolean, grantedList: List<String?>?, deniedList: List<String?>? ->
                 if (allGranted) {
-                    if (requestCode == InputConstant.ReqCode.FACE_PIC_CODE) {
-                        CameraParam.Builder()
-                            .setShowFocusTips(false)
-                            .setShowMask(false)
-                            .setFront(true)
-                            .setActivity(this@InputIdentityInformationActivity)
-                            .setRequestCode(requestCode)
-                            .build()
-                    } else {
-                        CameraParam.Builder()
-                            .setShowFocusTips(false)
-                            .setActivity(this@InputIdentityInformationActivity)
-                            .setRequestCode(requestCode)
-                            .build()
-                    }
-                } else {
-                    Toast.makeText(
-                        applicationContext,
-                        "These permissions are denied: \$deniedList",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    allPermissionGranted.invoke()
+                }
+            }
+    }
+
+    private fun requestSelectPhotoPermission(allPermissionGranted: () -> Unit) {
+        PermissionX.init(this)
+            .permissions(
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            .request { allGranted: Boolean, grantedList: List<String?>?, deniedList: List<String?>? ->
+                if (allGranted) {
+                    allPermissionGranted.invoke()
                 }
             }
     }
@@ -343,11 +418,5 @@ class InputIdentityInformationActivity :
         mBinding.tvNext.isSelected =
             InputUtil.nextBtnEnable(mBinding.etIdentityCard, mBinding.etNin)
         return mBinding.tvNext.isSelected
-    }
-
-    private fun isPicUpdateAll(): Boolean {
-        return mBinding.tvCardFrontUploadState.text.toString() == getString(R.string.text_t_l_chargement_r_ussi)
-                && mBinding.tvCardBackUploadState.text.toString() == getString(R.string.text_t_l_chargement_r_ussi)
-                && mBinding.tvFaceAfrUploadState.text.toString() == getString(R.string.text_t_l_chargement_r_ussi)
     }
 }

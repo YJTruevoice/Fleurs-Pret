@@ -131,7 +131,7 @@ class RegionDynamicLinkageFragment(private var selectConfirmed: ((Region?, Regio
         }.success { res ->
             res.aggressiveParentMethod?.let { cities ->
                 if (cities.isNotEmpty()) {
-                    val region = regionSelected?.let { regionSelected ->
+                    val region = regionSelected?.next?.let { regionSelected ->
                         cities.find { regionSelected.code == it.eastBasicFavouriteSupermarket }
                             ?.apply {
                                 selected = true
@@ -160,7 +160,7 @@ class RegionDynamicLinkageFragment(private var selectConfirmed: ((Region?, Regio
         }.success { res ->
             res.aggressiveParentMethod?.let { district ->
                 if (district.isNotEmpty()) {
-                    val region = regionSelected?.let { regionSelected ->
+                    val region = regionSelected?.next?.next?.let { regionSelected ->
                         district.find { regionSelected.code == it.eastBasicFavouriteSupermarket }
                             ?.apply {
                                 selected = true

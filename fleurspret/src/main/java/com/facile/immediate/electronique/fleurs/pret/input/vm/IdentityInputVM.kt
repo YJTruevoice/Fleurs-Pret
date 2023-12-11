@@ -10,8 +10,10 @@ import com.arthur.network.download.UploadListener
 import com.arthur.network.download.Uploader
 import com.facile.immediate.electronique.fleurs.pret.BuildConfig
 import com.facile.immediate.electronique.fleurs.pret.R
+import com.facile.immediate.electronique.fleurs.pret.common.event.UserInfoUpdate
 import com.facile.immediate.electronique.fleurs.pret.input.model.IdentityPic
 import com.facile.immediate.electronique.fleurs.pret.input.view.InputGatheringInformationActivity
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 
 class IdentityInputVM(app: Application) : BaseInputViewModel(app) {
@@ -99,8 +101,9 @@ class IdentityInputVM(app: Application) : BaseInputViewModel(app) {
 
     fun saveIdentityInfo() {
         launchNet {
-            mModel.saveIdentityInfo(pageType = 4, idCardNo = idNo, phoneNo = ninNo)
+            mModel.saveIdentityInfo(pageType = 4, idCardNo = idNo, energeticRudePollutionVisitor = ninNo)
         }.success {
+            EventBus.getDefault().post(UserInfoUpdate())
             startActivity(InputGatheringInformationActivity::class.java)
         }.showLoading(true).launch()
     }

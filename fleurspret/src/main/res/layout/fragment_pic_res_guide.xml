@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/shape_bg_ffffff_radius_10"
+    android:orientation="vertical"
+    android:paddingHorizontal="12dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="40dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="16dp"
+        android:text="@string/text_informations_d_identification"
+        android:textColor="@color/color_242237"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_E7E7E7" />
+
+    <TextView
+        android:id="@+id/tv_take"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/drawable_bg_state_sheet_list_item"
+        android:gravity="center"
+        android:text="@string/text_prendre_des_photos"
+        android:textColor="@color/list_item_text_state_color"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_select"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/drawable_bg_state_sheet_list_item"
+        android:gravity="center"
+        android:text="@string/text_album_photo"
+        android:textColor="@color/list_item_text_state_color"
+        android:textSize="16sp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

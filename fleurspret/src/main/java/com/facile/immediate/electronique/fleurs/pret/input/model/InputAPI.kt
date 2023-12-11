@@ -44,7 +44,7 @@ interface InputAPI {
     @POST("/fleurspret/few/holdPoorSpeaker")
     suspend fun saveIdentityInfo(
         @Field("necessaryRapidCustoms") pageType: Int,
-        @Field("radioactiveCheekChalkDeliciousAirmail") phoneNo: String,
+        @Field("radioactiveCheekChalkDeliciousAirmail") energeticRudePollutionVisitor: String,
         @Field("gratefulTourismFool") idCardNo: String
     ): BaseResponse<Any?>
 

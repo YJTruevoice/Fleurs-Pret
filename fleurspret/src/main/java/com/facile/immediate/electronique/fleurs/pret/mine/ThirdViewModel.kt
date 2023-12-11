@@ -1,6 +1,7 @@
 package com.facile.immediate.electronique.fleurs.pret.mine
 
 import android.app.Application
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.launchNet
 import com.arthur.baselib.structure.mvvm.BaseViewModel
 import com.arthur.baselib.structure.mvvm.SingleLiveEvent
@@ -12,6 +13,19 @@ class ThirdViewModel(app: Application) : BaseViewModel<ThirdModel>(app) {
 
     val userNameLiveData: SingleLiveEvent<UserBasicEntity?> = SingleLiveEvent()
     val userHeadImgLiveData: SingleLiveEvent<String?> = SingleLiveEvent()
+
+    override fun processLogic() {
+        super.processLogic()
+        if (UserManager.isLogUp()) {
+            getUserName()
+            getUserHeadPortrait()
+        }
+    }
+
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
+
+    }
 
     fun getUserName() {
         launchNet {

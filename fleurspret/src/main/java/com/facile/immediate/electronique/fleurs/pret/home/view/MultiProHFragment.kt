@@ -23,7 +23,7 @@ class MultiProHFragment : BaseMVVMFragment<FragmentMultiProHomeBinding, FirstVie
     override fun setListener() {
         super.setListener()
         mBinding.inTitle.ivCustomer.setOnClickListener {
-            ConsumerActivity.go(requireActivity())
+            ConsumerActivity.goBranch(requireActivity())
         }
     }
 

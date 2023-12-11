@@ -1,8 +1,8 @@
 package com.facile.immediate.electronique.fleurs.pret.input.view
 
 import android.Manifest
+import android.widget.ArrayAdapter
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
-import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Toaster
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.BottomSheet
@@ -55,17 +55,30 @@ class InputInformationActivity :
         mBinding.inTitleBar.ivBack.setOnClickListener {
             finish()
         }
-        mBinding.inTitleBar.ivCustomer.setOnClickListener {
-            ConsumerActivity.go(this)
+        mBinding.inTitleBar.ivCustomer.onClick {
+            ConsumerActivity.goBranch(this)
         }
 
         mBinding.etName.addTextChangedListener(mViewModel.textWatcher)
         mBinding.etNom.addTextChangedListener(mViewModel.textWatcher)
-        mBinding.etEmail.addTextChangedListener(mViewModel.textWatcher)
-        mBinding.etEmail.filters = arrayOf(EditTextFilter.getEmailEditFilter())
+        mBinding.etEmail.apply {
+            addTextChangedListener(mViewModel.textWatcher)
+            filters = arrayOf(EditTextFilter.getEmailEditFilter())
+
+            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                this@InputInformationActivity,
+                android.R.layout.simple_dropdown_item_1line,
+                resources.getStringArray(R.array.string_arr_common_email_suffixes)
+            )
+            setAdapter(adapter)
+            setOnItemClickListener { parent, view, position, id ->
+                val selected = parent.getItemAtPosition(position) as String
+                append(selected)
+            }
+        }
         mBinding.etAddress.addTextChangedListener(mViewModel.textWatcher)
 
-        mBinding.tvDate.setOnClickListener {
+        mBinding.tvDate.onClick {
             val curDateStr = mBinding.tvDate.text.toString()
             val dateSplitArr = curDateStr.split("-").reversed()
             val dateParam = StringBuilder()
@@ -88,7 +101,7 @@ class InputInformationActivity :
         }
 
         mBinding.tvRegion.onClick {
-            RegionDynamicLinkageFragment.show(this) { province, city, district ->
+            RegionDynamicLinkageFragment.show(this, mViewModel.region) { province, city, district ->
                 if (province == null || city == null) return@show
                 val builder = StringBuilder()
                 if (province.normalAppointmentHeadmistressMachine.isNotEmpty()) {
@@ -117,10 +130,10 @@ class InputInformationActivity :
             }
         }
 
-        mBinding.tvNext.setOnClickListener {
+        mBinding.tvNext.onClick {
             if (!isNextBtnEnable()) {
                 Toaster.showToast(getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
-                return@setOnClickListener
+                return@onClick
             }
             mViewModel.savePersonalInfo(
                 mBinding.etName.text.toString(),

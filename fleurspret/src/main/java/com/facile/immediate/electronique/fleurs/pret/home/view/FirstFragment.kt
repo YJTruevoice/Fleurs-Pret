@@ -3,6 +3,7 @@ package com.facile.immediate.electronique.fleurs.pret.home.view
 import android.Manifest
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
@@ -48,6 +49,10 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
 
     override fun buildView() {
         super.buildView()
+        mBinding.inTitle.clTitle.apply {
+            layoutParams.height = 44f.dp2px(requireContext()) + 32f.dp2px(requireContext())
+            updatePadding(top = 32f.dp2px(requireContext()))
+        }
         PrivacyPolicyDisplayUtil.displayPrivacyPolicyGuide(
             requireContext(), mBinding.tvReadPrivacyPolicyGuide
         )
@@ -75,7 +80,7 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
             mViewModel.getHomeData()
         }
         mBinding.inTitle.ivCustomer.setOnClickListener {
-            ConsumerActivity.go(requireActivity())
+            ConsumerActivity.goBranch(requireActivity())
         }
     }
 

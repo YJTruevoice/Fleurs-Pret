@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toStartOf="@id/tv_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Montant du remboursement Montant du remboursement Montant du remboursement" />
+        tools:text="Montant du remboursement" />
 
     <TextView
         android:id="@+id/tv_value"

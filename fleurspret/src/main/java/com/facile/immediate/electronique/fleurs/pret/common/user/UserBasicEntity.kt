@@ -76,6 +76,9 @@ data class UserBasicEntity(
     @SerializedName("gratefulTourismFool")
     val gratefulTourismFool: String = "",
 
+    @SerializedName("energeticRudePollutionVisitor")
+    val energeticRudePollutionVisitor: String = "",
+
 //    @SerializedName("aggressiveEarlyMidnight")
 //    val aggressiveEarlyMidnight: String = "",
 //    @SerializedName("anotherChurchExcellentDate")
@@ -136,8 +139,6 @@ data class UserBasicEntity(
 //    val eitherBarBorder: String = "",
 //    @SerializedName("eitherFlourSecondhand")
 //    val eitherFlourSecondhand: String = "",
-//    @SerializedName("energeticRudePollutionVisitor")
-//    val energeticRudePollutionVisitor: String = "",
 //    @SerializedName("everyCompressedTheoreticalFireplace")
 //    val everyCompressedTheoreticalFireplace: String = "",
 //    @SerializedName("fairDiskLivingGardening")

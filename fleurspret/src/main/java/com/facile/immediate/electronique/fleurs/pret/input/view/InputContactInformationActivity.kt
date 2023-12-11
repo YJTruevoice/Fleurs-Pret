@@ -8,9 +8,7 @@ import android.provider.Settings
 import android.text.SpannableStringBuilder
 import android.view.MotionEvent
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
-import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Toaster
-import com.arthur.commonlib.utils.PhoneUtils
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.BottomSheet
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.bean.CommonChooseListItem
@@ -64,8 +62,8 @@ class InputContactInformationActivity :
         mBinding.inTitleBar.ivBack.setOnClickListener {
             finish()
         }
-        mBinding.inTitleBar.ivCustomer.setOnClickListener {
-            ConsumerActivity.go(this)
+        mBinding.inTitleBar.ivCustomer.onClick {
+            ConsumerActivity.goBranch(this)
         }
         mBinding.inContact1st.tvRelation.onClick {
             mViewModel.config(ConfigType.relationship)
@@ -79,16 +77,16 @@ class InputContactInformationActivity :
         mBinding.inContact1st.etPhone.addTextChangedListener(mViewModel.textWatcher)
         mBinding.inContact2st.etNom.addTextChangedListener(mViewModel.textWatcher)
 
-        mBinding.tvNext.setOnClickListener {
+        mBinding.tvNext.onClick {
             if (!isNextBtnEnable()) {
                 Toaster.showToast(getString(R.string.veuilltext_ez_compl_ter_toutes_les_informations))
-                return@setOnClickListener
+                return@onClick
             }
             val fistNumber = mBinding.inContact1st.etPhone.text.toString()
             val secNumber = mBinding.inContact2st.etPhone.text.toString()
             if (fistNumber.length < 9 || secNumber.length < 9) {
                 Toaster.showToast(getString(R.string.text_veuillez_d_abord_remplir_le_bon_num_ro_de_t_l_phone_portable))
-                return@setOnClickListener
+                return@onClick
             }
             mViewModel.saveContactInfo(
                 phoneNumber = mBinding.inContact1st.etPhone.text.toString(),

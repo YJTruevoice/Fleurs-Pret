@@ -2,24 +2,24 @@ package com.arthur.commonlib.ability
 
 import android.app.Activity
 
-object Loading : com.arthur.commonlib.ability.ILoading {
+object Loading : ILoading {
 
-    private var loadingImpl: com.arthur.commonlib.ability.ILoading? = null
+    private var loadingImpl: ILoading? = null
 
-    fun init(loading: com.arthur.commonlib.ability.ILoading) {
-        com.arthur.commonlib.ability.Loading.loadingImpl = loading
+    fun init(loading: ILoading) {
+        loadingImpl = loading
     }
 
     override fun startLoading(ac: Activity) {
-        com.arthur.commonlib.ability.Loading.loadingImpl?.startLoading(ac)
+        loadingImpl?.startLoading(ac)
     }
 
     override fun startLoading(ac: Activity, message: String) {
-        com.arthur.commonlib.ability.Loading.loadingImpl?.startLoading(ac, message)
+        loadingImpl?.startLoading(ac, message)
     }
 
     override fun closeLoading() {
-        com.arthur.commonlib.ability.Loading.loadingImpl?.closeLoading()
+        loadingImpl?.closeLoading()
     }
 
 }

@@ -2,7 +2,6 @@ package com.facile.immediate.electronique.fleurs.pret.bottomsheet
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Rect
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -109,10 +108,15 @@ object BottomSheet {
             mDataList.clear()
             mDataList.addAll(data)
             mSelected = selected
+            this.callback = callback
             mDataList.forEach {
                 it.selected = this.mSelected?.equals(it) == true
             }
-            this.callback = callback
+            val selectedItem = mDataList.find { it.selected }
+            if (selectedItem == null) {
+                mDataList.first().selected = true
+                callback.invoke(mDataList.first())
+            }
             notifyDataSetChanged()
         }
 

@@ -369,7 +369,7 @@ public class CameraActivity extends AppCompatActivity {
                         rl_start.setVisibility(View.GONE);
                         rl_result_picture.setVisibility(View.VISIBLE);
                         ll_picture_parent.setVisibility(View.VISIBLE);
-                        Bitmap bitmap = Tools.bitmapClip(CameraActivity.this, photoFile, img_picture,front);
+                        Bitmap bitmap = Tools.bitmapClip(CameraActivity.this, photoFile, img_picture, front);
                         img_picture.setImageBitmap(bitmap);
                     }
 
@@ -387,7 +387,7 @@ public class CameraActivity extends AppCompatActivity {
             rect = new Rect(outLocation[0], outLocation[1],
                     view_mask.getMeasuredWidth(), view_mask.getMeasuredHeight());
         }
-        Tools.saveBitmap(this, mCameraParam.getPictureTempPath(), mCameraParam.getPicturePath(),img_picture, rect, front);
+        Tools.saveBitmap(this, mCameraParam.getPictureTempPath(), mCameraParam.getPicturePath(), img_picture, rect, front);
         Tools.deletTempFile(mCameraParam.getPictureTempPath());
 
         Intent intent = new Intent();
@@ -439,7 +439,9 @@ public class CameraActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         autoFocusCancel();
-        cameraProvider.unbindAll();
+        if (cameraProvider != null) {
+            cameraProvider.unbindAll();
+        }
 //        if (cameraExecutor != null)
 //            cameraExecutor.shutdown();
     }

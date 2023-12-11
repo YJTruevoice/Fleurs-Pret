@@ -1,19 +1,27 @@
 package com.facile.immediate.electronique.fleurs.pret.choosegold.view
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.widget.SeekBar
-import android.widget.SeekBar.OnSeekBarChangeListener
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
+import com.arthur.commonlib.ability.Toaster
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.QuickViewHolder
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.choosegold.model.ProdInfo
 import com.facile.immediate.electronique.fleurs.pret.choosegold.view.adapter.RePayDateAdapter
 import com.facile.immediate.electronique.fleurs.pret.choosegold.view.dialog.LockedRepaymentDateTip
 import com.facile.immediate.electronique.fleurs.pret.choosegold.view.dialog.PreOrdDialog
 import com.facile.immediate.electronique.fleurs.pret.choosegold.vm.ChooseGoldVM
+import com.facile.immediate.electronique.fleurs.pret.common.CommonItemDecoration
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
+import com.facile.immediate.electronique.fleurs.pret.common.config.CommonConfigItem
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.common.ext.addThousandSeparator
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityChooseGoldInformationBinding
@@ -55,10 +63,14 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
             finish()
         }
         mBinding.inTitleBar.ivCustomer.setOnClickListener {
-            ConsumerActivity.go(this)
+            ConsumerActivity.goBranch(this)
         }
 
         mBinding.tvApplyLoan.setOnClickListener {
+            if (mViewModel.curProDate == null) {
+                Toaster.showToast(getString(R.string.text_seleccione_el_plazo_del_pr_stamo))
+                return@setOnClickListener
+            }
             mViewModel.preOdr(
                 neatPhysicsPeasantCommonSport = mViewModel.curProDate?.neatPhysicsPeasantCommonSport.toString(),
                 rudeHungryActionInformation = mBinding.rbXofProgress.progress.toString()
@@ -75,44 +87,88 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
         }
         mViewModel.preComputeResultLiveData.observe(this) {
             it?.let {
-                mBinding.apply {
-                    tvXofReceive.text =
-                        "${getString(R.string.text_xof)} ${
-                            it.theoreticalMoneyLawyerSupper.addThousandSeparator(
-                                2
-                            )
-                        }"
-                    tvXofInterest.text =
-                        "${getString(R.string.text_xof)} ${
-                            it.unsafeAncestorBasement.addThousandSeparator(
-                                2
-                            )
-                        }"
-                    tvXofService.text =
-                        "${getString(R.string.text_xof)} ${
-                            it.unfairSeamanThemselvesMess.addThousandSeparator(
-                                2
-                            )
-                        }"
-                    tvXofTva.text =
-                        "${getString(R.string.text_xof)} ${
-                            it.crowdedSpecialistPunctuation.addThousandSeparator(
-                                2
-                            )
-                        }"
-                    tvXofMontant.text =
-                        "${getString(R.string.text_xof)} ${
-                            mBinding.rbXofProgress.progress.toString().addThousandSeparator(2)
-                        }"
+                mBinding.tvApplyLoan.isSelected = true
+            }
 
-                    tvRepaymentGold.text =
-                        "${getString(R.string.text_xof)} ${
-                            it.femaleSteamAsleepLifetime.addThousandSeparator(
-                                2
-                            )
-                        }"
-                    tvRepaymentDate.text = mViewModel.curProDate?.dateStr
+            mBinding.apply {
+                tvXofReceive.text =
+                    "${getString(R.string.text_xof)} ${
+                        it?.theoreticalMoneyLawyerSupper?.let { theoreticalMoneyLawyerSupper ->
+                            theoreticalMoneyLawyerSupper.addThousandSeparator(2)
+                        } ?: "--"
+                    }"
+
+                rvDetails.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = object : BaseQuickAdapter<CommonConfigItem, QuickViewHolder>() {
+                        override fun onCreateViewHolder(
+                            context: Context,
+                            parent: ViewGroup,
+                            viewType: Int
+                        ): QuickViewHolder {
+                            return QuickViewHolder(R.layout.layout_information_between, parent)
+                        }
+
+                        override fun onBindViewHolder(
+                            holder: QuickViewHolder,
+                            position: Int,
+                            item: CommonConfigItem?
+                        ) {
+                            item?.apply {
+                                holder.setText(R.id.tv_name, item.code)
+                                holder.getView<TextView>(R.id.tv_value).apply {
+                                    setTextColor(
+                                        ContextCompat.getColor(context, R.color.color_4635FF)
+                                    )
+                                    text = "${getString(R.string.text_xof)} ${
+                                        item.value.addThousandSeparator(2)
+                                    }"
+                                }
+                            }
+                        }
+
+                    }.apply {
+                        addAll(mutableListOf(
+                            CommonConfigItem(
+                                getString(R.string.text_int_r_t),
+                                it?.unsafeAncestorBasement ?: "--"
+                            ),
+                            CommonConfigItem(
+                                getString(R.string.text_frais_de_service),
+                                it?.unfairSeamanThemselvesMess ?: "--"
+                            ),
+                            CommonConfigItem(
+                                getString(R.string.text_t_v_a),
+                                it?.crowdedSpecialistPunctuation ?: "--"
+                            ),
+                        ).apply {
+                            it?.finalStorageGlove?.apply {
+                                for (e in this) {
+                                    CommonConfigItem(
+                                        e.irishGradeUndergroundAmericanPostcard,
+                                        e.peacefulFancySlightTeam
+                                    )
+                                }
+                            }
+                        })
+                    }
+                    if (itemDecorationCount <= 0) {
+                        addItemDecoration(CommonItemDecoration(8f))
+                    }
                 }
+
+                tvXofMontant.text =
+                    "${getString(R.string.text_xof)} ${
+                        mBinding.rbXofProgress.progress.toString().addThousandSeparator(2)
+                    }"
+
+                tvRepaymentGold.text =
+                    "${getString(R.string.text_xof)} ${
+                        it?.femaleSteamAsleepLifetime?.let { femaleSteamAsleepLifetime ->
+                            femaleSteamAsleepLifetime.addThousandSeparator(2)
+                        } ?: "--"
+                    }"
+                tvRepaymentDate.text = mViewModel.curProDate?.dateStr ?: "--"
             }
         }
 
@@ -159,15 +215,22 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
                 mViewModel.prodList?.bornSunglassesRipeProblemFalseHeadmaster?.let {
                     if (it.isNotEmpty()) {
                         addAll(it)
-                        displayBasicInfo(it[0])
+                        var defaultSelected:ProdInfo? = null
+                        for (e in it) {
+                            if (e.selected) {
+                                defaultSelected = e
+                            }
+                        }
+                        defaultSelected?.let {
+                            displayBasicInfo(defaultSelected)
+                        }?:displayBasicInfo(it[0],true)
                     }
                 }
             }
         }
-        mBinding.tvApplyLoan.isSelected = true
     }
 
-    private fun displayBasicInfo(prod: ProdInfo) {
+    private fun displayBasicInfo(prod: ProdInfo, defaultSelectedFist: Boolean = false) {
 
         if (prod.isLocked) {
             LockedRepaymentDateTip.with(this).build().show()
@@ -195,56 +258,24 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
                     mBinding.tvXof.text = prod.hugeFogPepper.toString().addThousandSeparator()
                     ratingBar.progress = prod.hugeFogPepper
                 }
-                mViewModel.preCompute(
-                    neatPhysicsPeasantCommonSport = prod.neatPhysicsPeasantCommonSport,
-                    rudeHungryActionInformation = mBinding.rbXofProgress.progress.toString()
-                )
+                if (mViewModel.curProDate != null) {
+                    mViewModel.preCompute(
+                        neatPhysicsPeasantCommonSport = prod.neatPhysicsPeasantCommonSport,
+                        rudeHungryActionInformation = mBinding.rbXofProgress.progress.toString()
+                    )
+                }
             }
-//            setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-//                override fun onProgressChanged(
-//                    seekBar: SeekBar?,
-//                    progress: Int,
-//                    fromUser: Boolean
-//                ) {
-//                    if (progress >= prod.hugeFogPepper) {
-//                        mBinding.tvXof.text = progress.toString().addThousandSeparator()
-//                    } else {
-//                        mBinding.tvXof.text = prod.hugeFogPepper.toString().addThousandSeparator()
-//                        seekBar?.progress = prod.hugeFogPepper
-//                    }
-//                }
-//
-//                override fun onStartTrackingTouch(seekBar: SeekBar?) {
-//                    seekBar?.apply {
-//                        if (progress < prod.hugeFogPepper) {
-//                            mBinding.tvXof.text = prod.hugeFogPepper.toString().addThousandSeparator()
-//                            progress = prod.hugeFogPepper
-//                        }
-//                    }
-//                }
-//
-//                override fun onStopTrackingTouch(seekBar: SeekBar?) {
-//                    seekBar?.apply {
-//                        if (progress < prod.hugeFogPepper) {
-//                            mBinding.tvXof.text = prod.hugeFogPepper.toString().addThousandSeparator()
-//                            progress = prod.hugeFogPepper
-//                        }
-//                    }
-//                    mViewModel.preCompute(
-//                        neatPhysicsPeasantCommonSport = prod.neatPhysicsPeasantCommonSport,
-//                        rudeHungryActionInformation = mBinding.rbXofProgress.progress.toString()
-//                    )
-//                }
-//
-//            })
         }
 
-        mViewModel.curProDate = prod
-
-        mViewModel.preCompute(
-            neatPhysicsPeasantCommonSport = prod.neatPhysicsPeasantCommonSport,
-            rudeHungryActionInformation = mBinding.rbXofProgress.progress.toString()
-        )
+        mViewModel.curProDate = if (defaultSelectedFist) null else prod
+        if (mViewModel.curProDate != null) {
+            mViewModel.preCompute(
+                neatPhysicsPeasantCommonSport = prod.neatPhysicsPeasantCommonSport,
+                rudeHungryActionInformation = mBinding.rbXofProgress.progress.toString()
+            )
+        } else {
+            mViewModel.preComputeResultLiveData.value = null
+        }
     }
 
 }

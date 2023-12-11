@@ -21,6 +21,13 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
 
+        multiDexEnabled true
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "App-${variant.name}-version-${variant.versionCode}${System.currentTimeMillis()}.apk"
+        }
     }
 
     signingConfigs {
@@ -110,6 +117,12 @@ dependencies {
     implementation rootProject.ext.dependencies.eventBus
     implementation rootProject.ext.glides
     implementation rootProject.ext.stethosLibs
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+    
+    implementation 'id.zelory:compressor:2.1.1'
+
+    implementation 'im.crisp:crisp-sdk:1.0.13'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:32.4.0')

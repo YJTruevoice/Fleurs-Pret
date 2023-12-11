@@ -28,7 +28,9 @@ class ServerStatusReceiver : BroadcastReceiver() {
                 // 如果token则将token失效的消息通知handler
                 // 登录失效跳转登录页
                 UserManager.logout()
-                context?.startActivity(Intent(context, LogUpActivity::class.java))
+                context?.startActivity(Intent(context, LogUpActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                })
             }
         }
     }

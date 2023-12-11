@@ -235,6 +235,17 @@ class CalendarView @JvmOverloads constructor(
                 holder.getView<TextView>(R.id.tv_month_day).apply {
                     text = if (item >= 1) "$item" else ""
 
+                    val now = DateUtil.getNow()
+                    val limitYear = now.get(Calendar.YEAR) - 10
+                    val limitMonth = now.get(Calendar.MONTH) + 1
+                    val limitDay = now.get(Calendar.DAY_OF_MONTH)
+                    if (curSelectedYear >= limitYear && curSelectedMonth > limitMonth) {
+                        curSelectedDayOfMonth = 0
+                    }
+                    if (curSelectedYear >= limitYear && curSelectedMonth == limitMonth && item > limitDay) {
+                        curSelectedDayOfMonth = 0
+                    }
+
                     isSelected = curSelectedDayOfMonth > 0 && curSelectedDayOfMonth == item
                     if (isSelected) {
                         setTextColor(ContextCompat.getColor(context, R.color.color_F6F3FF))
@@ -247,6 +258,12 @@ class CalendarView @JvmOverloads constructor(
                     }
 
                     holder.getView<View>(R.id.fl_item).setOnClickListener {
+                        if (curSelectedYear >= limitYear && curSelectedMonth > limitMonth) {
+                            return@setOnClickListener
+                        }
+                        if (curSelectedYear >= limitYear && curSelectedMonth == limitMonth && item > limitDay) {
+                            return@setOnClickListener
+                        }
                         if (item > 0 && curSelectedDayOfMonth != item) {
                             curSelectedDayOfMonth = item
                             notifyItemRangeChanged(0, itemCount)

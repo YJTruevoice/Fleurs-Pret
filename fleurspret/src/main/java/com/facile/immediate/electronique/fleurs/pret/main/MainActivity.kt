@@ -2,19 +2,19 @@ package com.facile.immediate.electronique.fleurs.pret.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
 import com.facile.immediate.electronique.fleurs.pret.R
-import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.common.event.HomeOrdState
 import com.facile.immediate.electronique.fleurs.pret.common.loadFragments
 import com.facile.immediate.electronique.fleurs.pret.common.showFragmentAndHideOthers
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityMainBinding
 import com.facile.immediate.electronique.fleurs.pret.home.view.FirstFragment
 import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
 import com.facile.immediate.electronique.fleurs.pret.mine.ThirdFragment
 import com.facile.immediate.electronique.fleurs.pret.order.view.SecondFragment
-import com.gyf.immersionbar.ImmersionBar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -27,12 +27,9 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
         super.onInit(savedInstanceState)
         EventBus.getDefault().register(this)
     }
-    override fun setStatusBar() {
-        ImmersionBar.with(this)
-            .transparentStatusBar()
-            .statusBarDarkFont(statusBarDarkMode)
-            .fitsSystemWindows(true)
-            .init()
+
+    override fun getViewBelowStatusBar(): View {
+        return mBinding.vTop
     }
 
     override fun buildView() {
@@ -127,8 +124,9 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(homeOrdState: HomeOrdState){
+    fun onEvent(homeOrdState: HomeOrdState) {
         mBinding.inTabFirst.navigationOne.performClick()
     }
 }

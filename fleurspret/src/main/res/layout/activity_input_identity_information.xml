@@ -89,21 +89,30 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.0" />
 
-                        <TextView
-                            android:id="@+id/tv_card_front_upload_state"
+                        <FrameLayout
                             android:layout_width="0dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
-                            android:backgroundTint="@color/color_B3CF1616"
-                            android:gravity="center"
-                            android:textColor="@color/color_FFFFFF"
-                            android:textSize="10sp"
-                            android:visibility="gone"
+                            android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            tools:text="@string/text_t_l_chargement_r_ussi"
-                            tools:visibility="visible" />
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <TextView
+                                android:id="@+id/tv_card_front_upload_state"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
+                                android:drawablePadding="6dp"
+                                android:gravity="center"
+                                android:paddingHorizontal="6dp"
+                                android:textColor="@color/color_FFFFFF"
+                                android:textSize="10sp"
+                                android:visibility="gone"
+                                tools:backgroundTint="@color/color_B3CF1616"
+                                tools:text="@string/text_le_t_l_chargement_a_chou"
+                                tools:visibility="visible" />
+
+                        </FrameLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -151,21 +160,30 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tv_card_back_upload_state"
+                        <FrameLayout
                             android:layout_width="0dp"
-                            android:layout_height="30dp"
-                            android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
-                            android:backgroundTint="@color/color_B3CF1616"
-                            android:gravity="center"
-                            android:textColor="@color/color_FFFFFF"
-                            android:textSize="10sp"
-                            android:visibility="gone"
+                            android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            tools:text="@string/text_t_l_chargement_r_ussi"
-                            tools:visibility="visible" />
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <TextView
+                                android:id="@+id/tv_card_back_upload_state"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
+                                android:drawablePadding="6dp"
+                                android:gravity="center"
+                                android:paddingHorizontal="6dp"
+                                android:textColor="@color/color_FFFFFF"
+                                android:textSize="10sp"
+                                android:visibility="gone"
+                                tools:backgroundTint="@color/color_B3CF1616"
+                                tools:text="@string/text_le_t_l_chargement_a_chou"
+                                tools:visibility="visible" />
+
+                        </FrameLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -187,7 +205,7 @@
                     android:autofillHints=""
                     android:background="@drawable/shape_bg_ffffff_stroke_e7e7e7_1_radius_4"
                     android:hint="@string/text_entrez_du_texte"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     android:minHeight="44dp"
                     android:paddingHorizontal="10dp"
                     android:textColor="@color/color_999999"
@@ -210,7 +228,7 @@
                     android:autofillHints=""
                     android:background="@drawable/shape_bg_ffffff_stroke_e7e7e7_1_radius_4"
                     android:hint="@string/text_entrez_du_texte"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     android:minHeight="44dp"
                     android:paddingHorizontal="10dp"
                     android:textColor="@color/color_999999"
@@ -288,21 +306,30 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_face_afr_upload_state"
+                    <FrameLayout
                         android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
-                        android:backgroundTint="@color/color_B3CF1616"
-                        android:gravity="center"
-                        android:textColor="@color/color_FFFFFF"
-                        android:textSize="10sp"
-                        android:visibility="gone"
+                        android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:text="@string/text_t_l_chargement_r_ussi"
-                        tools:visibility="visible" />
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                            android:id="@+id/tv_face_afr_upload_state"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/shape_bg_ffffff_radius_6_bottom"
+                            android:drawablePadding="6dp"
+                            android:gravity="center"
+                            android:paddingHorizontal="6dp"
+                            android:textColor="@color/color_FFFFFF"
+                            android:textSize="10sp"
+                            android:visibility="gone"
+                            tools:backgroundTint="@color/color_B3CF1616"
+                            tools:text="@string/text_le_t_l_chargement_a_chou"
+                            tools:visibility="visible" />
+
+                    </FrameLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

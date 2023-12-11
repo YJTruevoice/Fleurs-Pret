@@ -4,7 +4,10 @@ import android.app.Application
 import androidx.lifecycle.launchNet
 import com.arthur.baselib.structure.mvvm.SingleLiveEvent
 import com.facile.immediate.electronique.fleurs.pret.common.config.CommonConfigItem
+import com.facile.immediate.electronique.fleurs.pret.common.consumer.CrispMgr
+import com.facile.immediate.electronique.fleurs.pret.common.event.UserInfoUpdate
 import com.facile.immediate.electronique.fleurs.pret.input.view.InputContactInformationActivity
+import org.greenrobot.eventbus.EventBus
 
 class BasicInputVM(app: Application) : BaseInputViewModel(app) {
 
@@ -39,6 +42,8 @@ class BasicInputVM(app: Application) : BaseInputViewModel(app) {
                 fullAddress
             )
         }.success {
+            EventBus.getDefault().post(UserInfoUpdate())
+            CrispMgr.setEmail(email)
             startActivity(InputContactInformationActivity::class.java)
         }.showLoading(true).launch()
     }

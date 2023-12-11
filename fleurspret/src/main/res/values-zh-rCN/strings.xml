@@ -176,6 +176,10 @@
     <string name="text_veuillez_t_l_charger_une_photo_de_votre_visage">请上传人脸照片</string>
     <string name="text_veuillez_t_l_charger_une_photo_d_identit">请上传身份证照片</string>
     <string name="text_veuillez_remplir_les_m_mes_informations_de_compte">请填写相同的账户信息</string>
+    <string name="text_copie_r_ussie">复制成功</string>
+    <string name="text_prendre_des_photos">拍照</string>
+    <string name="text_album_photo">相册</string>
+    <string name="text_seleccione_el_plazo_del_pr_stamo">请选择贷款期限</string>
 
     <string-array name="string_arr_months">
         <item>1月</item>
@@ -190,6 +194,25 @@
         <item>10月</item>
         <item>11月</item>
         <item>12月</item>
+    </string-array>
+    <string-array name="string_arr_common_email_suffixes">
+        <item>gmail.com</item>
+        <item>yahoo.com</item>
+        <item>outlook.com</item>
+        <item>aol.com</item>
+        <item>icloud.com</item>
+        <item>protonmail.com</item>
+        <item>mail.com</item>
+        <item>hotmail.com</item>
+        <item>live.com</item>
+        <item>yandex.com</item>
+        <item>zoho.com</item>
+        <item>gmx.com</item>
+        <item>qq.com</item>
+        <item>163.com</item>
+        <item>126.com</item>
+        <item>sina.com</item>
+        <item>sohu.com</item>
     </string-array>
 
 </resources>

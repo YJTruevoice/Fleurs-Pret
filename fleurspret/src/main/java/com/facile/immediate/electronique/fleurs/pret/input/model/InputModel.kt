@@ -115,10 +115,10 @@ class InputModel : IBaseModel {
 
     suspend fun saveIdentityInfo(
         pageType: Int,
-        phoneNo: String,
+        energeticRudePollutionVisitor: String,
         idCardNo: String
     ): BaseResponse<Any?> {
-        return service.saveIdentityInfo(pageType, phoneNo, idCardNo)
+        return service.saveIdentityInfo(pageType, energeticRudePollutionVisitor, idCardNo)
     }
 
     suspend fun gatheringInfo(): BaseResponse<List<GatheringInfo>?> {

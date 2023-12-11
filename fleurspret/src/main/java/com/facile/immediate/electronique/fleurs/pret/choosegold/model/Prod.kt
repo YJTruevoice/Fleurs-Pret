@@ -37,9 +37,12 @@ data class ProdInfo(
     @IgnoredOnParcel
     var dampCabbageMaximumSorryCabbage = ""
 
+    @IgnoredOnParcel
+    var optTerm = 0
+
     val dateStr: String
         get() {
-            val durMillis: Long = plainLungAppleGale * 1000 * 60 * 60 * 24
+            val durMillis: Long = (plainLungAppleGale + optTerm) * 1000 * 60 * 60 * 24
             return DateUtil.getDateWithFormat(
                 DateUtil.targetTimeMillis(dampCabbageMaximumSorryCabbage) + durMillis,
                 "dd-MM-yyyy"
