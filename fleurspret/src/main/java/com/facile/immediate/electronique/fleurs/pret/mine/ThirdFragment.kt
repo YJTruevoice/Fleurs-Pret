@@ -4,14 +4,13 @@ import android.content.Intent
 import androidx.core.view.updatePadding
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
 import com.arthur.commonlib.utils.DensityUtils.Companion.dp2px
-import com.arthur.commonlib.utils.ValuesUtils
 import com.arthur.commonlib.utils.image.DisplayUtils
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
-import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.CrispMgr
 import com.facile.immediate.electronique.fleurs.pret.common.event.UserInfoUpdate
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentNotificationsBinding
 import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
 import com.facile.immediate.electronique.fleurs.pret.web.WebActivity
@@ -44,7 +43,7 @@ class ThirdFragment : BaseMVVMFragment<FragmentNotificationsBinding, ThirdViewMo
             WebActivity.open(
                 requireContext(),
                 PrivacyPolicyDisplayUtil.privacyLink(),
-                ValuesUtils.getString(R.string.app_name)
+                getString(R.string.app_name)
             )
         }
 

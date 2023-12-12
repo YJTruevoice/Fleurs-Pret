@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import com.arthur.commonlib.utils.DensityUtils.Companion.dp2px
@@ -70,7 +69,7 @@ class RejeteeFragment :
 
         val thoseLongBaseball = setting.thoseLongBaseball ?: ""
         val str = String.format(
-            ValuesUtils.getString(R.string.text_rejetee_desc),
+            getString(R.string.text_rejetee_desc),
             thoseLongBaseball
         )
         val ssb = SpannableStringBuilder(str)

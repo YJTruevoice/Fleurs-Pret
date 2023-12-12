@@ -1,5 +1,6 @@
 package com.facile.immediate.electronique.fleurs.pret.input.view.fragment
 
+import android.content.DialogInterface
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -31,20 +32,26 @@ class PicResGuideFragment(private var selectConfirmed: ((Int) -> Unit)? = null) 
     companion object {
         fun show(
             ac: FragmentActivity,
+            onShowListener: DialogInterface.OnShowListener? = null,
+            onDismissListener: DialogInterface.OnDismissListener? = null,
             selectConfirmed: ((Int) -> Unit)? = null
         ) {
-            show(ac.supportFragmentManager, selectConfirmed)
+            show(ac.supportFragmentManager, onShowListener, onDismissListener, selectConfirmed)
         }
 
         fun show(
             fm: FragmentManager,
+            onShowListener: DialogInterface.OnShowListener? = null,
+            onDismissListener: DialogInterface.OnDismissListener? = null,
             selectConfirmed: ((Int) -> Unit)? = null
         ) {
             BottomSheetDialog.withFixedHeight()
                 .height(DensityUtils.dp2px(AppKit.context, 500f))
                 .wrapHeight(true)
                 .content(PicResGuideFragment(selectConfirmed))
-                .cancelOnTouchOutsize(true)
+                .cancelOnTouchOutsize(false)
+                .onShowListener(onShowListener)
+                .onDismissListener(onDismissListener)
                 .build()
                 .show(fm, "PicResGuidePanel")
         }

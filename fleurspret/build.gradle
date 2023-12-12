@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
     // Add the Crashlytics Gradle plugin
     id 'com.google.firebase.crashlytics'
     // Add the Google services Gradle plugin

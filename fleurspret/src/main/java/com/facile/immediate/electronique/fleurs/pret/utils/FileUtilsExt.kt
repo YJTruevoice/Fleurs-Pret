@@ -67,6 +67,27 @@ fun cacheFileFromUri(context: Context?, uri: Uri?, cb: ((cacheFile: File?) -> Un
     }
 }
 
-fun compressImage(path: String): File? {
-    return null
+fun compressImage(sourceFile: String, width: Int, height: Int): File {
+    var result = File(sourceFile)
+    // 如果是图片文件，压缩后回调
+    if (ImageUtil.isImageFile(sourceFile)) {
+        try {
+            // 按照屏幕宽高加载，防止溢出
+            val bitmap = ImageUtil.loadScaledBitmap(sourceFile, width, height)
+            // 旋转并压缩文件
+            val scaled = ImageUtil.scaleBitMap(
+                bitmap,
+                AppKit.context,
+                width,
+                height,
+                ImageUtil.getRotateDegree(sourceFile)
+            )
+            // 源文件删除
+            result.delete()
+            result = scaled
+        } catch (e: Exception) {
+            Logger.logE(StringUtil.check(e.message))
+        }
+    }
+    return result
 }

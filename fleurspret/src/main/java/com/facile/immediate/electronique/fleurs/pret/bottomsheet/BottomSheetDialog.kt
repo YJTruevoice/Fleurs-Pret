@@ -1,6 +1,9 @@
 package com.facile.immediate.electronique.fleurs.pret.bottomsheet
 
 import android.app.Dialog
+import android.content.DialogInterface
+import android.content.DialogInterface.OnDismissListener
+import android.content.DialogInterface.OnShowListener
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -57,6 +60,10 @@ class BottomSheetDialog : BottomSheetDialogFragment(), IDialogPerformance {
      */
     private var wrapAble: Boolean = true
 
+
+    private var onShowListener: OnShowListener? = null
+    private var onDismissListener: OnDismissListener? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -71,12 +78,13 @@ class BottomSheetDialog : BottomSheetDialogFragment(), IDialogPerformance {
         if (content == null) {
             return
         }
-        when(content) {
+        when (content) {
             is Fragment -> {
                 childFragmentManager.beginTransaction()
                     .replace(R.id.fl_root, content as Fragment)
                     .commit()
             }
+
             else -> {
                 if (BuildConfig.DEBUG) {
                     throw RuntimeException("dialog content only fragment is supported now.")
@@ -90,6 +98,7 @@ class BottomSheetDialog : BottomSheetDialogFragment(), IDialogPerformance {
             return
         }
         super.show(manager, tag)
+        onShowListener?.onShow(dialog)
     }
 
     override fun showNow(manager: FragmentManager, tag: String?) {
@@ -102,7 +111,15 @@ class BottomSheetDialog : BottomSheetDialogFragment(), IDialogPerformance {
 
     //重点是这个方法，重写并返回FixedHeightBottomSheetDialog
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return FixedHeightBottomSheetDialog(requireContext(), theme, maxHeight, peekHeight, expend, wrapHeight, wrapAble)
+        return FixedHeightBottomSheetDialog(
+            requireContext(),
+            theme,
+            maxHeight,
+            peekHeight,
+            expend,
+            wrapHeight,
+            wrapAble
+        )
     }
 
     override fun onResume() {
@@ -123,6 +140,11 @@ class BottomSheetDialog : BottomSheetDialogFragment(), IDialogPerformance {
 
     override fun dismiss() {
         super.dismiss()
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissListener?.onDismiss(dialog)
     }
 
     companion object {
@@ -151,6 +173,8 @@ class BottomSheetDialog : BottomSheetDialogFragment(), IDialogPerformance {
             return create().apply {
                 this.maxHeight = height
                 this.peekHeight = height
+                this.onShowListener = this@FixHeightBuilder.onShowListener
+                this.onDismissListener = this@FixHeightBuilder.onDismissListener
             }
         }
     }
@@ -194,7 +218,7 @@ class BottomSheetDialog : BottomSheetDialogFragment(), IDialogPerformance {
     /**
      * 基础构建器
      */
-    abstract class BaseBuilder<B: BaseBuilder<B>> {
+    abstract class BaseBuilder<B : BaseBuilder<B>> {
         /**
          * 具体承载内容展示的Fragment
          */
@@ -219,6 +243,9 @@ class BottomSheetDialog : BottomSheetDialogFragment(), IDialogPerformance {
          * 是否可滑动
          */
         protected var canWrap: Boolean = true
+
+        protected var onShowListener: OnShowListener? = null
+        protected var onDismissListener: OnDismissListener? = null
 
         /**
          * 内容没有超出高度时，是否由内容确定高度
@@ -245,6 +272,16 @@ class BottomSheetDialog : BottomSheetDialogFragment(), IDialogPerformance {
 
         fun canWrap(canWrap: Boolean): B {
             this.canWrap = canWrap
+            return this as B
+        }
+
+        fun onShowListener(onShowListener: OnShowListener?): B {
+            this.onShowListener = onShowListener
+            return this as B
+        }
+
+        fun onDismissListener(onDismissListener: OnDismissListener?): B {
+            this.onDismissListener = onDismissListener
             return this as B
         }
 

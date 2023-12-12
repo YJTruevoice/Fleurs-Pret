@@ -2,6 +2,7 @@ package com.facile.immediate.electronique.fleurs.pret.common.consumer
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +15,11 @@ import com.arthur.network.ext.scopeNetLife
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
 import com.facile.immediate.electronique.fleurs.pret.R
-import com.facile.immediate.electronique.fleurs.pret.common.setting.GlobalSetting
 import com.facile.immediate.electronique.fleurs.pret.common.setting.SettingAPI
 import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityConsumerLayoutBinding
 import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
+
 
 class ConsumerActivity : BaseBindingActivity<ActivityConsumerLayoutBinding>() {
 
@@ -53,41 +54,41 @@ class ConsumerActivity : BaseBindingActivity<ActivityConsumerLayoutBinding>() {
     override fun processLogic() {
         super.processLogic()
         scopeNetLife {
-            settingService.globalSetting("longJawLeadingInjuryGreatTongue,hopelessLoudSkill,absentMoreCandle,formerDrierKiloJunk")
+            settingService.consumerConfig()
         }.success {
-            it.aggressiveParentMethod?.let { setting ->
-                setData(setting)
+            it.aggressiveParentMethod?.let { consumers ->
+                setData(consumers)
             }
         }.showLoading(true).launch()
     }
 
 
-    private fun setData(setting: GlobalSetting) {
+    private fun setData(consumerEntity: ConsumerEntity) {
 
         mBinding.rvPhoneList.apply {
             layoutManager = LinearLayoutManager(context)
-            setting.hopelessLoudSkill?.split(",")?.let { phones ->
+            consumerEntity.lazyNervousToiletHam?.let { phones ->
                 adapter = TextAdapter(ConsumeType.PHONE).apply { addAll(phones) }
             }
         }
         mBinding.rvWhatsAppList.apply {
             layoutManager = LinearLayoutManager(context)
-            setting.absentMoreCandle?.split(",")?.let { apps ->
+            consumerEntity.favouriteHungerLazyCoach?.let { apps ->
                 adapter = TextAdapter(ConsumeType.WHATSAPP).apply { addAll(apps) }
             }
         }
         mBinding.rvEmailList.apply {
             layoutManager = LinearLayoutManager(context)
-            setting.longJawLeadingInjuryGreatTongue?.split(",")?.let { emails ->
+            consumerEntity.freezingFieldPostmanSpaghetti?.let { emails ->
                 adapter = TextAdapter(ConsumeType.EMAIL).apply { addAll(emails) }
             }
         }
 
-        mBinding.tvConsumerDesc.text = setting.formerDrierKiloJunk
+        mBinding.tvConsumerDesc.text = consumerEntity.looseArabicCustom
     }
 
     inner class TextAdapter(private val type: ConsumeType) :
-        BaseQuickAdapter<String, QuickViewHolder>() {
+        BaseQuickAdapter<ItemEntity, QuickViewHolder>() {
         override fun onCreateViewHolder(
             context: Context,
             parent: ViewGroup,
@@ -96,29 +97,74 @@ class ConsumerActivity : BaseBindingActivity<ActivityConsumerLayoutBinding>() {
             return QuickViewHolder(R.layout.item_simple_text_list, parent)
         }
 
-        override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: String?) {
-            holder.getView<TextView>(R.id.tv_text).apply {
-                text = item
-                setOnClickListener {
-                    when (type) {
-                        ConsumeType.PHONE -> {
-                            val intent =
-                                Intent(Intent.ACTION_DIAL, Uri.parse("tel:$item"))
-                            if (intent.resolveActivity(context.packageManager) != null) {
-                                context.startActivity(intent)
-                            } else {
-                                ClipBoardUtil.copyText(context, item ?: "")
-                                Toaster.showToast(context.getString(R.string.text_copie_r_ussie))
+        override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: ItemEntity?) {
+            item?.apply {
+                holder.getView<TextView>(R.id.tv_text).apply {
+                    text = item.egyptianHeight
+                    setOnClickListener {
+                        ClipBoardUtil.copyText(context, item.egyptianHeight ?: "")
+                        Toaster.showToast(context.getString(R.string.text_copie_r_ussie))
+                        when (type) {
+                            ConsumeType.PHONE -> {
+                                val intent =
+                                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:${item.egyptianHeight}"))
+                                if (intent.resolveActivity(context.packageManager) != null) {
+                                    context.startActivity(intent)
+                                }
                             }
-                        }
 
-                        ConsumeType.EMAIL, ConsumeType.WHATSAPP -> {
-                            ClipBoardUtil.copyText(context, item ?: "")
-                            Toaster.showToast(context.getString(R.string.text_copie_r_ussie))
+                            ConsumeType.WHATSAPP -> {
+                                // 检查设备上是否安装了WhatsApp
+                                if (isWhatsAppInstalled()) {
+                                    // 如果已安装WhatsApp，直接跳转到WhatsApp内部
+                                    openWhatsApp(item.egyptianHeight ?: "")
+                                } else {
+                                    // 如果未安装WhatsApp，打开浏览器访问WhatsApp网页
+                                    openWhatsAppWeb(item.egyptianHeight ?: "")
+                                }
+                            }
+
+                            ConsumeType.EMAIL -> {
+
+                                // 创建一个Intent，指定动作为发送邮件
+                                val emailIntent = Intent(Intent.ACTION_SENDTO)
+                                emailIntent.data = Uri.parse("mailto: ${item.egyptianHeight}")
+
+                                // 检查是否有能够处理该Intent的应用程序
+                                if (emailIntent.resolveActivity(packageManager) != null) {
+                                    // 启动邮件应用程序
+                                    startActivity(emailIntent);
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun isWhatsAppInstalled(): Boolean {
+        val packageManager = packageManager
+        return try {
+            // 使用WhatsApp的包名检查是否安装
+            packageManager.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
+    }
+
+    private fun openWhatsApp(phone: String?) {
+        // 如果已安装WhatsApp，直接跳转到WhatsApp内部
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("whatsapp://send?phone=$phone")
+        startActivity(intent)
+    }
+
+    private fun openWhatsAppWeb(phone: String?) {
+        // 如果未安装WhatsApp，打开浏览器访问WhatsApp网页
+        val url = "https://web.whatsapp.com/send?phone=$phone"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 }

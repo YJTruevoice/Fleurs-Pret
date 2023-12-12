@@ -30,7 +30,7 @@ class GatheringInputVM(app: Application) : BaseInputViewModel(app) {
     }
 
     fun saveGatheringInfo(
-        collectionType: String,
+        collectionType: String = "2",
         bankAccountNumber: String,
         bankAccountType: String = "",
         bankCode: String = "",
@@ -39,9 +39,9 @@ class GatheringInputVM(app: Application) : BaseInputViewModel(app) {
         launchNet {
             val fieldMap = hashMapOf(
                 "necessaryRapidCustoms" to "5",
-                "safeVirtueClinicNewJewel" to collectionType,
+                "safeVirtueClinicNewJewel" to "2",
                 "lastBuildingTroublesomeRainbowChapter" to bankAccountNumber,
-                "looseManSauce" to bankAccountType,
+//                "looseManSauce" to bankAccountType,
                 "unablePolePacificShop" to bankCode,
                 "nativeShirtGrocerYesterday" to bankName,
             )

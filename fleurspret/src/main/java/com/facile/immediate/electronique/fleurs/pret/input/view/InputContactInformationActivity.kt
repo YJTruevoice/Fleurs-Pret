@@ -168,6 +168,7 @@ class InputContactInformationActivity :
 
         mViewModel.saveContactSucLiveData.observe(this) {
             BaseConfirmCancelDialog.with(this)
+                .title(getString(R.string.text_d_claration_de_divulgation))
                 .content(getString(R.string.text_permission_declare))
                 .confirm(getString(R.string.text_confirmer)) {
                     PermissionX.init(this)

@@ -1,6 +1,7 @@
 package com.facile.immediate.electronique.fleurs.pret.input.view
 
 import android.Manifest
+import android.content.DialogInterface
 import android.widget.ArrayAdapter
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
 import com.arthur.commonlib.ability.Toaster
@@ -20,11 +21,15 @@ import com.facile.immediate.electronique.fleurs.pret.input.view.fragment.SelectD
 import com.facile.immediate.electronique.fleurs.pret.input.vm.BasicInputVM
 import com.gyf.immersionbar.ImmersionBar
 import com.permissionx.guolindev.PermissionX
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicReference
 
 class InputInformationActivity :
     BaseMVVMActivity<ActivityInputInformationBinding, BasicInputVM>() {
 
     private var sexSelectedItem: CommonChooseListItem? = null
+
+    private var showingDialog = AtomicBoolean(false)
 
     override fun setStatusBar() {
         ImmersionBar.with(this)
@@ -88,7 +93,14 @@ class InputInformationActivity :
                     dateParam.append("-")
                 }
             }
-            SelectDateFragment.show(this, dateParam.toString()) { year, month, dayOfMonth ->
+            if (showingDialog.get())return@onClick
+            SelectDateFragment.show(this, dateParam.toString(),
+                {
+                    showingDialog.set(true)
+                },
+                {
+                    showingDialog.set(false)
+                }) { year, month, dayOfMonth ->
                 val monthStr = if (month < 10) "0$month" else month
                 val dayOfMonthStr = if (dayOfMonth < 10) "0$dayOfMonth" else dayOfMonth
                 mBinding.tvDate.text = "$dayOfMonthStr-$monthStr-$year"
@@ -101,7 +113,14 @@ class InputInformationActivity :
         }
 
         mBinding.tvRegion.onClick {
-            RegionDynamicLinkageFragment.show(this, mViewModel.region) { province, city, district ->
+            if (showingDialog.get()) return@onClick
+            RegionDynamicLinkageFragment.show(this, mViewModel.region,
+                {
+                    showingDialog.set(true)
+                },
+                {
+                    showingDialog.set(false)
+                }) { province, city, district ->
                 if (province == null || city == null) return@show
                 val builder = StringBuilder()
                 if (province.normalAppointmentHeadmistressMachine.isNotEmpty()) {
@@ -167,23 +186,6 @@ class InputInformationActivity :
                     )
                 }
 
-//                mViewModel.region = CommonConfigItem(
-//                    code = it.mercifulVanillaMatchBitterFirewood,
-//                    value = it.flamingLawyerDarkPalaceNoisyReceipt
-//                ).apply {
-//                    this.next = CommonConfigItem(
-//                        code = it.neitherSeniorStocking,
-//                        value = it.tinyExampleCertainMicrowave
-//                    ).apply {
-//                        this.next = CommonConfigItem(
-//                            code = it.australianHandsomeSummer,
-//                            value = it.guiltySteamDelightedDrierGarbage
-//                        )
-//                    }
-//                }
-//                val region = mViewModel.region
-//                mBinding.tvRegion.text =
-//                    "${region?.value} ${region?.next?.value} ${region?.next?.next?.value}".trim()
                 mViewModel.matchRegion(
                     it.mercifulVanillaMatchBitterFirewood,
                     it.neitherSeniorStocking,
@@ -209,7 +211,14 @@ class InputInformationActivity :
             pair?.second?.forEach {
                 list.add(CommonChooseListItem(it.value, it.code))
             }
-            BottomSheet.showListBottomSheet(this, list, selected = sexSelectedItem) {
+            if (showingDialog.get()) return@observe
+            BottomSheet.showListBottomSheet(this, list, selected = sexSelectedItem,
+                onShow = {
+                    showingDialog.set(true)
+                },
+                onDismiss = {
+                    showingDialog.set(false)
+                }) {
                 when (pair?.first) {
                     ConfigType.sex -> {
                         mBinding.tvSex.text = it.name

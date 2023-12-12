@@ -180,6 +180,7 @@
     <string name="text_prendre_des_photos">拍照</string>
     <string name="text_album_photo">相册</string>
     <string name="text_seleccione_el_plazo_del_pr_stamo">请选择贷款期限</string>
+    <string name="text_d_claration_de_divulgation">隐私声明</string>
 
     <string-array name="string_arr_months">
         <item>1月</item>

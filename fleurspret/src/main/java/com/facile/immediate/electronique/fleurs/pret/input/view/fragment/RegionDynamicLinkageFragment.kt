@@ -1,6 +1,8 @@
 package com.facile.immediate.electronique.fleurs.pret.input.view.fragment
 
 import android.content.Context
+import android.content.DialogInterface.OnDismissListener
+import android.content.DialogInterface.OnShowListener
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -110,17 +112,26 @@ class RegionDynamicLinkageFragment(private var selectConfirmed: ((Region?, Regio
                         ?.apply {
                             selected = true
                         }
+                } ?: let {
+                    val first = province.first().apply {
+                        selected = true
+                    }
+                    regionSelected = CommonConfigItem(
+                        code = first.eastBasicFavouriteSupermarket,
+                        first.normalAppointmentHeadmistressMachine
+                    )
+                    first
+                }.also {
+                    selectedProvince = it
                 }
                 provinceAdapter.clear()
                 provinceAdapter.addAll(province)
-                if (region != null) {
-                    mBinding.rvLevel1st.post {
-                        if (isValid()) {
-                            mBinding.rvLevel1st.scrollToPosition(province.indexOf(region))
-                        }
+                mBinding.rvLevel1st.post {
+                    if (isValid()) {
+                        mBinding.rvLevel1st.scrollToPosition(province.indexOf(region))
                     }
-                    cities(region.eastBasicFavouriteSupermarket)
                 }
+                cities(region.eastBasicFavouriteSupermarket)
             }
         }.showLoading(true).launch()
     }
@@ -136,19 +147,28 @@ class RegionDynamicLinkageFragment(private var selectConfirmed: ((Region?, Regio
                             ?.apply {
                                 selected = true
                             }
+                    } ?: let {
+                        val first = cities.first().apply {
+                            selected = true
+                        }
+                        regionSelected?.next = CommonConfigItem(
+                            code = first.eastBasicFavouriteSupermarket,
+                            first.normalAppointmentHeadmistressMachine
+                        )
+                        first
+                    }.also {
+                        selectedCity = it
                     }
                     cityAdapter.clear()
                     cityAdapter.addAll(cities)
                     mBinding.vLine2st.visibility = View.VISIBLE
                     mBinding.rvLevel2st.visibility = View.VISIBLE
-                    if (region != null) {
-                        mBinding.rvLevel2st.post {
-                            if (isValid()) {
-                                mBinding.rvLevel2st.scrollToPosition(cities.indexOf(region))
-                            }
+                    mBinding.rvLevel2st.post {
+                        if (isValid()) {
+                            mBinding.rvLevel2st.scrollToPosition(cities.indexOf(region))
                         }
-                        district(region.eastBasicFavouriteSupermarket)
                     }
+                    district(region.eastBasicFavouriteSupermarket)
                 }
             }
         }.showLoading(true).launch()
@@ -165,16 +185,25 @@ class RegionDynamicLinkageFragment(private var selectConfirmed: ((Region?, Regio
                             ?.apply {
                                 selected = true
                             }
+                    } ?: let {
+                        val first = district.first().apply {
+                            selected = true
+                        }
+                        regionSelected?.next?.next = CommonConfigItem(
+                            code = first.eastBasicFavouriteSupermarket,
+                            first.normalAppointmentHeadmistressMachine
+                        )
+                        first
+                    }.also {
+                        selectedDistrict = it
                     }
                     districtAdapter.clear()
                     districtAdapter.addAll(district)
                     mBinding.vLine3st.visibility = View.VISIBLE
                     mBinding.rvLevel3st.visibility = View.VISIBLE
-                    if (region != null) {
-                        mBinding.rvLevel3st.post {
-                            if (isValid()) {
-                                mBinding.rvLevel3st.scrollToPosition(district.indexOf(region))
-                            }
+                    mBinding.rvLevel3st.post {
+                        if (isValid()) {
+                            mBinding.rvLevel3st.scrollToPosition(district.indexOf(region))
                         }
                     }
                 }
@@ -186,14 +215,24 @@ class RegionDynamicLinkageFragment(private var selectConfirmed: ((Region?, Regio
         fun show(
             ac: FragmentActivity,
             regionSelected: CommonConfigItem? = null,
+            onShowListener: OnShowListener? = null,
+            onDismissListener: OnDismissListener? = null,
             selectConfirmed: ((Region?, Region?, Region?) -> Unit)? = null
         ) {
-            show(ac.supportFragmentManager, regionSelected, selectConfirmed)
+            show(
+                ac.supportFragmentManager,
+                regionSelected,
+                onShowListener,
+                onDismissListener,
+                selectConfirmed
+            )
         }
 
         fun show(
             fm: FragmentManager,
             regionSelected: CommonConfigItem? = null,
+            onShowListener: OnShowListener? = null,
+            onDismissListener: OnDismissListener? = null,
             selectConfirmed: ((Region?, Region?, Region?) -> Unit)? = null
         ) {
             BottomSheetDialog.withFixedHeight()
@@ -203,6 +242,8 @@ class RegionDynamicLinkageFragment(private var selectConfirmed: ((Region?, Regio
                     arguments = Bundle().apply { putParcelable("regionSelected", regionSelected) }
                 })
                 .cancelOnTouchOutsize(false)
+                .onShowListener(onShowListener)
+                .onDismissListener(onDismissListener)
                 .build()
                 .show(fm, "SelectRegionPanel")
         }
@@ -238,9 +279,10 @@ class RegionDynamicLinkageFragment(private var selectConfirmed: ((Region?, Regio
         }
 
         fun clear() {
-            for (i in items) {
-                remove(i)
-            }
+            val originSize = items.size
+
+            items = emptyList()
+            notifyItemRangeChanged(0, originSize)
         }
     }
 }

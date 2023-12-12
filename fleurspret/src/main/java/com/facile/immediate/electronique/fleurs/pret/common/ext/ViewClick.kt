@@ -22,7 +22,7 @@ private var <T : View> T.lastClickTime: Long
         setTag(key, value)
     }
 
-private fun <T : View> T.clickEnable(triggerDelay: Long = 800): Boolean {
+private fun <T : View> T.clickEnable(triggerDelay: Long = 500): Boolean {
     var flag = false
     val curClickTime = SystemClock.elapsedRealtime()
     if ((curClickTime - lastClickTime) >= triggerDelay) {
@@ -35,7 +35,7 @@ private fun <T : View> T.clickEnable(triggerDelay: Long = 800): Boolean {
 /**
  * 设置View的点击事件，防止多次点击
  */
-fun <T : View> T.onClick(triggerDelay: Long = 800, block: (T) -> Unit) = setOnClickListener { view ->
+fun <T : View> T.onClick(triggerDelay: Long = 500, block: (T) -> Unit) = setOnClickListener { view ->
     (view as? T)?.let {
         if (clickEnable(triggerDelay)) {
             block(it)

@@ -2,6 +2,7 @@ package com.facile.immediate.electronique.fleurs.pret.bottomsheet
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -31,13 +32,18 @@ object BottomSheet {
         textBold: Boolean = false,
         textIncludePadding: Boolean = true,
         cancelCallback: (() -> Unit)? = null,
+        onShow: ((DialogInterface) -> Unit)? = null,
+        onDismiss: ((DialogInterface) -> Unit)? = null,
         callback: (CommonChooseListItem) -> Unit
     ) {
         val view = LayoutInflater.from(ac).inflate(R.layout.dialog_nc_bottomsheet_list_view, null)
         val mBinding = DialogNcBottomsheetListViewBinding.bind(view)
-        val bottomSheetDialog = BottomSheetDialog(ac, R.style.BottomSheetDialog)
-        bottomSheetDialog.setContentView(view)
-        bottomSheetDialog.setCanceledOnTouchOutside(false)
+        val bottomSheetDialog = BottomSheetDialog(ac, R.style.BottomSheetDialog).apply {
+            setContentView(view)
+            setCanceledOnTouchOutside(false)
+            setOnShowListener(onShow)
+            setOnDismissListener(onDismiss)
+        }
         val bottomSheetBehavior = BottomSheetBehavior.from(view.parent as ViewGroup)
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {

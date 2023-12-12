@@ -113,6 +113,20 @@
                                 tools:visibility="visible" />
 
                         </FrameLayout>
+
+                        <ProgressBar
+                            android:id="@+id/iv_card_front_loading"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:indeterminateBehavior="repeat"
+                            android:indeterminateDrawable="@drawable/drawable_head_loading"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -184,6 +198,19 @@
                                 tools:visibility="visible" />
 
                         </FrameLayout>
+
+                        <ProgressBar
+                            android:id="@+id/iv_card_back_loading"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:indeterminateBehavior="repeat"
+                            android:indeterminateDrawable="@drawable/drawable_head_loading"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -330,6 +357,19 @@
                             tools:visibility="visible" />
 
                     </FrameLayout>
+
+                    <ProgressBar
+                        android:id="@+id/iv_face_afr_loading"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:indeterminateBehavior="repeat"
+                        android:indeterminateDrawable="@drawable/drawable_head_loading"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

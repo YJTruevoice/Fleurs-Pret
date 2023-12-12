@@ -1,5 +1,6 @@
 package com.facile.immediate.electronique.fleurs.pret.input.view.fragment
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -37,14 +38,18 @@ class SelectDateFragment(private var selectConfirmed: ((Int, Int, Int) -> Unit)?
         fun show(
             ac: FragmentActivity,
             dateSource: String = "",
+            onShowListener: DialogInterface.OnShowListener? = null,
+            onDismissListener: DialogInterface.OnDismissListener? = null,
             selectConfirmed: ((Int, Int, Int) -> Unit)? = null
         ) {
-            show(ac.supportFragmentManager, dateSource, selectConfirmed)
+            show(ac.supportFragmentManager, dateSource,onShowListener, onDismissListener, selectConfirmed)
         }
 
         fun show(
             fm: FragmentManager,
             dateSource: String = "",
+            onShowListener: DialogInterface.OnShowListener? = null,
+            onDismissListener: DialogInterface.OnDismissListener? = null,
             selectConfirmed: ((Int, Int, Int) -> Unit)? = null
         ) {
             BottomSheetDialog.withFixedHeight()
@@ -54,6 +59,8 @@ class SelectDateFragment(private var selectConfirmed: ((Int, Int, Int) -> Unit)?
                     arguments = Bundle().apply { putString("dateSource", dateSource) }
                 })
                 .cancelOnTouchOutsize(false)
+                .onShowListener(onShowListener)
+                .onDismissListener(onDismissListener)
                 .build()
                 .show(fm, "SelectDatePanel")
         }

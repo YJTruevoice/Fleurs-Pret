@@ -8,18 +8,23 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.text.SpannableStringBuilder
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
 import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Loading
+import com.arthur.commonlib.ability.Logger
 import com.arthur.commonlib.ability.Toaster
 import com.arthur.commonlib.file.FileUtil
 import com.arthur.commonlib.utils.DensityUtils.Companion.dp2px
 import com.arthur.commonlib.utils.SystemUtils
 import com.arthur.commonlib.utils.image.DisplayUtils
+import com.arthur.network.withMain
 import com.facile.immediate.electronique.fleurs.pret.R
+import com.facile.immediate.electronique.fleurs.pret.camera.CameraActivity
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.common.event.NetErrorRefresh
@@ -30,12 +35,16 @@ import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
 import com.facile.immediate.electronique.fleurs.pret.input.view.fragment.PicResGuideFragment
 import com.facile.immediate.electronique.fleurs.pret.input.vm.IdentityInputVM
 import com.facile.immediate.electronique.fleurs.pret.utils.cacheFileFromUri
+import com.facile.immediate.electronique.fleurs.pret.utils.compressImage
 import com.facile.immediate.electronique.fleurs.pret.web.WebLoadTimeoutDialog
 import com.gyf.immersionbar.ImmersionBar
 import com.permissionx.guolindev.PermissionX
 import com.wld.mycamerax.util.CameraConstant
 import com.wld.mycamerax.util.CameraParam
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
+import java.util.concurrent.atomic.AtomicBoolean
 
 
 class InputIdentityInformationActivity :
@@ -46,6 +55,8 @@ class InputIdentityInformationActivity :
     private var isFacePicUp = false
 
     private var picGuideType = 0
+
+    private var showingDialog = AtomicBoolean(false)
     override fun setStatusBar() {
         ImmersionBar.with(this)
             .transparentStatusBar()
@@ -77,10 +88,24 @@ class InputIdentityInformationActivity :
             showPicGuidePanel(InputConstant.ReqCode.CARD_BACK_CODE)
         }
         mBinding.ivFaceAfr.setOnClickListener {
-            showPicGuidePanel(InputConstant.ReqCode.FACE_PIC_CODE)
+            requestTakePhotoPermission {
+                startActivityForResult(
+                    Intent(this, CameraActivity::class.java),
+                    InputConstant.ReqCode.FACE_PIC_CODE
+                )
+            }
         }
 
         mBinding.etIdentityCard.addTextChangedListener(mViewModel.textWatcher)
+        mBinding.etIdentityCard.setOnEditorActionListener { v, actionId, event ->
+            Logger.logD("arthur_action","actionId $actionId")
+            if (actionId == EditorInfo.IME_FLAG_NO_ENTER_ACTION) {
+                // 按下Enter/Return键时，将焦点切换到下一个EditText
+                mBinding.etNin.requestFocus();
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
         mBinding.etNin.addTextChangedListener(mViewModel.textWatcher)
 
         mBinding.tvNext.setOnClickListener {
@@ -125,7 +150,8 @@ class InputIdentityInformationActivity :
                     DisplayUtils.displayImageAsRound(
                         it.broadImportantBelief,
                         mBinding.ivCardFront,
-                        radius = 6f.dp2px(this)
+                        radius = 6f.dp2px(this),
+                        loadingView = mBinding.ivCardFrontLoading
                     )
                     isCardFrontPicUp = true
                 }
@@ -136,7 +162,8 @@ class InputIdentityInformationActivity :
                     DisplayUtils.displayImageAsRound(
                         it.beautifulTelephoneFamiliarPicturePorridge,
                         mBinding.ivCardBack,
-                        radius = 6f.dp2px(this)
+                        radius = 6f.dp2px(this),
+                        loadingView = mBinding.ivCardBackLoading
                     )
                     isCardBackPicUp = true
                 }
@@ -147,7 +174,8 @@ class InputIdentityInformationActivity :
                     DisplayUtils.displayImageAsRound(
                         it.everydayRainfallCookieGuidance,
                         mBinding.ivFaceAfr,
-                        radius = 6f.dp2px(this)
+                        radius = 6f.dp2px(this),
+                        loadingView = mBinding.ivFaceAfrLoading
                     )
                     isFacePicUp = true
                 }
@@ -277,76 +305,115 @@ class InputIdentityInformationActivity :
                 when (requestCode) {
                     InputConstant.ReqCode.CARD_FRONT_CODE -> {
                         if (picGuideType == 1) {
-                            mViewModel.cardFrontPicPath =
-                                intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
-                            DisplayUtils.displayImageAsRound(
-                                mViewModel.cardFrontPicPath,
-                                mBinding.ivCardFront,
-                                radius = 6f.dp2px(this)
-                            )
-                        } else if (picGuideType == 2) {
-                            cacheFileFromUri(this, intent.data) {
-                                it?.let {
-                                    mViewModel.cardFrontPicPath = it.path
+                            lifecycleScope.launchWhenStarted {
+                                mViewModel.cardFrontPicPath =
+                                    intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY)
+                                        ?.let { path ->
+                                            compressImage(
+                                                path,
+                                                mBinding.ivCardFront.measuredWidth,
+                                                mBinding.ivCardFront.measuredHeight
+                                            ).path
+                                        } ?: ""
+                                withContext(Dispatchers.Main) {
                                     DisplayUtils.displayImageAsRound(
                                         mViewModel.cardFrontPicPath,
                                         mBinding.ivCardFront,
-                                        radius = 6f.dp2px(this)
+                                        radius = 6f.dp2px(this@InputIdentityInformationActivity)
                                     )
+                                    setUploadStateInVisible(mBinding.tvCardFrontUploadState)
+                                }
+                            }
+                        } else if (picGuideType == 2) {
+                            cacheFileFromUri(this, intent.data) {
+                                it?.let {
+                                    lifecycleScope.launchWhenStarted {
+                                        mViewModel.cardFrontPicPath =
+                                            compressImage(
+                                                it.path,
+                                                mBinding.ivCardFront.measuredWidth,
+                                                mBinding.ivCardFront.measuredHeight
+                                            ).path
+                                        withContext(Dispatchers.Main) {
+                                            DisplayUtils.displayImageAsRound(
+                                                mViewModel.cardFrontPicPath,
+                                                mBinding.ivCardFront,
+                                                radius = 6f.dp2px(this@InputIdentityInformationActivity)
+                                            )
+                                            setUploadStateInVisible(mBinding.tvCardFrontUploadState)
+                                        }
+                                    }
                                 }
                             }
                         }
-                        setUploadStateInVisible(mBinding.tvCardFrontUploadState)
                     }
 
                     InputConstant.ReqCode.CARD_BACK_CODE -> {
                         if (picGuideType == 1) {
-                            mViewModel.cardBackPicPath =
-                                intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
-                            DisplayUtils.displayImageAsRound(
-                                mViewModel.cardBackPicPath,
-                                mBinding.ivCardBack,
-                                radius = 6f.dp2px(this)
-                            )
-                        } else if (picGuideType == 2) {
-                            cacheFileFromUri(this, intent.data) {
-                                it?.let {
-                                    mViewModel.cardBackPicPath = it.path
+                            lifecycleScope.launchWhenStarted {
+                                mViewModel.cardBackPicPath =
+                                    intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY)
+                                        ?.let { path ->
+                                            compressImage(
+                                                path,
+                                                mBinding.ivCardBack.measuredWidth,
+                                                mBinding.ivCardBack.measuredHeight
+                                            ).path
+                                        } ?: ""
+                                withContext(Dispatchers.Main) {
                                     DisplayUtils.displayImageAsRound(
                                         mViewModel.cardBackPicPath,
                                         mBinding.ivCardBack,
-                                        radius = 6f.dp2px(this)
+                                        radius = 6f.dp2px(this@InputIdentityInformationActivity)
                                     )
+                                    setUploadStateInVisible(mBinding.tvCardBackUploadState)
                                 }
                             }
-                        }
-
-                        setUploadStateInVisible(mBinding.tvCardBackUploadState)
-                    }
-
-                    InputConstant.ReqCode.FACE_PIC_CODE -> {
-                        if (picGuideType == 1) {
-                            mViewModel.facePicPath =
-                                intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY) ?: ""
-                            DisplayUtils.displayImageAsRound(
-                                mViewModel.facePicPath,
-                                mBinding.ivFaceAfr,
-                                radius = 6f.dp2px(this)
-                            )
                         } else if (picGuideType == 2) {
                             cacheFileFromUri(this, intent.data) {
                                 it?.let {
-                                    mViewModel.facePicPath = it.path
-                                    DisplayUtils.displayImageAsRound(
-                                        mViewModel.facePicPath,
-                                        mBinding.ivFaceAfr,
-                                        radius = 6f.dp2px(this)
-                                    )
+                                    lifecycleScope.launchWhenStarted {
+                                        mViewModel.cardBackPicPath =
+                                            compressImage(
+                                                it.path,
+                                                mBinding.ivCardBack.measuredWidth,
+                                                mBinding.ivCardBack.measuredHeight
+                                            ).path
+                                        withContext(Dispatchers.Main) {
+                                            DisplayUtils.displayImageAsRound(
+                                                mViewModel.cardBackPicPath,
+                                                mBinding.ivCardBack,
+                                                radius = 6f.dp2px(this@InputIdentityInformationActivity)
+                                            )
+                                            setUploadStateInVisible(mBinding.tvCardBackUploadState)
+                                        }
+                                    }
                                 }
                             }
                         }
 
-                        setUploadStateInVisible(mBinding.tvFaceAfrUploadState)
+                    }
+
+                    InputConstant.ReqCode.FACE_PIC_CODE -> {
+                        lifecycleScope.launchWhenStarted {
+                            mViewModel.facePicPath =
+                                intent.getStringExtra(CameraConstant.PICTURE_PATH_KEY)
+                                    ?.let { path ->
+                                        compressImage(
+                                            path,
+                                            mBinding.ivFaceAfr.measuredWidth,
+                                            mBinding.ivFaceAfr.measuredHeight
+                                        ).path
+                                    } ?: ""
+                            withContext(Dispatchers.Main) {
+                                DisplayUtils.displayImageAsRound(
+                                    mViewModel.facePicPath,
+                                    mBinding.ivFaceAfr,
+                                    radius = 6f.dp2px(this@InputIdentityInformationActivity)
+                                )
+                                setUploadStateInVisible(mBinding.tvFaceAfrUploadState)
+                            }
+                        }
                     }
                 }
             }
@@ -354,7 +421,14 @@ class InputIdentityInformationActivity :
     }
 
     private fun showPicGuidePanel(requestCode: Int) {
-        PicResGuideFragment.show(this) {
+        if (showingDialog.get()) return
+        PicResGuideFragment.show(this,
+            {
+                showingDialog.set(true)
+            },
+            {
+                showingDialog.set(false)
+            }) {
             picGuideType = it
             when (picGuideType) {
                 1 -> {

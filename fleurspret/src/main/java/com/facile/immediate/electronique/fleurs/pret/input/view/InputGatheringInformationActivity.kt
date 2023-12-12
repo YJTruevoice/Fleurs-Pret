@@ -57,7 +57,7 @@ class InputGatheringInformationActivity :
         mBinding.etAccountNoConfirm.addTextChangedListener(mViewModel.textWatcher)
 
         mBinding.tvGatheringWay.onClick {
-            mViewModel.config(ConfigType.collectionType)
+            mViewModel.config(ConfigType.bankNameList)
         }
 
         mBinding.tvNext.onClick {
@@ -69,15 +69,15 @@ class InputGatheringInformationActivity :
                 Toaster.showToast(getString(R.string.text_veuillez_remplir_les_m_mes_informations_de_compte))
                 return@onClick
             }
-            if (collectionTypeSelectedItem?.value == "1") {
-                mViewModel.config(ConfigType.bankAccountType)
-            } else {
-                mViewModel.saveGatheringInfo(
-                    bankAccountType = collectionTypeSelectedItem?.value.toString(),
-                    bankAccountNumber = mBinding.etAccountNoConfirm.text.toString(),
-                    collectionType = collectionTypeSelectedItem?.value.toString()
-                )
-            }
+//            if (collectionTypeSelectedItem?.value == "1") {
+//                mViewModel.config(ConfigType.bankAccountType)
+//            } else {
+//            }
+            mViewModel.saveGatheringInfo(
+                bankAccountNumber = mBinding.etAccountNoConfirm.text.toString(),
+                bankName = bankSelectedItem?.name.toString(),
+                bankCode = bankSelectedItem?.value.toString(),
+            )
         }
     }
 
@@ -97,13 +97,13 @@ class InputGatheringInformationActivity :
                     mBinding.etAccountNoConfirm.text =
                         SpannableStringBuilder(gathering.lastBuildingTroublesomeRainbowChapter)
 
-                    if (gathering.nextNovelPuzzledCouple?.isNotEmpty() == true
-                        && gathering.safeVirtueClinicNewJewel?.isNotEmpty() == true
+                    if (gathering.nativeShirtGrocerYesterday?.isNotEmpty() == true
+                        && gathering.unablePolePacificShop?.isNotEmpty() == true
                     ) {
-                        mBinding.tvGatheringWay.text = gathering.nextNovelPuzzledCouple
-                        collectionTypeSelectedItem = CommonChooseListItem(
-                            gathering.nextNovelPuzzledCouple,
-                            gathering.safeVirtueClinicNewJewel
+                        mBinding.tvGatheringWay.text = gathering.nativeShirtGrocerYesterday
+                        bankSelectedItem = CommonChooseListItem(
+                            gathering.nativeShirtGrocerYesterday,
+                            gathering.unablePolePacificShop
                         )
                     }
                 }
@@ -146,20 +146,17 @@ class InputGatheringInformationActivity :
 
                     ConfigType.bankAccountType -> {
                         bankAccountTypeSelectedItem = it
-                        mViewModel.config(ConfigType.bankNameList)
+//                        mViewModel.config(ConfigType.bankNameList)
                     }
 
                     ConfigType.bankNameList -> {
+                        mBinding.tvGatheringWay.text = it.name
+                        if (bankSelectedItem?.value != it.value) {
+                            mBinding.etAccountNo.text = SpannableStringBuilder("")
+                            mBinding.etAccountNoConfirm.text = SpannableStringBuilder("")
+                        }
                         bankSelectedItem = it
-                        mViewModel.saveGatheringInfo(
-                            bankCode = bankSelectedItem?.value?.toString() ?: "",
-                            bankName = bankSelectedItem?.name ?: "",
-                            bankAccountType = bankAccountTypeSelectedItem?.value?.toString() ?: "",
-                            bankAccountNumber = mBinding.etAccountNoConfirm.text.toString(),
-                            collectionType = collectionTypeSelectedItem?.value?.toString() ?: ""
-                        )
-                        bankAccountTypeSelectedItem = null
-                        bankSelectedItem = null
+                        isNextBtnEnable()
                     }
 
                     else -> {}

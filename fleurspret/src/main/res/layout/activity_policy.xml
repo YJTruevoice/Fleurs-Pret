@@ -10,7 +10,7 @@
         android:id="@+id/tv_policy_title_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_authorisation"
+        android:text="@string/text_d_claration_de_divulgation"
         android:textColor="@color/color_333333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

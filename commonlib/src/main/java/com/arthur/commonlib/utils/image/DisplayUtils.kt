@@ -11,20 +11,25 @@ import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.arthur.commonlib.ability.AppKit
 import com.arthur.commonlib.ability.Logger
 import com.arthur.commonlib.utils.StringUtil
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.CustomViewTarget
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import java.io.File
 import java.security.MessageDigest
@@ -73,7 +78,7 @@ class DisplayUtils {
         ) {
             Glide.with(imageView)
                 .asBitmap()
-                .placeholder(placeHolder?:Color.parseColor("#EBEBEB"))
+                .placeholder(placeHolder ?: Color.parseColor("#EBEBEB"))
                 .load(path)
                 .into(object : CustomViewTarget<ImageView, Bitmap>(imageView) {
                     override fun onLoadFailed(errorDrawable: Drawable?) {
@@ -137,7 +142,8 @@ class DisplayUtils {
             path: Any?,
             imageView: ImageView,
             placeHolder: Int = 0,
-            radius: Int = 0
+            radius: Int = 0,
+            loadingView: View? = null
         ) {
             if ((path is Int && path <= 0 || path is String && path.isBlank() || path !is Int && path !is String) && placeHolder == 0) {
                 Logger.logE("display img path不存在 + $path")
@@ -150,7 +156,31 @@ class DisplayUtils {
                     CenterCrop(), RoundedCorners(radius)
                 )
                 .dontAnimate()
-            Glide.with(imageView.context).load(path).apply(requestOptions).into(imageView)
+            loadingView?.visibility = View.VISIBLE
+            Glide.with(imageView.context).load(path).apply(requestOptions).listener(object :
+                RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    loadingView?.visibility = View.GONE
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    loadingView?.visibility = View.GONE
+                    return false
+                }
+
+            }).into(imageView)
         }
 
         /**
@@ -173,7 +203,13 @@ class DisplayUtils {
                 .placeholder(placeHolder)
                 .error(placeHolder)
                 .transform(
-                    CenterCrop(), com.arthur.commonlib.utils.image.transform.RoundedCorners(topLeft, topRight, bottomLeft, bottomRight)
+                    CenterCrop(),
+                    com.arthur.commonlib.utils.image.transform.RoundedCorners(
+                        topLeft,
+                        topRight,
+                        bottomLeft,
+                        bottomRight
+                    )
                 )
                 .dontAnimate()
             Glide.with(imageView.context).load(path).apply(requestOptions).into(imageView)

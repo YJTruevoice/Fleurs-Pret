@@ -503,9 +503,10 @@ class OrdArrAdapter : BaseMultiItemAdapter<Ord>() {
     }
 
     private fun clear() {
-        for (i in items) {
-            remove(i)
-        }
+        val originSize = items.size
+
+        items = emptyList()
+        notifyItemRangeChanged(0, originSize)
     }
 
     class EnEvaluationVH(

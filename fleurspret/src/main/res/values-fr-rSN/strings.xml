@@ -179,6 +179,7 @@
     <string name="text_prendre_des_photos">Prendre des photos</string>
     <string name="text_album_photo">album photo</string>
     <string name="text_seleccione_el_plazo_del_pr_stamo">Seleccione el plazo del préstamo</string>
+    <string name="text_d_claration_de_divulgation">Déclaration de divulgation</string>
 
     <string-array name="string_arr_months">
         <item>Janvier</item>

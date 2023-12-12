@@ -53,7 +53,7 @@ open class BaseDialogConfigEntity(
     /**
      * 点击外部是否消失
      */
-    var touchOutsideCancelAble: Boolean = true,
+    var touchOutsideCancelAble: Boolean = false,
     /**
      * 点击按钮时是否默认关闭
      */

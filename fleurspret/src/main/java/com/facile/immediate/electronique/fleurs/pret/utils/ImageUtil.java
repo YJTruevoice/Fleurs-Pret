@@ -54,7 +54,7 @@ public class ImageUtil {
     }
 
     public static File scaleBitMap(Bitmap bitmap, Context context, int maxWidth, int maxHeight,int rotateDegree){
-        String filename = "nowcoder_" + System.currentTimeMillis() + ".jpeg";
+        String filename = "pret_" + System.currentTimeMillis() + ".jpeg";
         File folder = new File(APPDir.INSTANCE.imageCache());
         if (!folder.exists()) {
             folder.mkdirs();
@@ -99,7 +99,7 @@ public class ImageUtil {
             File dstFile = new Compressor(context)
                     .setMaxWidth(maxWidth)
                     .setMaxHeight(maxHeight)
-                    .setQuality(75)
+                    .setQuality(90)
                     .setCompressFormat(Bitmap.CompressFormat.JPEG)
                     .setDestinationDirectoryPath(context.getExternalFilesDir(
                             Environment.DIRECTORY_PICTURES).getAbsolutePath())

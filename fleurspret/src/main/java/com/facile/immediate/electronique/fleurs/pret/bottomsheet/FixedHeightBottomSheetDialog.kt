@@ -106,9 +106,7 @@ class FixedHeightBottomSheetDialog(
     override fun setOnDismissListener(listener: DialogInterface.OnDismissListener?) {
         mOnDismissListener = listener
         super.setOnDismissListener(
-                WrappedDismissDialogListener(
-                        listener
-                )
+                WrappedDismissDialogListener(mOnDismissListener)
         )
     }
 
@@ -116,18 +114,14 @@ class FixedHeightBottomSheetDialog(
         //包装一层，使用弱引用
         mOnShowListener = listener
         super.setOnShowListener(
-                WrappedShowListener(
-                        listener
-                )
+                WrappedShowListener(mOnShowListener)
         )
     }
 
     override fun setOnCancelListener(listener: DialogInterface.OnCancelListener?) {
         mOnCancelListener = listener
         super.setOnCancelListener(
-                WrappedCancelListener(
-                        listener
-                )
+                WrappedCancelListener(mOnCancelListener)
         )
     }
 }
