@@ -40,6 +40,10 @@ class CameraActivity : AppCompatActivity() {
         }, IMMERSIVE_FLAG_TIMEOUT)
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
+
     companion object {
         /** Combination of all flags required to put activity into immersive mode */
         const val FLAGS_FULLSCREEN =

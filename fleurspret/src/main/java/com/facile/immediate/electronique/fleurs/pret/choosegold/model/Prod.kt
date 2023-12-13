@@ -3,6 +3,7 @@ package com.facile.immediate.electronique.fleurs.pret.choosegold.model
 
 import android.os.Parcelable
 import com.arthur.commonlib.utils.DateUtil
+import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -42,7 +43,8 @@ data class ProdInfo(
 
     val dateStr: String
         get() {
-            val durMillis: Long = (plainLungAppleGale + optTerm) * 1000 * 60 * 60 * 24
+            val durMillis: Long =
+                ((if (UserManager.isTestAccount()) 0 else plainLungAppleGale) + optTerm) * 1000 * 60 * 60 * 24
             return DateUtil.getDateWithFormat(
                 DateUtil.targetTimeMillis(dampCabbageMaximumSorryCabbage) + durMillis,
                 "dd-MM-yyyy"

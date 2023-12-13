@@ -9,15 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMFragment
 import com.arthur.commonlib.utils.DensityUtils
-import com.facile.immediate.electronique.fleurs.pret.choosegold.view.ChooseGoldActivity
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.ext.addThousandSeparator
 import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentHomeBinding
 import com.facile.immediate.electronique.fleurs.pret.home.vm.FirstViewModel
-import com.facile.immediate.electronique.fleurs.pret.input.view.InputContactInformationActivity
-import com.facile.immediate.electronique.fleurs.pret.input.view.InputGatheringInformationActivity
-import com.facile.immediate.electronique.fleurs.pret.input.view.InputIdentityInformationActivity
 import com.facile.immediate.electronique.fleurs.pret.input.view.InputInformationActivity
 import com.facile.immediate.electronique.fleurs.pret.login.LogUpActivity
 import com.facile.immediate.electronique.fleurs.pret.main.FeatureAdapter
@@ -49,9 +45,7 @@ class SingleProHFragment : BaseMVVMFragment<FragmentHomeBinding, FirstViewModel>
                 return@setOnClickListener
             }
             mViewModel.verifyIsNetworkAvailable {
-//                startActivity(Intent(requireContext(), InputInformationActivity::class.java))
-                startActivity(Intent(requireContext(), InputIdentityInformationActivity::class.java))
-//                startActivity(Intent(requireContext(), InputContactInformationActivity::class.java))
+                startActivity(Intent(requireContext(), InputInformationActivity::class.java))
             }
         }
     }

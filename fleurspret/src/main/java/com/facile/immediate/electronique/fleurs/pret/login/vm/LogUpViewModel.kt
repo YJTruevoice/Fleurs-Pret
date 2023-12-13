@@ -36,7 +36,7 @@ class LogUpViewModel(application: Application) : BaseViewModel<LogUpModel>(appli
                 code = verifyCode.dearProperArgument ?: ""
                 verifyCodeLiveData.value = verifyCode
             }
-        }.showErrorTip(true).launch()
+        }.showLoading(true).launch()
     }
 
     fun logUp() {
@@ -61,6 +61,6 @@ class LogUpViewModel(application: Application) : BaseViewModel<LogUpModel>(appli
                 EventBus.getDefault().post(UserInfoUpdate())
                 logUpSuccessLiveData.value = user
             }
-        }.showErrorTip(true).launch()
+        }.showLoading(true).launch()
     }
 }

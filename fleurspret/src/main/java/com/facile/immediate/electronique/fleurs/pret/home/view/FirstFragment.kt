@@ -116,7 +116,6 @@ class FirstFragment : BaseMVVMFragment<FragmentHomeHostBinding, FirstViewModel>(
                     putParcelable(BaseLoanStateFragment.KEY_PRO_INFO, it)
                 }
                 when (it.rudeReceptionCyclistArcticHunger) {
-                    ProState.CAN_APPLY.value.toString(),
                     ProState.VERSEMENT.value.toString(),
                     ProState.VERSEMENT_ECHOUE.value.toString(),
                     ProState.EN_EVALUATION.value.toString()

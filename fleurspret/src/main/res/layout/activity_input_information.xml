@@ -133,7 +133,7 @@
                 android:background="@drawable/shape_bg_ffffff_stroke_e7e7e7_1_radius_4"
                 android:completionThreshold="1"
                 android:hint="@string/text_entrez_du_texte"
-                android:inputType="textEmailAddress"
+                android:inputType="textMultiLine"
                 android:minHeight="44dp"
                 android:paddingHorizontal="10dp"
                 android:textColor="@color/color_999999"

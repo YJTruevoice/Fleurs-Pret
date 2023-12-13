@@ -169,7 +169,6 @@
                     android:hint="@string/text_entrez_le_code_de_v_rification"
                     android:inputType="number"
                     android:lines="1"
-                    android:maxLength="4"
                     android:paddingEnd="54dp"
                     android:textColor="@color/color_999999"
                     android:textColorHint="@color/color_999999"

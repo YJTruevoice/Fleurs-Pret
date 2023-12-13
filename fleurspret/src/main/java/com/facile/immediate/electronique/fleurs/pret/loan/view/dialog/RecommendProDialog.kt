@@ -95,6 +95,8 @@ open class RecommendProDialog @JvmOverloads constructor(
                         }
                     }
 
+                }.apply {
+                    addAll(config.recommendPros)
                 }
             }
         }

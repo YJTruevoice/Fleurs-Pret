@@ -1,10 +1,17 @@
 package com.facile.immediate.electronique.fleurs.pret.input.view
 
 import android.Manifest
-import android.content.DialogInterface
-import android.widget.ArrayAdapter
+import android.text.Editable
+import android.text.Layout
+import android.text.SpannableStringBuilder
+import android.text.TextWatcher
+import android.view.Gravity
+import android.view.WindowManager
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
+import com.arthur.commonlib.ability.Logger
 import com.arthur.commonlib.ability.Toaster
+import com.arthur.commonlib.utils.DensityUtils.Companion.dp2px
+import com.arthur.commonlib.utils.ScreenUtils
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.BottomSheet
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.bean.CommonChooseListItem
@@ -18,11 +25,11 @@ import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityInputIn
 import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
 import com.facile.immediate.electronique.fleurs.pret.input.view.fragment.RegionDynamicLinkageFragment
 import com.facile.immediate.electronique.fleurs.pret.input.view.fragment.SelectDateFragment
+import com.facile.immediate.electronique.fleurs.pret.input.view.popup.EmailTipsPopupWindow
 import com.facile.immediate.electronique.fleurs.pret.input.vm.BasicInputVM
 import com.gyf.immersionbar.ImmersionBar
 import com.permissionx.guolindev.PermissionX
 import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicReference
 
 class InputInformationActivity :
     BaseMVVMActivity<ActivityInputInformationBinding, BasicInputVM>() {
@@ -30,6 +37,8 @@ class InputInformationActivity :
     private var sexSelectedItem: CommonChooseListItem? = null
 
     private var showingDialog = AtomicBoolean(false)
+
+    private var emailTipsPopupWindow: EmailTipsPopupWindow? = null
 
     override fun setStatusBar() {
         ImmersionBar.with(this)
@@ -64,24 +73,72 @@ class InputInformationActivity :
             ConsumerActivity.goBranch(this)
         }
 
-        mBinding.etName.addTextChangedListener(mViewModel.textWatcher)
-        mBinding.etNom.addTextChangedListener(mViewModel.textWatcher)
-        mBinding.etEmail.apply {
+        mBinding.etName.apply {
+            filters = arrayOf(EditTextFilter.getEnterFilter())
             addTextChangedListener(mViewModel.textWatcher)
-            filters = arrayOf(EditTextFilter.getEmailEditFilter())
-
-            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                this@InputInformationActivity,
-                android.R.layout.simple_dropdown_item_1line,
-                resources.getStringArray(R.array.string_arr_common_email_suffixes)
-            )
-            setAdapter(adapter)
-            setOnItemClickListener { parent, view, position, id ->
-                val selected = parent.getItemAtPosition(position) as String
-                append(selected)
-            }
         }
-        mBinding.etAddress.addTextChangedListener(mViewModel.textWatcher)
+        mBinding.etNom.apply {
+            filters = arrayOf(EditTextFilter.getEnterFilter())
+            addTextChangedListener(mViewModel.textWatcher)
+        }
+        mBinding.etEmail.apply {
+            filters = arrayOf(EditTextFilter.getEmailEditFilter(), EditTextFilter.getEnterFilter())
+            addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (s?.isNotEmpty() == true && s.last() == '@') {
+                        var x = ScreenUtils.getScreenWidth(context) / 2
+                        if (layout != null) {
+                            x = layout.getPrimaryHorizontal(selectionStart).toInt()
+                        }
+                        if (emailTipsPopupWindow == null) {
+                            emailTipsPopupWindow = EmailTipsPopupWindow(context) {
+                                text = SpannableStringBuilder(text.toString().plus(it))
+                                mBinding.etEmail.setSelection(text.toString().length)
+                            }
+
+                            emailTipsPopupWindow?.showAsDropDown(
+                                this@apply,
+                                x,
+                                (-200f).dp2px(context),
+                                Gravity.CENTER or Gravity.TOP
+                            )
+                        } else {
+                            if (emailTipsPopupWindow?.isShowing == true) {
+                                emailTipsPopupWindow?.dismiss()
+                            }
+
+                            emailTipsPopupWindow?.showAsDropDown(
+                                this@apply,
+                                x,
+                                (-200f).dp2px(context),
+                                Gravity.CENTER or Gravity.TOP
+                            )
+                        }
+//                        emailTipsPopupWindow?.updateAppend(text.toString())
+                    } else {
+                        emailTipsPopupWindow?.dismiss()
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    isNextBtnEnable()
+                }
+            })
+
+        }
+        mBinding.etAddress.apply {
+            filters = arrayOf(EditTextFilter.getEnterFilter())
+            addTextChangedListener(mViewModel.textWatcher)
+        }
 
         mBinding.tvDate.onClick {
             val curDateStr = mBinding.tvDate.text.toString()
@@ -93,7 +150,7 @@ class InputInformationActivity :
                     dateParam.append("-")
                 }
             }
-            if (showingDialog.get())return@onClick
+            if (showingDialog.get()) return@onClick
             SelectDateFragment.show(this, dateParam.toString(),
                 {
                     showingDialog.set(true)
@@ -174,9 +231,13 @@ class InputInformationActivity :
         mViewModel.userBasicLiveData.observe(this) {
             it?.let {
                 mBinding.etName.setText(it.dirtyCrowdedEarthquakePrivateLevel)
+                mBinding.etName.setSelection(mBinding.etName.text.toString().length)
                 mBinding.etNom.setText(it.dustyChocolateEaster)
+                mBinding.etNom.setSelection(mBinding.etNom.text.toString().length)
                 mBinding.etEmail.setText(it.moralPressure)
+                mBinding.etEmail.setSelection(mBinding.etEmail.text.toString().length)
                 mBinding.etAddress.setText(it.dangerousGoatContraryDueSemicircle)
+                mBinding.etAddress.setSelection(mBinding.etAddress.text.toString().length)
                 mBinding.tvDate.text = it.messyChapterLemonDozen
                 mBinding.tvSex.text = it.properExperienceFlatSimilarBat
                 if (!it.properExperienceFlatSimilarBat.isNullOrEmpty() && !it.sureChemistryBigFairness.isNullOrEmpty()) {

@@ -356,7 +356,7 @@ object GeneralDataTool {
         try {
             val cellInfoList = if (ActivityCompat.checkSelfPermission(
                     AppKit.context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                    Manifest.permission.ACCESS_COARSE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 (AppKit.context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager).allCellInfo

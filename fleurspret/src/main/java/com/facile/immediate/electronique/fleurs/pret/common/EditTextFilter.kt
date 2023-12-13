@@ -30,4 +30,14 @@ object EditTextFilter {
     fun getEditLengthFilter(length: Int): InputFilter {
         return InputFilter.LengthFilter(length)
     }
+
+    fun getEnterFilter() = InputFilter { source, start, end, dest, dstart, dend ->
+        for (i in start until end) {
+            val c = source[i]
+            if (c == '\n') {
+                return@InputFilter ""
+            }
+        }
+        null
+    }
 }

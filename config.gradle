@@ -126,7 +126,7 @@ ext {
             smartRefreshLayout: "io.github.scwang90:refresh-layout-kernel:2.0.5",
             baseQuickAdapter  : "io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.1",
             palette           : "androidx.palette:palette:1.0.0",
-            permissions       : "com.permissionx.guolindev:permissionx:1.4.0",
+            permissions       : "com.guolindev.permissionx:permissionx:1.7.1",
     ]
 
     rxJava = [

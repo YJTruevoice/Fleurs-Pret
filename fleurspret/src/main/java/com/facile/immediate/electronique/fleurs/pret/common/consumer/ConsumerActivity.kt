@@ -7,6 +7,7 @@ import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arthur.baselib.structure.base.view.BaseBindingActivity
 import com.arthur.commonlib.ability.Toaster
@@ -19,6 +20,9 @@ import com.facile.immediate.electronique.fleurs.pret.common.setting.SettingAPI
 import com.facile.immediate.electronique.fleurs.pret.common.user.UserManager
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityConsumerLayoutBinding
 import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 
 class ConsumerActivity : BaseBindingActivity<ActivityConsumerLayoutBinding>() {
@@ -104,36 +108,41 @@ class ConsumerActivity : BaseBindingActivity<ActivityConsumerLayoutBinding>() {
                     setOnClickListener {
                         ClipBoardUtil.copyText(context, item.egyptianHeight ?: "")
                         Toaster.showToast(context.getString(R.string.text_copie_r_ussie))
-                        when (type) {
-                            ConsumeType.PHONE -> {
-                                val intent =
-                                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:${item.egyptianHeight}"))
-                                if (intent.resolveActivity(context.packageManager) != null) {
-                                    context.startActivity(intent)
-                                }
-                            }
+                        lifecycleScope.launchWhenStarted {
+                            delay(800)
+                            withContext(Dispatchers.Main){
+                                when (type) {
+                                    ConsumeType.PHONE -> {
+                                        val intent =
+                                            Intent(Intent.ACTION_DIAL, Uri.parse("tel:${item.egyptianHeight}"))
+                                        if (intent.resolveActivity(context.packageManager) != null) {
+                                            context.startActivity(intent)
+                                        }
+                                    }
 
-                            ConsumeType.WHATSAPP -> {
-                                // 检查设备上是否安装了WhatsApp
-                                if (isWhatsAppInstalled()) {
-                                    // 如果已安装WhatsApp，直接跳转到WhatsApp内部
-                                    openWhatsApp(item.egyptianHeight ?: "")
-                                } else {
-                                    // 如果未安装WhatsApp，打开浏览器访问WhatsApp网页
-                                    openWhatsAppWeb(item.egyptianHeight ?: "")
-                                }
-                            }
+                                    ConsumeType.WHATSAPP -> {
+                                        // 检查设备上是否安装了WhatsApp
+                                        if (isWhatsAppInstalled()) {
+                                            // 如果已安装WhatsApp，直接跳转到WhatsApp内部
+                                            openWhatsApp(item.egyptianHeight ?: "")
+                                        } else {
+                                            // 如果未安装WhatsApp，打开浏览器访问WhatsApp网页
+                                            openWhatsAppWeb(item.egyptianHeight ?: "")
+                                        }
+                                    }
 
-                            ConsumeType.EMAIL -> {
+                                    ConsumeType.EMAIL -> {
 
-                                // 创建一个Intent，指定动作为发送邮件
-                                val emailIntent = Intent(Intent.ACTION_SENDTO)
-                                emailIntent.data = Uri.parse("mailto: ${item.egyptianHeight}")
+                                        // 创建一个Intent，指定动作为发送邮件
+                                        val emailIntent = Intent(Intent.ACTION_SENDTO)
+                                        emailIntent.data = Uri.parse("mailto: ${item.egyptianHeight}")
 
-                                // 检查是否有能够处理该Intent的应用程序
-                                if (emailIntent.resolveActivity(packageManager) != null) {
-                                    // 启动邮件应用程序
-                                    startActivity(emailIntent);
+                                        // 检查是否有能够处理该Intent的应用程序
+                                        if (emailIntent.resolveActivity(packageManager) != null) {
+                                            // 启动邮件应用程序
+                                            startActivity(emailIntent);
+                                        }
+                                    }
                                 }
                             }
                         }

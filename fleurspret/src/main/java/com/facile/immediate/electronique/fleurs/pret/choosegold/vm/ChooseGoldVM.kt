@@ -48,12 +48,17 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
         }.launch()
     }
 
-    fun prodList() {
+    private fun prodList() {
         launchNet {
             mModel.prodList()
         }.success { res ->
             prodList = res.aggressiveParentMethod
             prodList?.bornSunglassesRipeProblemFalseHeadmaster?.let {
+                if (UserManager.isTestAccount() && it.size > 1) {
+                    val prodInfo = it[0]
+                    it.clear()
+                    it.add(prodInfo)
+                }
                 isMulti = it.size > 1
                 for (i in it.indices) {
                     it[i].dampCabbageMaximumSorryCabbage =
@@ -109,8 +114,6 @@ class ChooseGoldVM(app: Application) : BaseViewModel<ChooseGoldModel>(app) {
                         this.isLocked = true
                         this.selected = false
                     })
-                } else {
-
                 }
 
                 // 测试账号 在计算基础上加 91*n （n代表元素顺序位）

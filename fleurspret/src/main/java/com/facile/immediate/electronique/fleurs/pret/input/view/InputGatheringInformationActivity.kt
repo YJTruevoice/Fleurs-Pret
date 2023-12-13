@@ -7,6 +7,7 @@ import com.arthur.commonlib.ability.Toaster
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.BottomSheet
 import com.facile.immediate.electronique.fleurs.pret.bottomsheet.bean.CommonChooseListItem
+import com.facile.immediate.electronique.fleurs.pret.common.EditTextFilter
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.config.ConfigType
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
@@ -53,8 +54,14 @@ class InputGatheringInformationActivity :
             ConsumerActivity.goBranch(this)
         }
 
-        mBinding.etAccountNo.addTextChangedListener(mViewModel.textWatcher)
-        mBinding.etAccountNoConfirm.addTextChangedListener(mViewModel.textWatcher)
+        mBinding.etAccountNo.apply {
+            filters = arrayOf(EditTextFilter.getEnterFilter())
+            addTextChangedListener(mViewModel.textWatcher)
+        }
+        mBinding.etAccountNoConfirm.apply {
+            filters = arrayOf(EditTextFilter.getEnterFilter())
+            addTextChangedListener(mViewModel.textWatcher)
+        }
 
         mBinding.tvGatheringWay.onClick {
             mViewModel.config(ConfigType.bankNameList)
@@ -93,9 +100,15 @@ class InputGatheringInformationActivity :
                 if (it.isNotEmpty()) {
                     val gathering = it[0]
                     mBinding.etAccountNo.text =
-                        SpannableStringBuilder(gathering.lastBuildingTroublesomeRainbowChapter)
+                        SpannableStringBuilder(
+                            gathering.lastBuildingTroublesomeRainbowChapter ?: ""
+                        )
+                    mBinding.etAccountNo.setSelection(mBinding.etAccountNo.text.toString().length)
                     mBinding.etAccountNoConfirm.text =
-                        SpannableStringBuilder(gathering.lastBuildingTroublesomeRainbowChapter)
+                        SpannableStringBuilder(
+                            gathering.lastBuildingTroublesomeRainbowChapter ?: ""
+                        )
+                    mBinding.etAccountNoConfirm.setSelection(mBinding.etAccountNoConfirm.text.toString().length)
 
                     if (gathering.nativeShirtGrocerYesterday?.isNotEmpty() == true
                         && gathering.unablePolePacificShop?.isNotEmpty() == true

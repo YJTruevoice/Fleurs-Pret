@@ -142,11 +142,13 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
                                 it?.crowdedSpecialistPunctuation ?: "--"
                             ),
                         ).apply {
-                            it?.finalStorageGlove?.apply {
-                                for (e in this) {
-                                    CommonConfigItem(
-                                        e.irishGradeUndergroundAmericanPostcard,
-                                        e.peacefulFancySlightTeam
+                            it?.finalStorageGlove?.let { finalStorageGlove ->
+                                for (e in finalStorageGlove) {
+                                    this.add(
+                                        CommonConfigItem(
+                                            e.irishGradeUndergroundAmericanPostcard,
+                                            e.peacefulFancySlightTeam
+                                        )
                                     )
                                 }
                             }
@@ -215,7 +217,7 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
                 mViewModel.prodList?.bornSunglassesRipeProblemFalseHeadmaster?.let {
                     if (it.isNotEmpty()) {
                         addAll(it)
-                        var defaultSelected:ProdInfo? = null
+                        var defaultSelected: ProdInfo? = null
                         for (e in it) {
                             if (e.selected) {
                                 defaultSelected = e
@@ -223,7 +225,7 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
                         }
                         defaultSelected?.let {
                             displayBasicInfo(defaultSelected)
-                        }?:displayBasicInfo(it[0],true)
+                        } ?: displayBasicInfo(it[0], true)
                     }
                 }
             }

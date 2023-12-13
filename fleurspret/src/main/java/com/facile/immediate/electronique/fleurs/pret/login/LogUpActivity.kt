@@ -1,17 +1,22 @@
 package com.facile.immediate.electronique.fleurs.pret.login
 
+import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.os.SystemClock
 import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
+import android.view.ContentInfo
 import android.view.KeyEvent
+import android.view.OnReceiveContentListener
 import android.view.View
 import androidx.core.text.isDigitsOnly
 import com.arthur.baselib.structure.mvvm.view.BaseMVVMActivity
+import com.arthur.commonlib.ability.Logger
 import com.arthur.commonlib.ability.Toaster
 import com.arthur.commonlib.utils.PhoneUtils
 import com.facile.immediate.electronique.fleurs.pret.R
@@ -21,25 +26,11 @@ import com.facile.immediate.electronique.fleurs.pret.common.ext.tryCompleteZero
 import com.facile.immediate.electronique.fleurs.pret.databinding.ActivityLogUpBinding
 import com.facile.immediate.electronique.fleurs.pret.login.vm.LogUpViewModel
 import com.facile.immediate.electronique.fleurs.pret.main.MainActivity
+import com.permissionx.guolindev.PermissionX
+import java.lang.StringBuilder
 
 
 class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
-    private var clipboard: ClipboardManager? = null
-    private val onPrimaryClipChangedListener = ClipboardManager.OnPrimaryClipChangedListener {
-        if (clipboard != null
-            && clipboard?.hasPrimaryClip() == true
-            && clipboard?.primaryClip != null
-            && (clipboard?.primaryClip?.itemCount ?: 0) > 0
-        ) {
-            val addedText = clipboard?.primaryClip?.getItemAt(0)?.text ?: ""
-            val addedTextString = addedText.toString().replace(" ", "")
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                clipboard?.clearPrimaryClip()
-            }
-
-            clipboard?.setPrimaryClip(ClipData.newPlainText("TEXT", addedTextString))
-        }
-    }
 
     private var isCountDown = false
 
@@ -49,10 +40,6 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
         mBinding.btnLogUp.isSelected = false
         mBinding.btnSendVerifyCode.isSelected = false
         mBinding.btnSendVerifyCode.text = getString(R.string.text_obtenir_otp)
-        mBinding.etPhone.filters =
-            arrayOf(EditTextFilter.getPhoneEditFilter(), EditTextFilter.getEditLengthFilter(20))
-        mBinding.etVerifyCode.filters =
-            arrayOf(EditTextFilter.getPhoneEditFilter(), EditTextFilter.getEditLengthFilter(4))
     }
 
     override fun getViewBelowStatusBar(): View {
@@ -61,8 +48,6 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
 
     override fun setListener() {
         super.setListener()
-        clipboard = getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager
-        clipboard?.addPrimaryClipChangedListener(onPrimaryClipChangedListener)
         mBinding.ivBack.setOnClickListener {
             gotoMain()
             finish()
@@ -121,14 +106,29 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                val afterText = SpannableStringBuilder(s).toString()
+                val resultBuilder = StringBuilder()
+                var needReplace = false
+                for (c in afterText) {
+                    if (Character.isDigit(c)) {
+                        resultBuilder.append(c)
+                    } else {
+                        needReplace = true
+                    }
+                }
+                val result = resultBuilder.toString()
+                if (needReplace) {
+                    mBinding.etPhone.text = SpannableStringBuilder(result)
+                    mBinding.etPhone.setSelection(result.length)
+                }
                 mBinding.btnSendVerifyCode.isSelected =
-                    s?.toString()?.isNotEmpty() == true && !isCountDown
+                    result.isNotEmpty() && !isCountDown
 
                 mBinding.btnLogUp.isSelected =
-                    s?.isNotEmpty() == true && mBinding.etVerifyCode.text.toString().isNotEmpty()
-                mViewModel.phone = s.toString()
+                    result.isNotEmpty() && mBinding.etVerifyCode.text.toString().isNotEmpty()
+                mViewModel.phone = result
                 mBinding.ivClearPhone.visibility =
-                    if (s?.isNotEmpty() == true) View.VISIBLE else View.GONE
+                    if (result.isNotEmpty()) View.VISIBLE else View.GONE
             }
         })
 
@@ -142,11 +142,29 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                val afterText = SpannableStringBuilder(s).toString()
+                val resultBuilder = StringBuilder()
+                var needReplace = false
+                var curLen = 0
+                for (c in afterText) {
+                    if (curLen < 4 && Character.isDigit(c)) {
+                        resultBuilder.append(c)
+                        curLen++
+                    } else {
+                        needReplace = true
+                    }
+                }
+                val result = resultBuilder.toString()
+                if (needReplace) {
+                    mBinding.etVerifyCode.text = SpannableStringBuilder(result)
+                    mBinding.etVerifyCode.setSelection(result.length)
+                }
+
                 mBinding.btnLogUp.isSelected =
-                    s?.isNotEmpty() == true && mBinding.etPhone.text.toString().isNotEmpty()
-                mViewModel.code = s.toString()
+                    result.isNotEmpty() && mBinding.etPhone.text.toString().isNotEmpty()
+                mViewModel.code = result
                 mBinding.ivClearVerify.visibility =
-                    if (s?.isNotEmpty() == true) View.VISIBLE else View.GONE
+                    if (result.isNotEmpty()) View.VISIBLE else View.GONE
             }
         })
     }
@@ -191,11 +209,6 @@ class LogUpActivity : BaseMVVMActivity<ActivityLogUpBinding, LogUpViewModel>() {
             return true
         }
         return super.onKeyDown(keyCode, event)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        clipboard?.removePrimaryClipChangedListener(onPrimaryClipChangedListener)
     }
 
     private fun gotoMain() {

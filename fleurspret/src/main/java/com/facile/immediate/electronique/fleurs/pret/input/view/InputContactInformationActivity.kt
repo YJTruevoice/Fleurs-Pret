@@ -23,6 +23,7 @@ import com.facile.immediate.electronique.fleurs.pret.input.InputUtil
 import com.facile.immediate.electronique.fleurs.pret.input.vm.ContactInputVM
 import com.gyf.immersionbar.ImmersionBar
 import com.permissionx.guolindev.PermissionX
+import com.permissionx.guolindev.callback.ExplainReasonCallback
 
 
 class InputContactInformationActivity :
@@ -72,10 +73,22 @@ class InputContactInformationActivity :
             mViewModel.config(ConfigType.secRelationship)
         }
 
-        mBinding.inContact1st.etPhone.addTextChangedListener(mViewModel.textWatcher)
-        mBinding.inContact1st.etNom.addTextChangedListener(mViewModel.textWatcher)
-        mBinding.inContact1st.etPhone.addTextChangedListener(mViewModel.textWatcher)
-        mBinding.inContact2st.etNom.addTextChangedListener(mViewModel.textWatcher)
+        mBinding.inContact1st.etPhone.apply {
+            filters = arrayOf(EditTextFilter.getEnterFilter())
+            addTextChangedListener(mViewModel.textWatcher)
+        }
+        mBinding.inContact1st.etNom.apply {
+            filters = arrayOf(EditTextFilter.getEnterFilter())
+            addTextChangedListener(mViewModel.textWatcher)
+        }
+        mBinding.inContact1st.etPhone.apply {
+            filters = arrayOf(EditTextFilter.getEnterFilter())
+            addTextChangedListener(mViewModel.textWatcher)
+        }
+        mBinding.inContact2st.etNom.apply {
+            filters = arrayOf(EditTextFilter.getEnterFilter())
+            addTextChangedListener(mViewModel.textWatcher)
+        }
 
         mBinding.tvNext.onClick {
             if (!isNextBtnEnable()) {
@@ -111,9 +124,13 @@ class InputContactInformationActivity :
                     inContact1st.apply {
                         tvRelation.text = it.secondViolentTightPilot
                         etPhone.text =
-                            SpannableStringBuilder(it.usualExtraordinaryScholarshipQuickHardship)
+                            SpannableStringBuilder(
+                                it.usualExtraordinaryScholarshipQuickHardship ?: ""
+                            )
+                        etPhone.setSelection(etPhone.text.toString().length)
                         etNom.text =
-                            SpannableStringBuilder(it.irishGradeUndergroundAmericanPostcard)
+                            SpannableStringBuilder(it.irishGradeUndergroundAmericanPostcard ?: "")
+                        etNom.setSelection(etNom.text.toString().length)
                     }
                     if (it.secondViolentTightPilot?.isNotEmpty() == true && it.constantNovelistMessSureLibrary?.isNotEmpty() == true) {
                         firstShipSelectedItem = CommonChooseListItem(
@@ -123,8 +140,10 @@ class InputContactInformationActivity :
                     }
                     inContact2st.apply {
                         tvRelation.text = it.expensiveSeriousPatientVoice
-                        etPhone.text = SpannableStringBuilder(it.europeanBeardUniform)
-                        etNom.text = SpannableStringBuilder(it.theseMedicalRadioactiveDoll)
+                        etPhone.text = SpannableStringBuilder(it.europeanBeardUniform ?: "")
+                        etPhone.setSelection(etPhone.text.toString().length)
+                        etNom.text = SpannableStringBuilder(it.theseMedicalRadioactiveDoll ?: "")
+                        etNom.setSelection(etNom.text.toString().length)
                     }
                     if (it.expensiveSeriousPatientVoice?.isNotEmpty() == true && it.mostSpaceshipVideophoneBirdcage?.isNotEmpty() == true) {
                         secShipSelectedItem = CommonChooseListItem(
@@ -177,11 +196,16 @@ class InputContactInformationActivity :
                             Manifest.permission.READ_CALENDAR,
                             Manifest.permission.CAMERA,
                             Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_SMS,
-                            Manifest.permission.READ_SMS,
-                        )
+                        ).onExplainRequestReason { scope, deniedList ->
+                            scope.showRequestReasonDialog(
+                                deniedList,
+                                getString(R.string.text_afin_de_vous_fournir_un_bon_service_activez_les_autorisations_correspondantes_dans_les_param_tres_de_votre_t_l_phone),
+                                getString(R.string.text_ok),
+                                getString(R.string.text_refuse)
+                            )
+                        }
                         .request { allGranted: Boolean, grantedList: List<String?>?, deniedList: List<String?>? ->
                             if (allGranted) {
                                 mViewModel.jsonNeed()

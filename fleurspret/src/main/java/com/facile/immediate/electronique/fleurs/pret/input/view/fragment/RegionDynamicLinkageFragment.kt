@@ -147,28 +147,19 @@ class RegionDynamicLinkageFragment(private var selectConfirmed: ((Region?, Regio
                             ?.apply {
                                 selected = true
                             }
-                    } ?: let {
-                        val first = cities.first().apply {
-                            selected = true
-                        }
-                        regionSelected?.next = CommonConfigItem(
-                            code = first.eastBasicFavouriteSupermarket,
-                            first.normalAppointmentHeadmistressMachine
-                        )
-                        first
-                    }.also {
-                        selectedCity = it
                     }
                     cityAdapter.clear()
                     cityAdapter.addAll(cities)
                     mBinding.vLine2st.visibility = View.VISIBLE
                     mBinding.rvLevel2st.visibility = View.VISIBLE
-                    mBinding.rvLevel2st.post {
-                        if (isValid()) {
-                            mBinding.rvLevel2st.scrollToPosition(cities.indexOf(region))
+                    if (region != null) {
+                        mBinding.rvLevel2st.post {
+                            if (isValid()) {
+                                mBinding.rvLevel2st.scrollToPosition(cities.indexOf(region))
+                            }
                         }
+                        district(region.eastBasicFavouriteSupermarket)
                     }
-                    district(region.eastBasicFavouriteSupermarket)
                 }
             }
         }.showLoading(true).launch()
@@ -185,25 +176,16 @@ class RegionDynamicLinkageFragment(private var selectConfirmed: ((Region?, Regio
                             ?.apply {
                                 selected = true
                             }
-                    } ?: let {
-                        val first = district.first().apply {
-                            selected = true
-                        }
-                        regionSelected?.next?.next = CommonConfigItem(
-                            code = first.eastBasicFavouriteSupermarket,
-                            first.normalAppointmentHeadmistressMachine
-                        )
-                        first
-                    }.also {
-                        selectedDistrict = it
                     }
                     districtAdapter.clear()
                     districtAdapter.addAll(district)
                     mBinding.vLine3st.visibility = View.VISIBLE
                     mBinding.rvLevel3st.visibility = View.VISIBLE
-                    mBinding.rvLevel3st.post {
-                        if (isValid()) {
-                            mBinding.rvLevel3st.scrollToPosition(district.indexOf(region))
+                    if (region != null) {
+                        mBinding.rvLevel3st.post {
+                            if (isValid()) {
+                                mBinding.rvLevel3st.scrollToPosition(district.indexOf(region))
+                            }
                         }
                     }
                 }

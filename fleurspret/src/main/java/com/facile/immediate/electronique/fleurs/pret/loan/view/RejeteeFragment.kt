@@ -62,24 +62,22 @@ class RejeteeFragment :
                     )
                 }
             }
+
+
+            val lowTopicStraightImpression = ordInfo.lowTopicStraightImpression ?: ""
+            val str = String.format(
+                getString(R.string.text_rejetee_desc),
+                lowTopicStraightImpression
+            )
+            val ssb = SpannableStringBuilder(str)
+
+            val blueTextStartIdx = ssb.indexOf(lowTopicStraightImpression)
+            ssb.setSpan(
+                ForegroundColorSpan(ValuesUtils.getColor(R.color.color_4635FF)),
+                blueTextStartIdx, blueTextStartIdx + lowTopicStraightImpression.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            mBinding.tvStateTips.text = ssb
         }
-    }
-
-    override fun onGlobalSetting(setting: GlobalSetting) {
-
-        val thoseLongBaseball = setting.thoseLongBaseball ?: ""
-        val str = String.format(
-            getString(R.string.text_rejetee_desc),
-            thoseLongBaseball
-        )
-        val ssb = SpannableStringBuilder(str)
-
-        val blueTextStartIdx = ssb.indexOf(thoseLongBaseball)
-        ssb.setSpan(
-            ForegroundColorSpan(ValuesUtils.getColor(R.color.color_4635FF)),
-            blueTextStartIdx, blueTextStartIdx + thoseLongBaseball.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        mBinding.tvStateTips.text = ssb
     }
 }

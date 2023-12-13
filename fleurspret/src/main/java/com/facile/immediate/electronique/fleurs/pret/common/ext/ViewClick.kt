@@ -27,8 +27,8 @@ private fun <T : View> T.clickEnable(triggerDelay: Long = 500): Boolean {
     val curClickTime = SystemClock.elapsedRealtime()
     if ((curClickTime - lastClickTime) >= triggerDelay) {
         flag = true
+        lastClickTime = curClickTime
     }
-    lastClickTime = curClickTime
     return flag
 }
 

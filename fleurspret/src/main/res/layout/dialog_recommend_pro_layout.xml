@@ -29,7 +29,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="344dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@mipmap/pic_bg_recommend_pro_dialog"
         android:paddingHorizontal="10dp"
@@ -72,15 +72,17 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recommend_pro_list"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/shape_bg_stroke_e7e7e7_1_radius_6"
+            android:maxHeight="200dp"
             android:paddingHorizontal="16dp"
             android:paddingTop="10dp"
             android:paddingBottom="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_recommend_pro_title"
+            tools:itemCount="5"
             tools:listitem="@layout/item_recommend_pro_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

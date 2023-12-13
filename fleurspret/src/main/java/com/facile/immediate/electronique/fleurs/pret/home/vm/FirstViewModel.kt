@@ -14,6 +14,7 @@ import com.facile.immediate.electronique.fleurs.pret.home.Constant
 import com.facile.immediate.electronique.fleurs.pret.home.model.FirstModel
 import com.facile.immediate.electronique.fleurs.pret.home.model.MultiP
 import com.facile.immediate.electronique.fleurs.pret.home.model.ProInfo
+import com.facile.immediate.electronique.fleurs.pret.loan.model.ProState
 import java.util.Date
 
 class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(application) {
@@ -68,6 +69,7 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
                         if (normalBillClinicMercifulBay?.isNotEmpty() == true
                             && normalBillClinicMercifulBay.isDigitsOnly()
                             && normalBillClinicMercifulBay.toLong() > 0
+                            && e.rudeReceptionCyclistArcticHunger != ProState.CAN_APPLY.value.toString()
                         ) {
                             ordStateLiveData.value = e
                             return@success
@@ -80,6 +82,7 @@ class FirstViewModel(application: Application) : BaseViewModel<FirstModel>(appli
                     if (normalBillClinicMercifulBay?.isNotEmpty() == true
                         && normalBillClinicMercifulBay.isDigitsOnly()
                         && normalBillClinicMercifulBay.toLong() > 0
+                        && pro.rudeReceptionCyclistArcticHunger != ProState.CAN_APPLY.value.toString()
                     ) {
                         ordStateLiveData.value = pro
                     } else {

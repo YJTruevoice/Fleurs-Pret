@@ -25,6 +25,7 @@ import com.arthur.commonlib.utils.image.DisplayUtils
 import com.arthur.network.withMain
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.camera.CameraActivity
+import com.facile.immediate.electronique.fleurs.pret.common.EditTextFilter
 import com.facile.immediate.electronique.fleurs.pret.common.PrivacyPolicyDisplayUtil
 import com.facile.immediate.electronique.fleurs.pret.common.consumer.ConsumerActivity
 import com.facile.immediate.electronique.fleurs.pret.common.event.NetErrorRefresh
@@ -57,6 +58,7 @@ class InputIdentityInformationActivity :
     private var picGuideType = 0
 
     private var showingDialog = AtomicBoolean(false)
+    private var isResume = false
     override fun setStatusBar() {
         ImmersionBar.with(this)
             .transparentStatusBar()
@@ -70,6 +72,16 @@ class InputIdentityInformationActivity :
         initTitleBar()
 
         PrivacyPolicyDisplayUtil.displayPrivacyPolicyGuide(this, mBinding.tvReadPrivacyPolicyGuide)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isResume = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isResume = false
     }
 
     override fun setListener() {
@@ -89,6 +101,7 @@ class InputIdentityInformationActivity :
         }
         mBinding.ivFaceAfr.setOnClickListener {
             requestTakePhotoPermission {
+                if (showingDialog.get()) return@requestTakePhotoPermission
                 startActivityForResult(
                     Intent(this, CameraActivity::class.java),
                     InputConstant.ReqCode.FACE_PIC_CODE
@@ -96,17 +109,14 @@ class InputIdentityInformationActivity :
             }
         }
 
-        mBinding.etIdentityCard.addTextChangedListener(mViewModel.textWatcher)
-        mBinding.etIdentityCard.setOnEditorActionListener { v, actionId, event ->
-            Logger.logD("arthur_action","actionId $actionId")
-            if (actionId == EditorInfo.IME_FLAG_NO_ENTER_ACTION) {
-                // 按下Enter/Return键时，将焦点切换到下一个EditText
-                mBinding.etNin.requestFocus();
-                return@setOnEditorActionListener true
-            }
-            return@setOnEditorActionListener false
+        mBinding.etIdentityCard.apply {
+            filters = arrayOf(EditTextFilter.getEnterFilter())
+            addTextChangedListener(mViewModel.textWatcher)
         }
-        mBinding.etNin.addTextChangedListener(mViewModel.textWatcher)
+        mBinding.etNin.apply {
+            filters = arrayOf(EditTextFilter.getEnterFilter())
+            addTextChangedListener(mViewModel.textWatcher)
+        }
 
         mBinding.tvNext.setOnClickListener {
             if (!isCardFrontPicUp || !isCardBackPicUp) {
@@ -136,8 +146,10 @@ class InputIdentityInformationActivity :
         super.initLiveDataObserver()
         mViewModel.userBasicLiveData.observe(this) {
             it?.let {
-                mBinding.etIdentityCard.text = SpannableStringBuilder(it.gratefulTourismFool)
-                mBinding.etNin.text = SpannableStringBuilder(it.energeticRudePollutionVisitor)
+                mBinding.etIdentityCard.text = SpannableStringBuilder(it.gratefulTourismFool ?: "")
+                mBinding.etIdentityCard.setSelection(mBinding.etIdentityCard.text.toString().length)
+                mBinding.etNin.text = SpannableStringBuilder(it.energeticRudePollutionVisitor ?: "")
+                mBinding.etNin.setSelection(mBinding.etNin.text.toString().length)
                 isNextBtnEnable()
             }
         }
@@ -421,6 +433,7 @@ class InputIdentityInformationActivity :
     }
 
     private fun showPicGuidePanel(requestCode: Int) {
+        if (!isResume) return
         if (showingDialog.get()) return
         PicResGuideFragment.show(this,
             {
