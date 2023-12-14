@@ -17,7 +17,7 @@ class GatheringInputVM(app: Application) : BaseInputViewModel(app) {
     override fun processLogic() {
         super.processLogic()
         gatheringInfo()
-        ordId = getArgumentsIntent()?.getStringExtra("ordId")?:""
+        ordId = getArgumentsIntent()?.getStringExtra("ordId") ?: ""
     }
 
     private fun gatheringInfo() {
@@ -56,7 +56,11 @@ class GatheringInputVM(app: Application) : BaseInputViewModel(app) {
             }
             mModel.saveGatheringInfo(fieldMap)
         }.success {
-            startActivity(ChooseGoldActivity::class.java)
-        }.launch()
+            if (ordId.isNotEmpty()) {
+                finish()
+            } else {
+                startActivity(ChooseGoldActivity::class.java)
+            }
+        }.showLoading(true).launch()
     }
 }

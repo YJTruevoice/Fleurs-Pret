@@ -44,8 +44,8 @@ class DisplayUtils {
         }
 
         fun displayImage(path: String, imageView: ImageView, placeHolder: Int, thumbnail: Float) {
-            val activity = imageView.context as Activity
-            if (activity.isFinishing || activity.isDestroyed) {
+            val activity = imageView.context as? Activity
+            if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                 return
             }
             if (StringUtil.isBlank(path)) {

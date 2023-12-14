@@ -6,6 +6,7 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arthur.commonlib.ability.Toaster
@@ -14,6 +15,7 @@ import com.arthur.network.ext.scopeNetLife
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
 import com.facile.immediate.electronique.fleurs.pret.R
+import com.facile.immediate.electronique.fleurs.pret.common.CommonItemDecoration
 import com.facile.immediate.electronique.fleurs.pret.databinding.DialogPayIntallmentLayoutBinding
 import com.facile.immediate.electronique.fleurs.pret.dialog.entity.BaseDialogConfigEntity
 import com.facile.immediate.electronique.fleurs.pret.dialog.entity.CommonDialogConfigEntity
@@ -52,7 +54,14 @@ open class PayIntallmentDialog @JvmOverloads constructor(
             }
 
             mBinding.tvTitle.text = config.title
-            mBinding.tvContent.text = config.content
+
+            val format =
+                "Si vous faites une paiement unique de %s maintenant, la date de remboursement peut être prolongée de %s jours. Si votre prêt est déjà en retard, vous devrez d'abord régler les frais de retard."
+            mBinding.tvContent.text = String.format(
+                format,
+                config.payDetail?.foolishCentreKindergartenRadioactiveGrammar,
+                config.payDetail?.neitherFilmReligiousBuddhism
+            )
 
             mBinding.inDateLimit.tvName.text =
                 context.getString(R.string.text_la_date_limite_sera_prolong_e)
@@ -82,7 +91,7 @@ open class PayIntallmentDialog @JvmOverloads constructor(
                         parent: ViewGroup,
                         viewType: Int
                     ): QuickViewHolder {
-                        return QuickViewHolder(R.layout.item_recommend_pro_layout, parent)
+                        return QuickViewHolder(R.layout.layout_repayment_way_simple, parent)
                     }
 
                     override fun onBindViewHolder(
@@ -91,6 +100,11 @@ open class PayIntallmentDialog @JvmOverloads constructor(
                         item: PayType?
                     ) {
                         item?.apply {
+                            holder.getView<View>(R.id.cl_root).background =
+                                ContextCompat.getDrawable(
+                                    context,
+                                    R.drawable.shape_bg_ffffff_radius_6
+                                )
                             DisplayUtils.displayImage(
                                 item.unfitCanadianSeat,
                                 holder.getView(R.id.iv_repayment_way),
@@ -120,7 +134,12 @@ open class PayIntallmentDialog @JvmOverloads constructor(
                                             it.aggressiveParentMethod?.eagerThunderstormCentigradeAmusementFairButterfly
                                                 ?: "",
                                             RemboursementRetardeFragment.REQUEST_CODE_REPAY_INTALLMENT,
-                                            bundle = Bundle().apply { putString("neitherFilmReligiousBuddhism",config.payDetail?.neitherFilmReligiousBuddhism) }
+                                            bundle = Bundle().apply {
+                                                putString(
+                                                    "neitherFilmReligiousBuddhism",
+                                                    config.payDetail?.neitherFilmReligiousBuddhism
+                                                )
+                                            }
                                         )
                                         dismiss()
                                     }.launch()
@@ -128,6 +147,11 @@ open class PayIntallmentDialog @JvmOverloads constructor(
                             }
                         }
                     }
+                }.apply {
+                    addAll(config.payLinks)
+                }
+                if (itemDecorationCount <= 0) {
+                    addItemDecoration(CommonItemDecoration(8f))
                 }
             }
         }

@@ -20,6 +20,7 @@ import com.facile.immediate.electronique.fleurs.pret.AppConstants
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.common.CommonItemDecoration
 import com.facile.immediate.electronique.fleurs.pret.common.ext.addThousandSeparator
+import com.facile.immediate.electronique.fleurs.pret.common.setting.GlobalSetting
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentLoanStateRemboursementLayoutBinding
 import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseCountDownDialog
 import com.facile.immediate.electronique.fleurs.pret.loan.model.OrdStateInfo
@@ -104,31 +105,71 @@ class RemboursementRetardeFragment :
                 }
 
                 tvRepaymentGoldLabel.text = getString(R.string.text_montant_du_remboursement)
-                tvRepaymentGold.text = ordInfo.eagerSculptureEasyPineShame.addThousandSeparator()
+                tvRepaymentGold.text = ordInfo.eagerSculptureEasyPineShame.addThousandSeparator(2)
                 tvRepaymentDateLabel.text = getString(R.string.text_date_du_remboursement)
                 tvRepaymentDate.text = ordInfo.difficultTeapotNeedInitialPine
 
 
                 inMontantRepayment.tvName.text = getString(R.string.text_montant_du_remboursement)
                 inMontantRepayment.tvValue.text =
-                    "XOF ${ordInfo.eagerSculptureEasyPineShame.addThousandSeparator()}"
+                    "XOF ${ordInfo.eagerSculptureEasyPineShame.addThousandSeparator(2)}"
 
                 inMontantPret.tvName.text = getText(R.string.text_montant_du_pr_t)
                 inMontantPret.tvValue.text =
-                    "XOF ${ordInfo.friendlyBusinessmanHistory.addThousandSeparator()}"
+                    "XOF ${ordInfo.friendlyBusinessmanHistory.addThousandSeparator(2)}"
 
                 inMontantInteret.tvName.text = getText(R.string.text_int_r_t)
                 inMontantInteret.tvValue.text =
-                    "XOF ${ordInfo.unsafeAncestorBasement.addThousandSeparator()}"
+                    "XOF ${ordInfo.unsafeAncestorBasement.addThousandSeparator(2)}"
 
                 if (mViewModel.proInfo?.rudeReceptionCyclistArcticHunger == ProState.RETARDE.value.toString()) {
                     inMontantFrais.tvName.text = getString(R.string.text_frais_de_report)
                     inMontantFrais.tvValue.text =
-                        "XOF ${ordInfo.hardworkingContraryPaddleLongHousework.addThousandSeparator()}"
+                        "XOF ${ordInfo.hardworkingContraryPaddleLongHousework.addThousandSeparator(2)}"
 
                     inMontantTarif.tvName.text = getString(R.string.text_tarif_r_duit)
                     inMontantTarif.tvValue.text =
-                        "XOF ${ordInfo.tightBoxFurniture.addThousandSeparator()}"
+                        "XOF ${ordInfo.tightBoxFurniture.addThousandSeparator(2)}"
+                }
+            }
+
+            btnProlongerRepayment.apply {
+                if (ordInfo.maximumRealVinegarMadGentleman == "1") {
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        // 查询还款详情&查询支付列表 -> 展期弹窗
+                        scopeMultiTaskLife(
+                            TaskCollector().apply {
+                                put("payTypes") { mViewModel.payTypes() }
+                                put("payDetail") { mViewModel.getPayDt() }
+                            }
+                        ).finisher { result ->
+                            result?.let { map ->
+                                (map["payDetail"] as? BaseResponse<PayDetail?>)?.let { resPD ->
+                                    resPD.aggressiveParentMethod?.let { payd ->
+                                        ac?.let { activity ->
+                                            PayIntallmentDialog.with(activity)
+                                                .title(context.getString(R.string.text_prolongation_des_d_lais))
+                                                .content("")
+                                                .ordId(
+                                                    mViewModel.ordStateInfo?.normalBillClinicMercifulBay
+                                                        ?: ""
+                                                )
+                                                .payDetail(payd)
+                                                .payLinks(
+                                                    (map["payTypes"] as? BaseResponse<List<PayType>?>)?.aggressiveParentMethod
+                                                        ?: emptyList()
+                                                )
+                                                .build().show()
+                                        }
+                                    }
+                                }
+                            }
+
+                        }.launch()
+                    }
+                } else {
+                    visibility = View.GONE
                 }
             }
         }
@@ -174,6 +215,8 @@ class RemboursementRetardeFragment :
                                 }
                             }
                         }
+                    }.apply {
+                        addAll(it)
                     }
                     if (itemDecorationCount <= 0) {
                         addItemDecoration(CommonItemDecoration(8f))
@@ -205,63 +248,17 @@ class RemboursementRetardeFragment :
                 }
             }
         }
-        mViewModel.settingLiveData.observe(this) {
-            it?.let { setting ->
-                mBinding.ivReloanGuide.apply {
-                    if (setting.brownTopic?.isNotEmpty() == true) {
-                        visibility = View.VISIBLE
-                        setOnClickListener {
-                            WebActivity.open(context, setting.brownTopic)
-                        }
-                    } else {
-                        visibility = View.GONE
-                    }
-                }
-                mBinding.btnProlongerRepayment.apply {
-                    if (setting.challengingDevelopmentTechnicalMineral == "1") {
-                        visibility = View.VISIBLE
-                        setOnClickListener {
-                            // TODO:  查询还款详情&查询支付列表 -> 展期弹窗
-                            scopeMultiTaskLife(
-                                TaskCollector().apply {
-                                    put("payTypes") { mViewModel.payTypes() }
-                                    put("payDetail") { mViewModel.getPayDt() }
-                                }
-                            ).finisher { result ->
-                                result?.let { map ->
-                                    (map["payDetail"] as? BaseResponse<PayDetail?>)?.let { resPD ->
-                                        resPD.aggressiveParentMethod?.let { payd ->
-                                            ac?.let { activity ->
-                                                PayIntallmentDialog.with(activity)
-                                                    .title(setting.rainyIncomeUnhealthyPie ?: "")
-                                                    .content(
-                                                        setting.surroundingMedicineTriangleHarmlessHeadline
-                                                            ?: ""
-                                                    )
-                                                    .ordId(
-                                                        mViewModel.ordStateInfo?.normalBillClinicMercifulBay
-                                                            ?: ""
-                                                    )
-                                                    .payDetail(payd)
-                                                    .payLinks(
-                                                        (map["payTypes"] as? BaseResponse<List<PayType>?>)?.aggressiveParentMethod
-                                                            ?: emptyList()
-                                                    )
-                                                    .build().show()
-                                            }
-                                        }
-                                    }
-                                }
+    }
 
-                            }.launch()
-                        }
-                    } else {
-                        visibility = View.GONE
-                    }
+    override fun onGlobalSetting(setting: GlobalSetting) {
+        mBinding.ivReloanGuide.apply {
+            if (setting.brownTopic?.isNotEmpty() == true) {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    WebActivity.open(context, setting.brownTopic)
                 }
-            } ?: let {
-                mBinding.ivReloanGuide.visibility = View.GONE
-                mBinding.btnProlongerRepayment.visibility = View.GONE
+            } else {
+                visibility = View.GONE
             }
         }
     }

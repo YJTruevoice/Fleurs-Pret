@@ -99,16 +99,18 @@ class InputGatheringInformationActivity :
             it?.let {
                 if (it.isNotEmpty()) {
                     val gathering = it[0]
-                    mBinding.etAccountNo.text =
-                        SpannableStringBuilder(
-                            gathering.lastBuildingTroublesomeRainbowChapter ?: ""
-                        )
-                    mBinding.etAccountNo.setSelection(mBinding.etAccountNo.text.toString().length)
-                    mBinding.etAccountNoConfirm.text =
-                        SpannableStringBuilder(
-                            gathering.lastBuildingTroublesomeRainbowChapter ?: ""
-                        )
-                    mBinding.etAccountNoConfirm.setSelection(mBinding.etAccountNoConfirm.text.toString().length)
+                    if (mViewModel.ordId.isEmpty()) {
+                        mBinding.etAccountNo.text =
+                            SpannableStringBuilder(
+                                gathering.lastBuildingTroublesomeRainbowChapter ?: ""
+                            )
+                        mBinding.etAccountNo.setSelection(mBinding.etAccountNo.text.toString().length)
+                        mBinding.etAccountNoConfirm.text =
+                            SpannableStringBuilder(
+                                gathering.lastBuildingTroublesomeRainbowChapter ?: ""
+                            )
+                        mBinding.etAccountNoConfirm.setSelection(mBinding.etAccountNoConfirm.text.toString().length)
+                    }
 
                     if (gathering.nativeShirtGrocerYesterday?.isNotEmpty() == true
                         && gathering.unablePolePacificShop?.isNotEmpty() == true

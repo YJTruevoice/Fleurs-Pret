@@ -82,9 +82,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
+                android:text="@string/text_le_syst_me_a_d_tect_des_informations_fausses_dans_vos_informations_de_compte_de_r_ception_veuillez_les_remettre"
                 android:textColor="@color/color_D11616"
                 android:textSize="14sp"
-                tools:text="@string/text_le_syst_me_a_d_tect_des_informations_fausses_dans_vos_informations_de_compte_de_r_ception_veuillez_les_remettre"
                 tools:visibility="visible" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

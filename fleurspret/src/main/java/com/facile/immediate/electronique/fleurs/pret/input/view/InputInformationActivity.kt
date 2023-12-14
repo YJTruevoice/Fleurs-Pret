@@ -82,7 +82,7 @@ class InputInformationActivity :
             addTextChangedListener(mViewModel.textWatcher)
         }
         mBinding.etEmail.apply {
-            filters = arrayOf(EditTextFilter.getEmailEditFilter(), EditTextFilter.getEnterFilter())
+            filters = arrayOf(EditTextFilter.getEnterFilter())
             addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
@@ -108,7 +108,7 @@ class InputInformationActivity :
                             emailTipsPopupWindow?.showAsDropDown(
                                 this@apply,
                                 x,
-                                (-200f).dp2px(context),
+                                (-245f).dp2px(context),
                                 Gravity.CENTER or Gravity.TOP
                             )
                         } else {
@@ -119,7 +119,7 @@ class InputInformationActivity :
                             emailTipsPopupWindow?.showAsDropDown(
                                 this@apply,
                                 x,
-                                (-200f).dp2px(context),
+                                (-245f).dp2px(context),
                                 Gravity.CENTER or Gravity.TOP
                             )
                         }
