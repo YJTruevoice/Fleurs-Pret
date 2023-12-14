@@ -45,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:maxHeight="85dp"
             android:textColor="@color/color_666666"
             android:textSize="16sp"
             tools:text="Si vous faites une paiement unique de XOF 2,000 maintenant, la date de remboursement peut être prolongée de7 jours. Si votre prêt est déjà en retard, vous devrez d'abord régler les frais de retard." />

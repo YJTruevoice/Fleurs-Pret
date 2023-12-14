@@ -25,6 +25,7 @@ import com.facile.immediate.electronique.fleurs.pret.loan.model.PayDetail
 import com.facile.immediate.electronique.fleurs.pret.loan.model.PayType
 import com.facile.immediate.electronique.fleurs.pret.loan.view.RemboursementRetardeFragment
 import com.facile.immediate.electronique.fleurs.pret.net.NetMgr
+import com.facile.immediate.electronique.fleurs.pret.utils.HighlightStrUtil
 import com.facile.immediate.electronique.fleurs.pret.web.WebActivity
 import kotlinx.parcelize.Parcelize
 
@@ -55,12 +56,18 @@ open class PayIntallmentDialog @JvmOverloads constructor(
 
             mBinding.tvTitle.text = config.title
 
-            val format =
-                "Si vous faites une paiement unique de %s maintenant, la date de remboursement peut être prolongée de %s jours. Si votre prêt est déjà en retard, vous devrez d'abord régler les frais de retard."
-            mBinding.tvContent.text = String.format(
-                format,
-                config.payDetail?.foolishCentreKindergartenRadioactiveGrammar,
+            val formatContent = String.format(
+                context.getString(R.string.text_intallment_content),
+                "${context.getString(R.string.text_xof)} ${config.payDetail?.eagerSculptureEasyPineShame}",
                 config.payDetail?.neitherFilmReligiousBuddhism
+            )
+
+            mBinding.tvContent.text = HighlightStrUtil.matchHighlight(
+                ContextCompat.getColor(context, R.color.color_FF0000), formatContent,
+                listOf(
+                    "${context.getString(R.string.text_xof)} ${config.payDetail?.eagerSculptureEasyPineShame}",
+                    config.payDetail?.neitherFilmReligiousBuddhism?:""
+                )
             )
 
             mBinding.inDateLimit.tvName.text =
@@ -117,7 +124,7 @@ open class PayIntallmentDialog @JvmOverloads constructor(
                             )
 
                             holder.getView<View>(R.id.tv_payer).setOnClickListener {
-                                (context as? FragmentActivity)?.let { activity ->
+                                (this@PayIntallmentDialog.context as? FragmentActivity)?.let { activity ->
                                     activity.scopeNetLife {
                                         NetMgr.get().service<LoanAPI>().getPayLink(
                                             config.ordId,
@@ -170,7 +177,9 @@ open class PayIntallmentDialog @JvmOverloads constructor(
 
     class Builder constructor(var context: Context) : BaseDialog.Builder<Builder>(context) {
         override fun createDialog(): BaseDialog {
-            return PayIntallmentDialog(context)
+            return PayIntallmentDialog(context).apply {
+                setOwnerActivity(context as FragmentActivity)
+            }
         }
 
         override fun createConfig(): BaseDialogConfigEntity {

@@ -181,6 +181,7 @@
     <string name="text_seleccione_el_plazo_del_pr_stamo">Seleccione el plazo del préstamo</string>
     <string name="text_d_claration_de_divulgation">Déclaration de divulgation</string>
     <string name="text_prolongation_des_d_lais">Prolongation des délais</string>
+    <string name="text_intallment_content">Si vous faites une paiement unique de %s maintenant, la date de remboursement peut être prolongée de %s jours. Si votre prêt est déjà en retard, vous devrez d\'abord régler les frais de retard.</string>
 
     <string-array name="string_arr_months">
         <item>Janvier</item>

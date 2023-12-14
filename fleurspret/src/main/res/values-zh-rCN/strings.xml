@@ -181,7 +181,8 @@
     <string name="text_album_photo">相册</string>
     <string name="text_seleccione_el_plazo_del_pr_stamo">请选择贷款期限</string>
     <string name="text_d_claration_de_divulgation">隐私声明</string>
-    <string name="text_prolongation_des_d_lais">Prolongation des délais</string>
+    <string name="text_prolongation_des_d_lais">延长期限</string>
+    <string name="text_intallment_content">如果您现在一次性还款%s，还款日期可能会延长%s天。 如果您的贷款已经逾期，您需要先支付滞纳金。</string>
 
     <string-array name="string_arr_months">
         <item>1月</item>
