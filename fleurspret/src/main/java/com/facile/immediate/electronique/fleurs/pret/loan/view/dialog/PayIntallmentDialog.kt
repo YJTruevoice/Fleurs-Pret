@@ -66,7 +66,7 @@ open class PayIntallmentDialog @JvmOverloads constructor(
                 ContextCompat.getColor(context, R.color.color_FF0000), formatContent,
                 listOf(
                     "${context.getString(R.string.text_xof)} ${config.payDetail?.eagerSculptureEasyPineShame}",
-                    config.payDetail?.neitherFilmReligiousBuddhism?:""
+                    config.payDetail?.neitherFilmReligiousBuddhism ?: ""
                 )
             )
 
@@ -124,7 +124,7 @@ open class PayIntallmentDialog @JvmOverloads constructor(
                             )
 
                             holder.getView<View>(R.id.tv_payer).setOnClickListener {
-                                (this@PayIntallmentDialog.context as? FragmentActivity)?.let { activity ->
+                                (ownerActivity as? FragmentActivity)?.let { activity ->
                                     activity.scopeNetLife {
                                         NetMgr.get().service<LoanAPI>().getPayLink(
                                             config.ordId,
@@ -149,7 +149,7 @@ open class PayIntallmentDialog @JvmOverloads constructor(
                                             }
                                         )
                                         dismiss()
-                                    }.launch()
+                                    }.showLoading(true).launch()
                                 }
                             }
                         }
@@ -178,7 +178,7 @@ open class PayIntallmentDialog @JvmOverloads constructor(
     class Builder constructor(var context: Context) : BaseDialog.Builder<Builder>(context) {
         override fun createDialog(): BaseDialog {
             return PayIntallmentDialog(context).apply {
-                setOwnerActivity(context as FragmentActivity)
+                setOwnerActivity(this@Builder.context as FragmentActivity)
             }
         }
 
