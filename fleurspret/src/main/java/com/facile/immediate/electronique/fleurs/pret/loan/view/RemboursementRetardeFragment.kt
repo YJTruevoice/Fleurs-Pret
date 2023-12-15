@@ -7,7 +7,6 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +19,9 @@ import com.facile.immediate.electronique.fleurs.pret.AppConstants
 import com.facile.immediate.electronique.fleurs.pret.R
 import com.facile.immediate.electronique.fleurs.pret.common.CommonItemDecoration
 import com.facile.immediate.electronique.fleurs.pret.common.ext.addThousandSeparator
+import com.facile.immediate.electronique.fleurs.pret.common.ext.gone
+import com.facile.immediate.electronique.fleurs.pret.common.ext.onClick
+import com.facile.immediate.electronique.fleurs.pret.common.ext.visible
 import com.facile.immediate.electronique.fleurs.pret.common.setting.GlobalSetting
 import com.facile.immediate.electronique.fleurs.pret.databinding.FragmentLoanStateRemboursementLayoutBinding
 import com.facile.immediate.electronique.fleurs.pret.dialog.widget.BaseCountDownDialog
@@ -123,20 +125,31 @@ class RemboursementRetardeFragment :
                     "XOF ${ordInfo.unsafeAncestorBasement.addThousandSeparator(2)}"
 
                 if (mViewModel.proInfo?.rudeReceptionCyclistArcticHunger == ProState.RETARDE.value.toString()) {
+                    inMontantFrais.clRoot.visible()
                     inMontantFrais.tvName.text = getString(R.string.text_frais_de_report)
                     inMontantFrais.tvValue.text =
                         "XOF ${ordInfo.hardworkingContraryPaddleLongHousework.addThousandSeparator(2)}"
 
-                    inMontantTarif.tvName.text = getString(R.string.text_tarif_r_duit)
-                    inMontantTarif.tvValue.text =
-                        "XOF ${ordInfo.tightBoxFurniture.addThousandSeparator(2)}"
+                    if (ordInfo.tightBoxFurniture?.isNotEmpty() == true
+                        && (ordInfo.tightBoxFurniture.toFloatOrNull() ?: 0f) > 0f
+                    ) {
+                        inMontantTarif.clRoot.visible()
+                        inMontantTarif.tvName.text = getString(R.string.text_tarif_r_duit)
+                        inMontantTarif.tvValue.text =
+                            "XOF ${ordInfo.tightBoxFurniture.addThousandSeparator(2)}"
+                    } else {
+                        inMontantTarif.clRoot.gone()
+                    }
+                } else {
+                    inMontantFrais.clRoot.gone()
+                    inMontantTarif.clRoot.gone()
                 }
             }
 
             btnProlongerRepayment.apply {
                 if (ordInfo.maximumRealVinegarMadGentleman == "1") {
                     visibility = View.VISIBLE
-                    setOnClickListener {
+                    onClick {
                         // 查询还款详情&查询支付列表 -> 展期弹窗
                         scopeMultiTaskLife(
                             TaskCollector().apply {
