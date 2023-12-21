@@ -27,7 +27,7 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "App-${variant.name}-version-${variant.versionCode}${System.currentTimeMillis()}.apk"
+            outputFileName = "${project.getName()}-${variant.name}-${variant.versionCode}${System.currentTimeMillis()}.apk"
         }
     }
 
@@ -60,7 +60,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release']
             buildConfigField("int", "MODE", "2")
-            buildConfigField("String", "HOST", "\"https://snjr.ultracreditosmx.com\"")
+            buildConfigField("String", "HOST", "\"https://test.fleurspret.com\"")
             signingConfig signingConfigs.debug
         }
 
@@ -69,6 +69,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release']
             buildConfigField("int", "MODE", "1")
+            buildConfigField("String", "HOST", "\"https://test.fleurspret.com\"")
             signingConfig signingConfigs.releaseTest
         }
 
@@ -79,7 +80,11 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("int", "MODE", "0")
+            buildConfigField("String", "HOST", "\"https://test.fleurspret.com\"")
             signingConfig signingConfigs.release
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
         }
     }
     compileOptions {
@@ -132,7 +137,7 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     // When using the BoM, don't specify versions in Firebase dependencies
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx:1.7.1'
 
     implementation 'com.google.android.play:review:2.0.1'
     implementation 'com.google.android.gms:play-services-location:19.0.1'

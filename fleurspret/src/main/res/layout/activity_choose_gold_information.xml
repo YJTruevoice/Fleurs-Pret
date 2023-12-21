@@ -78,19 +78,21 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <androidx.appcompat.widget.AppCompatRatingBar
+                    <androidx.appcompat.widget.AppCompatSeekBar
                         android:id="@+id/rb_xof_progress"
                         style="?android:progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="24dp"
                         android:layout_marginTop="16dp"
                         android:paddingHorizontal="12dp"
-                        android:progress="60"
                         android:progressDrawable="@drawable/drawable_xof_progress"
+                        android:splitTrack="false"
                         android:thumb="@mipmap/icon_xof_dynamic_thumb"
+                        android:thumbOffset="5dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ll_xof" />
+                        app:layout_constraintTop_toBottomOf="@id/ll_xof"
+                        tools:progress="50" />
 
                     <TextView
                         android:id="@+id/tv_xof_decrease"

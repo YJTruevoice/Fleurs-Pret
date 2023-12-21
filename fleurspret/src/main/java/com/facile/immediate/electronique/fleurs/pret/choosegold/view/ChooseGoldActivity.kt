@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.view.ViewGroup
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -251,22 +253,59 @@ class ChooseGoldActivity : BaseMVVMActivity<ActivityChooseGoldInformationBinding
                 min = prod.hugeFogPepper
             }
             progress = prod.afraidDecemberSlimClassicalTechnology
-            stepSize = prod.backBenchRegularHomeland
-            setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-                val progress = ratingBar.progress
-                if (progress >= prod.hugeFogPepper) {
-                    mBinding.tvXof.text = progress.toString().addThousandSeparator()
-                } else {
-                    mBinding.tvXof.text = prod.hugeFogPepper.toString().addThousandSeparator()
-                    ratingBar.progress = prod.hugeFogPepper
+            setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    seekBar?.apply {
+                        val step = prod.backBenchRegularHomeland.toInt() // 设置步长
+                        val remainder = progress % step
+
+                        val newProgress: Int = if (remainder < step / 2) {
+                            progress - remainder
+                        } else {
+                            progress + (step - remainder)
+                        }
+
+                        mBinding.tvXof.text = newProgress.toString().addThousandSeparator()
+                    }
                 }
-                if (mViewModel.curProDate != null) {
-                    mViewModel.preCompute(
-                        neatPhysicsPeasantCommonSport = prod.neatPhysicsPeasantCommonSport,
-                        rudeHungryActionInformation = mBinding.rbXofProgress.progress.toString()
-                    )
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 }
-            }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    seekBar?.apply {
+                        val step = prod.backBenchRegularHomeland.toInt() // 设置步长
+
+                        val progress = this.progress
+                        val remainder = progress % step
+
+                        val newProgress: Int = if (remainder < step / 2) {
+                            progress - remainder
+                        } else {
+                            progress + (step - remainder)
+                        }
+
+                        mBinding.tvXof.text = newProgress.toString().addThousandSeparator()
+                        if (newProgress >= prod.hugeFogPepper) {
+                            mBinding.tvXof.text = newProgress.toString().addThousandSeparator()
+                        } else {
+                            mBinding.tvXof.text =
+                                prod.hugeFogPepper.toString().addThousandSeparator()
+                        }
+                        this.progress = newProgress
+                        if (mViewModel.curProDate != null) {
+                            mViewModel.preCompute(
+                                neatPhysicsPeasantCommonSport = prod.neatPhysicsPeasantCommonSport,
+                                rudeHungryActionInformation = newProgress.toString()
+                            )
+                        }
+                    }
+                }
+            })
         }
 
         mViewModel.curProDate = if (defaultSelectedFist) null else prod
