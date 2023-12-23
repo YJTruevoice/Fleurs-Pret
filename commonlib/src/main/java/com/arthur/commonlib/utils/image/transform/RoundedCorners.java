@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
  * Created by guo.lei on 2023/1/30
  */
 public final class RoundedCorners extends BitmapTransformation {
-    private static final String ID = "com.nowcoder.app.nowcoderuilibrary.utils.image.transform.RoundedCorners";
+    private static final String ID = "com.arthur.commonlib.utils.image.transform.RoundedCorners";
     private static final byte[] ID_BYTES = ID.getBytes(CHARSET);
 
     private final int topLeftRadius;

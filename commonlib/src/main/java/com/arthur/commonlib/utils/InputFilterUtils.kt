@@ -13,7 +13,7 @@ class InputFilterUtils {
 
     companion object {
         val emojiInputFilter = InputFilter { source, start, end, dest, dstart, dend ->
-            if (com.arthur.commonlib.utils.StringUtil.containsEmoji(source)) {
+            if (StringUtil.containsEmoji(source)) {
                 ""
             } else source
         }

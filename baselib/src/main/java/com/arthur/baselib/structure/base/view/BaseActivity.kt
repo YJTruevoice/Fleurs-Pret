@@ -10,6 +10,7 @@ import com.arthur.commonlib.ability.Logger
 import com.gyf.immersionbar.ImmersionBar
 import com.arthur.commonlib.ability.MainThreadExecutor
 import com.arthur.commonlib.ability.Toaster
+import com.arthur.commonlib.utils.StringUtil
 
 /**
  *
@@ -125,7 +126,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * 延时退出
      */
     protected fun finishDelay(text: String? = null, delay: Long? = 0) {
-        if (!com.arthur.commonlib.utils.StringUtil.isEmpty(text)) {
+        if (!StringUtil.isEmpty(text)) {
             if (text != null) {
                 Toaster.showToast(text)
             }

@@ -3,8 +3,10 @@ package com.arthur.commonlib.utils;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
 
+@Keep
 public class ReflectUtils {
 
     public static <T> T getT(Object o, int i) {
@@ -42,6 +44,7 @@ public class ReflectUtils {
      * @param <T>
      * @return
      */
+    @Keep
     @Nullable
     public static <T> Class<T> getTargetTFromObj(Object o, Class<?> topTarget) {
         return getTargetTFromObj(o, null, topTarget);
@@ -56,6 +59,7 @@ public class ReflectUtils {
      * @param <T>
      * @return
      */
+    @Keep
     @Nullable
     public static <T> Class<T> getTargetTFromObj(Object o, Class<?> topObj, Class<?> topTarget) {
         if (o == null || topTarget == null || (topObj != null && !topObj.isAssignableFrom(o.getClass()))) {

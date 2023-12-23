@@ -15,6 +15,7 @@ import com.arthur.baselib.structure.base.*
 import com.arthur.baselib.structure.mvvm.entity.LaunchActivityResultInfo
 import com.arthur.baselib.structure.mvvm.entity.RegisterActivityResultInfo
 import com.arthur.baselib.structure.base.io.IKTIobility
+import com.arthur.commonlib.utils.ReflectUtils
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -135,7 +136,7 @@ abstract class BaseViewModel<M : IBaseModel>(app: Application) : AndroidViewMode
     }
 
     override fun createModel(): M {
-        var clz: Class<M> = (com.arthur.commonlib.utils.ReflectUtils.getTargetTFromObj(this, IBaseModel::class.java)
+        var clz: Class<M> = (ReflectUtils.getTargetTFromObj(this, IBaseModel::class.java)
             ?: IBaseModel::class.java) as Class<M>
         if (clz.isInterface) {
             throw RuntimeException("can not declare <Model> with interface(like:IBaseModel), use BaseModel or other instead")

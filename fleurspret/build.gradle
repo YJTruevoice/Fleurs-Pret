@@ -23,6 +23,8 @@ android {
         versionName rootProject.ext.android.versionName
 
         multiDexEnabled true
+
+        proguardFiles "proguard-rules.pro"
     }
 
     applicationVariants.all { variant ->

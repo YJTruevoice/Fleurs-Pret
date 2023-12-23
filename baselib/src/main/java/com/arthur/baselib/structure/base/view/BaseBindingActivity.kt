@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import com.arthur.baselib.structure.base.IBindingView
+import com.arthur.commonlib.utils.ReflectUtils
 
 /**
  *
@@ -30,7 +31,7 @@ open class BaseBindingActivity<V : ViewBinding> : BaseSimpleActivity(),
     }
 
     override fun initBinding(inflater: LayoutInflater, container: ViewGroup?): V? {
-        val clz = com.arthur.commonlib.utils.ReflectUtils.getTargetTFromObj<V>(
+        val clz = ReflectUtils.getTargetTFromObj<V>(
             this,
             BaseBindingActivity::class.java,
             ViewBinding::class.java

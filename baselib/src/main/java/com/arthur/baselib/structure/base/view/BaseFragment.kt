@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.arthur.commonlib.ability.MainThreadExecutor
 import com.arthur.commonlib.ability.Toaster
+import com.arthur.commonlib.utils.StringUtil
 
 /**
  * @author: guo.lei
@@ -127,7 +128,7 @@ abstract class BaseFragment : Fragment() {
      * 延时退出
      */
     protected fun finishDelay(text: String? = null, delay: Long? = 0) {
-        if (!com.arthur.commonlib.utils.StringUtil.isEmpty(text)) {
+        if (!StringUtil.isEmpty(text)) {
             if (text != null) {
                 Toaster.showToast(text)
             }
