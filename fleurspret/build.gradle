@@ -23,9 +23,20 @@ android {
         versionName rootProject.ext.android.versionName
 
         multiDexEnabled true
+        vectorDrawables.generatedDensities = []
+        vectorDrawables.useSupportLibrary = true
 
-        proguardFiles "proguard-rules.pro"
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'armeabi'
+        }
+
+        proguardFiles 'proguard-rules.pro'
     }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+    flavorDimensions "color"
 
     applicationVariants.all { variant ->
         variant.outputs.all {
@@ -127,7 +138,7 @@ dependencies {
     implementation rootProject.ext.stethosLibs
 
     implementation 'androidx.multidex:multidex:2.0.1'
-    
+
     implementation 'id.zelory:compressor:2.1.1'
 
     implementation 'im.crisp:crisp-sdk:1.0.13'

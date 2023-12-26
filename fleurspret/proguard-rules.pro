@@ -45,6 +45,7 @@
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
 -keep public class * extends android.view.View
+-keep public class * extends androidx.viewbinding.ViewBinding
 -keep public class com.android.vending.licensing.ILicensingService
 
 -keep class **.R$* {
@@ -137,6 +138,12 @@
 -keepclassmembers class ** {
     @org.greenrobot.eventbus.Subscribe <methods>;
 }
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
 
 #Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -147,13 +154,6 @@
 }
 # for DexGuard only
 #-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
-
--keep enum org.greenrobot.eventbus.ThreadMode { *; }
-
-# Only required if you use AsyncExecutor
--keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
-    <init>(java.lang.Throwable);
-}
 
 -keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
 -keep public class * extends com.chad.library.adapter.base.viewholder.QuickViewHolder
@@ -223,13 +223,74 @@
     *;
 }
 
+#base
+-keep public class * implements com.arthur.baselib.structure.base.IBaseModel{
+    *;
+}
+-keep class com.arthur.baselib.structure.**{ *; }
 
--dontwarn org.bouncycastle.jsse.BCSSLParameters
--dontwarn org.bouncycastle.jsse.BCSSLSocket
--dontwarn org.bouncycastle.jsse.provider.BouncyCastleJsseProvider
--dontwarn org.conscrypt.Conscrypt$Version
--dontwarn org.conscrypt.Conscrypt
--dontwarn org.conscrypt.ConscryptHostnameVerifier
--dontwarn org.openjsse.javax.net.ssl.SSLParameters
--dontwarn org.openjsse.javax.net.ssl.SSLSocket
--dontwarn org.openjsse.net.ssl.OpenJSSE
+
+#-libraryjars <java.home>/lib/rt.jar
+
+-keep class android.support.v4.** { *; }
+-keep class javax.** {*;}
+-keep class java.awt.** {*;}
+-keep class android.app.** {*;}
+
+-keepattributes Signature
+
+
+##fastjson混淆代码有问题
+-dontskipnonpubliclibraryclassmembers
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+-keepclassmembers class * {
+	public <methods>;
+}
+
+-keep class **.R$* {
+ *;
+}
+
+-keepattributes Signature
+-keepattributes *Annotation*
+-keepattributes InnerClasses
+
+# 执行混淆时丢失了文件名和行号
+-keepattributes SourceFile,LineNumberTable
+
+-dontoptimize
+
+-keep class org.android.agoo.impl.*{
+        public <fields>;
+        public <methods>;
+}
+
+
+-keep class org.android.agoo.service.* {*;}
+
+-keep class org.android.spdy.**{*;}
+
+-dontwarn android.support.v7.**
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }
+
+
+
+# Keep native methods
+-keepclassmembers class * {
+    native <methods>;
+}
+
+
+-ignorewarnings
+
+
+
+
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-dontwarn org.bouncycastle.jsse.**
+-dontwarn org.conscrypt.**
+-dontwarn org.openjsse.javax.net.ssl.**
+-dontwarn org.openjsse.net.ssl.**
